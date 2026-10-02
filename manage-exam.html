@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Exam - Online Examination</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #172b4d;
+        }
+
+        .sidebar {
+            width: 245px;
+            height: 100vh;
+            background: #062d63;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-area {
+            height: 85px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+
+        .logo-area img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: white;
+            border: 2px solid rgba(255,255,255,.7);
+        }
+
+        .logo-text h2 {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #bcd3ef;
+            margin-top: 3px;
+        }
+
+        .nav {
+            padding: 20px 12px;
+            flex: 1;
+        }
+
+        .nav a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            color: #d7e7fa;
+            padding: 13px 15px;
+            margin-bottom: 7px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .nav a:hover {
+            background: rgba(255,255,255,.1);
+            color: white;
+        }
+
+        .nav a.active {
+            background: #0878d1;
+            color: white;
+            box-shadow: 0 5px 15px rgba(8,120,209,.25);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .main {
+            margin-left: 245px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 500;
+        }
+
+        .topbar-left h1 {
+            font-size: 23px;
+            color: #172b4d;
+        }
+
+        .topbar-left p {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 4px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg,#062d63,#0878d1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .admin-profile strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .admin-profile span {
+            display: block;
+            font-size: 11px;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        .content {
+            padding: 28px 30px 40px;
+        }
+
+        .page-intro {
+            background: linear-gradient(135deg,#062d63,#0878d1);
+            color: white;
+            border-radius: 15px;
+            padding: 27px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(6,45,99,.15);
+        }
+
+        .page-intro h2 {
+            font-size: 24px;
+            margin-bottom: 7px;
+        }
+
+        .page-intro p {
+            font-size: 13px;
+            color: #dcecff;
+            line-height: 20px;
+        }
+
+        .add-exam-btn {
+            border: none;
+            background: white;
+            color: #0668b7;
+            padding: 12px 19px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 13px;
+            padding: 21px;
+            border: 1px solid #e7edf5;
+            box-shadow: 0 5px 18px rgba(31,50,81,.05);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf5ff;
+            color: #0878d1;
+        }
+
+        .stat-icon svg {
+            width: 23px;
+            height: 23px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .stat-info h3 {
+            font-size: 25px;
+            color: #172b4d;
+        }
+
+        .stat-info p {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 3px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title h2 {
+            font-size: 18px;
+        }
+
+        .section-title span {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 17px;
+            margin-bottom: 28px;
+        }
+
+        .management-card {
+            background: white;
+            border: 1px solid #e7edf5;
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: 0 5px 18px rgba(31,50,81,.05);
+        }
+
+        .management-card .m-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 10px;
+            background: #edf7ff;
+            color: #0878d1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .management-card .m-icon svg {
+            width: 21px;
+            height: 21px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .management-card h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .management-card p {
+            color: #718096;
+            font-size: 11px;
+            line-height: 17px;
+            min-height: 35px;
+            margin-bottom: 13px;
+        }
+
+        .management-card button {
+            border: none;
+            background: #eef6ff;
+            color: #066bbd;
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .management-card button:hover {
+            background: #0878d1;
+            color: white;
+        }
+
+        .exam-section {
+            background: white;
+            border: 1px solid #e7edf5;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(31,50,81,.05);
+            overflow: hidden;
+        }
+
+        .exam-section-header {
+            padding: 19px 22px;
+            border-bottom: 1px solid #e8edf4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .exam-section-header h2 {
+            font-size: 17px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 230px;
+            padding: 9px 12px 9px 35px;
+            border: 1px solid #d9e1ec;
+            border-radius: 7px;
+            outline: none;
+            font-size: 12px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 11px;
+            top: 9px;
+            color: #8b99ab;
+        }
+
+        .search-icon svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        .exam-item {
+            padding: 18px 22px;
+            border-bottom: 1px solid #edf1f5;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr .9fr 1.4fr;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .exam-item:last-child {
+            border-bottom: none;
+        }
+
+        .exam-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .exam-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 9px;
+            background: #eaf5ff;
+            color: #0878d1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .exam-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .exam-name h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+            overflow-wrap: anywhere;
+        }
+
+        .exam-name p {
+            font-size: 11px;
+            color: #8190a4;
+            overflow-wrap: anywhere;
+        }
+
+        .exam-detail {
+            min-width: 0;
+        }
+
+        .exam-detail strong {
+            display: block;
+            font-size: 12px;
+            color: #34445c;
+            margin-bottom: 4px;
+            overflow-wrap: anywhere;
+        }
+
+        .exam-detail span {
+            font-size: 11px;
+            color: #8290a2;
+            overflow-wrap: anywhere;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .status.active {
+            color: #138a52;
+            background: #e9f9f0;
+        }
+
+        .status.inactive {
+            color: #9b5b08;
+            background: #fff4df;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .exam-actions {
+            display: flex;
+            gap: 7px;
+            justify-content: flex-end;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #dfe6ef;
+            background: white;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            background: #f4f8fc;
+        }
+
+        .action-btn svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .action-btn.view {
+            color: #6f42c1;
+        }
+
+        .action-btn.edit {
+            color: #0878d1;
+        }
+
+        .action-btn.toggle {
+            color: #138a52;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 55px 20px;
+            color: #718096;
+        }
+
+        .empty-state-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #edf6ff;
+            color: #0878d1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .empty-state h3 {
+            color: #34445c;
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .empty-add-btn {
+            border: none;
+            background: #0878d1;
+            color: white;
+            padding: 10px 17px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            min-width: 280px;
+            background: #172b4d;
+            color: white;
+            padding: 13px 17px;
+            border-radius: 9px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+            transform: translateY(120px);
+            opacity: 0;
+            transition: .3s;
+            z-index: 3000;
+            font-size: 12px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid #16a765;
+        }
+
+        .toast.error {
+            border-left: 4px solid #dc3545;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #eef6ff;
+            color: #0878d1;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 900;
+        }
+
+        @media(max-width:1100px) {
+
+            .management-grid {
+                grid-template-columns: repeat(3,1fr);
+            }
+
+            .exam-item {
+                grid-template-columns: 1.5fr 1fr 1fr;
+            }
+
+            .exam-item .exam-status {
+                display: none;
+            }
+
+        }
+
+        @media(max-width:800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .topbar-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .admin-profile > div:last-child {
+                display: none;
+            }
+
+            .content {
+                padding: 20px 18px 30px;
+            }
+
+            .page-intro {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 17px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .management-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .exam-section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box,
+            .search-box input {
+                width: 100%;
+            }
+
+            .exam-item {
+                grid-template-columns: 1fr;
+            }
+
+            .exam-actions {
+                justify-content: flex-start;
+            }
+
+        }
+
+        @media(max-width:520px) {
+
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-intro h2 {
+                font-size: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo-area">
+
+            <img src="logo.jpg" alt="College Logo">
+
+            <div class="logo-text">
+                <h2>Online Examination</h2>
+                <p>Admin Panel</p>
+            </div>
+
+        </div>
+
+        <nav class="nav">
+
+            <a href="admin.html">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                    </svg>
+                </span>
+                Dashboard
+            </a>
+
+            <a href="manage-exam.html" class="active">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+                        <path d="M8 2v4"></path>
+                        <path d="M16 2v4"></path>
+                        <path d="M3 9h18"></path>
+                        <path d="M8 13h3"></path>
+                        <path d="M8 17h5"></path>
+                    </svg>
+                </span>
+                Manage Exam
+            </a>
+
+            <a href="manage-question.html">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M9.5 9a2.5 2.5 0 1 1 4.2 1.8c-.9.7-1.7 1.2-1.7 2.7"></path>
+                        <path d="M12 17h.01"></path>
+                    </svg>
+                </span>
+                Questions
+            </a>
+
+            <a href="students.html">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9.5" cy="7" r="4"></circle>
+                        <path d="M17 11a4 4 0 1 0 0-8"></path>
+                        <path d="M21 21v-2a4 4 0 0 0-3-3.87"></path>
+                    </svg>
+                </span>
+                Students
+            </a>
+
+            <a href="results.html">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19V5"></path>
+                        <path d="M4 19h17"></path>
+                        <path d="M8 16v-5"></path>
+                        <path d="M12 16V8"></path>
+                        <path d="M16 16V4"></path>
+                        <path d="M20 16v-7"></path>
+                    </svg>
+                </span>
+                Results
+            </a>
+
+            <a href="reports.html">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 2h9l4 4v16H6z"></path>
+                        <path d="M14 2v5h5"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h6"></path>
+                    </svg>
+                </span>
+                Reports
+            </a>
+
+            <a href="settings.html">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2v-.08a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1.03H7v-2h.84A1.7 1.7 0 0 0 9.4 10a1.7 1.7 0 0 0-.34-1.88L9 8.06l1.42-1.42.06.06A1.7 1.7 0 0 0 12.36 7.04 1.7 1.7 0 0 0 13.39 5.5V5h2v.5a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06A1.7 1.7 0 0 0 19.4 10a1.7 1.7 0 0 0 1.56 1.03H21v2h-.04A1.7 1.7 0 0 0 19.4 15z"></path>
+                    </svg>
+                </span>
+                Settings
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        onclick="toggleSidebar()">
+    </div>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="mobile-menu-btn"
+                    onclick="toggleSidebar()">
+
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 6h16"></path>
+                        <path d="M4 12h16"></path>
+                        <path d="M4 18h16"></path>
+                    </svg>
+
+                </button>
+
+                <div>
+
+                    <h1>Manage Exam</h1>
+
+                    <p>
+                        Create and manage online examination
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="admin-profile">
+
+                <div
+                    class="admin-avatar"
+                    id="adminAvatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong id="adminName">
+                        Administrator
+                    </strong>
+
+                    <span>
+                        System Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            <div class="page-intro">
+
+                <div>
+
+                    <h2>
+                        Examination Management
+                    </h2>
+
+                    <p>
+                        Create, update and manage examinations
+                        for your students. Keep all exam details
+                        organized in one place.
+                    </p>
+
+                </div>
+
+                <button
+                    class="add-exam-btn"
+                    onclick="goToAddExam()">
+
+                    <span>＋</span>
+                    Add New Exam
+
+                </button>
+
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <rect
+                                x="3"
+                                y="4"
+                                width="18"
+                                height="17"
+                                rx="2">
+                            </rect>
+
+                            <path d="M8 2v4"></path>
+                            <path d="M16 2v4"></path>
+                            <path d="M3 9h18"></path>
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3 id="totalExams">
+                            0
+                        </h3>
+
+                        <p>
+                            Total Exams
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3 id="activeExams">
+                            0
+                        </h3>
+
+                        <p>
+                            Active Exams
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 19V5"></path>
+                            <path d="M4 19h17"></path>
+                            <path d="M8 16v-5"></path>
+                            <path d="M12 16V8"></path>
+                            <path d="M16 16V4"></path>
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <h3 id="totalQuestions">
+                            0
+                        </h3>
+
+                        <p>
+                            Total Exam Questions
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="section-title">
+
+                <h2>
+                    Exam Management
+                </h2>
+
+                <span>
+                    Manage your examination system
+                </span>
+
+            </div>
+
+            <div class="management-grid">
+
+                <div class="management-card">
+
+                    <div class="m-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 5v14"></path>
+                            <path d="M5 12h14"></path>
+                        </svg>
+
+                    </div>
+
+                    <h3>
+                        Add Exam
+                    </h3>
+
+                    <p>
+                        Create a new examination with subject,
+                        date, duration and marks.
+                    </p>
+
+                    <button onclick="goToAddExam()">
+                        Add Exam
+                    </button>
+
+                </div>
+
+                <div class="management-card">
+
+                    <div class="m-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+                        </svg>
+
+                    </div>
+
+                    <h3>
+                        Edit Exam
+                    </h3>
+
+                    <p>
+                        Update exam information whenever
+                        changes are required.
+                    </p>
+
+                    <button onclick="goToEditExam()">
+                        Edit Exam
+                    </button>
+
+                </div>
+
+                <div class="management-card">
+
+                    <div class="m-icon">
+
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="2.5">
+                            </circle>
+                        </svg>
+
+                    </div>
+
+                    <h3>
+                        View Exams
+                    </h3>
+
+                    <p>
+                        View all created examinations and
+                        their current status.
+                    </p>
+
+                    <button onclick="goToViewExam()">
+                        View Exams
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div
+                class="exam-section"
+                id="examSection">
+
+                <div class="exam-section-header">
+
+                    <h2>
+                        All Examinations
+                    </h2>
+
+                    <div class="search-box">
+
+                        <span class="search-icon">
+
+                            <svg viewBox="0 0 24 24">
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="7">
+                                </circle>
+
+                                <path d="m20 20-4-4"></path>
+                            </svg>
+
+                        </span>
+
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search exam...">
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="exam-list"
+                    id="examList">
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div
+        class="toast"
+        id="toast">
+    </div>
+
+    <script>
+
+        let exams = [];
+
+        /* ================= LOAD EXAMS ================= */
+
+        function loadExams() {
+
+            try {
+
+                const savedExams =
+                    localStorage.getItem("exams");
+
+                if (savedExams) {
+
+                    const parsedExams =
+                        JSON.parse(savedExams);
+
+                    exams =
+                        Array.isArray(parsedExams)
+                            ? parsedExams
+                            : [];
+
+                } else {
+
+                    exams = [];
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to load exams:",
+                    error
+                );
+
+                exams = [];
+
+            }
+
+            /*
+             * IMPORTANT:
+             * Make sure every exam has one stable
+             * Exam ID.
+             *
+             * Priority:
+             * 1. existing id
+             * 2. existing examId
+             * 3. create new ID
+             */
+
+            let changed = false;
+
+            exams =
+                exams.map(function(exam, index) {
+
+                    let stableId = "";
+
+                    if (
+                        exam.id !== undefined &&
+                        exam.id !== null &&
+                        String(exam.id).trim() !== ""
+                    ) {
+
+                        stableId =
+                            String(exam.id);
+
+                    } else if (
+                        exam.examId !== undefined &&
+                        exam.examId !== null &&
+                        String(exam.examId).trim() !== ""
+                    ) {
+
+                        stableId =
+                            String(exam.examId);
+
+                    } else {
+
+                        stableId =
+                            "exam-" +
+                            Date.now() +
+                            "-" +
+                            index +
+                            "-" +
+                            Math.random()
+                                .toString(36)
+                                .substring(2, 8);
+
+                    }
+
+                    if (
+                        String(exam.id || "") !==
+                        stableId
+                    ) {
+
+                        exam.id =
+                            stableId;
+
+                        changed = true;
+
+                    }
+
+                    /*
+                     * Keep examId identical to id.
+                     * Questions use this same value.
+                     */
+
+                    if (
+                        String(exam.examId || "") !==
+                        stableId
+                    ) {
+
+                        exam.examId =
+                            stableId;
+
+                        changed = true;
+
+                    }
+
+                    /*
+                     * Keep old date field compatible.
+                     */
+
+                    if (
+                        !exam.date &&
+                        exam.examDate
+                    ) {
+
+                        exam.date =
+                            exam.examDate;
+
+                        changed = true;
+
+                    }
+
+                    /*
+                     * Keep examDate synchronized.
+                     */
+
+                    if (
+                        !exam.examDate &&
+                        exam.date
+                    ) {
+
+                        exam.examDate =
+                            exam.date;
+
+                        changed = true;
+
+                    }
+
+                    /*
+                     * Default status.
+                     */
+
+                    if (
+                        !exam.status ||
+                        (
+                            exam.status !== "Active" &&
+                            exam.status !== "Inactive"
+                        )
+                    ) {
+
+                        exam.status =
+                            "Active";
+
+                        changed = true;
+
+                    }
+
+                    return exam;
+
+                });
+
+            if (changed) {
+
+                localStorage.setItem(
+                    "exams",
+                    JSON.stringify(exams)
+                );
+
+            }
+
+            renderExams();
+            updateStats();
+
+        }
+
+        /* ================= ADMIN NAME ================= */
+
+        function loadAdminName() {
+
+            const savedName =
+                localStorage.getItem(
+                    "adminName"
+                );
+
+            if (
+                savedName &&
+                savedName.trim() !== ""
+            ) {
+
+                document.getElementById(
+                    "adminName"
+                ).textContent =
+                    savedName;
+
+                document.getElementById(
+                    "adminAvatar"
+                ).textContent =
+                    savedName
+                        .trim()
+                        .charAt(0)
+                        .toUpperCase();
+
+            }
+
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        function goToAddExam() {
+
+            window.location.href =
+                "add-exam.html";
+
+        }
+
+        function goToEditExam() {
+
+            if (exams.length === 0) {
+
+                showToast(
+                    "No exam available to edit.",
+                    "error"
+                );
+
+                focusExamList();
+
+                return;
+
+            }
+
+            const firstExam =
+                exams[0];
+
+            const firstExamId =
+                firstExam.id ||
+                firstExam.examId;
+
+            if (!firstExamId) {
+
+                showToast(
+                    "Exam ID not available.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            window.location.href =
+                "edit-exam.html?id=" +
+                encodeURIComponent(
+                    String(firstExamId)
+                );
+
+        }
+
+        function goToViewExam() {
+
+            if (exams.length === 0) {
+
+                showToast(
+                    "No exam available to view.",
+                    "error"
+                );
+
+                focusExamList();
+
+                return;
+
+            }
+
+            const firstExam =
+                exams[0];
+
+            const firstExamId =
+                firstExam.id ||
+                firstExam.examId;
+
+            if (!firstExamId) {
+
+                showToast(
+                    "Exam ID not available.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            window.location.href =
+                "view-exam.html?id=" +
+                encodeURIComponent(
+                    String(firstExamId)
+                );
+
+        }
+
+        /* ================= EDIT EXAM ================= */
+
+        function editExam(id) {
+
+            if (
+                id === undefined ||
+                id === null ||
+                String(id).trim() === ""
+            ) {
+
+                showToast(
+                    "Exam ID not available.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            window.location.href =
+                "edit-exam.html?id=" +
+                encodeURIComponent(
+                    String(id)
+                );
+
+        }
+
+        /* ================= VIEW EXAM ================= */
+
+        function viewExam(id) {
+
+            if (
+                id === undefined ||
+                id === null ||
+                String(id).trim() === ""
+            ) {
+
+                showToast(
+                    "Exam ID not available.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            window.location.href =
+                "view-exam.html?id=" +
+                encodeURIComponent(
+                    String(id)
+                );
+
+        }
+
+        /* ================= GET QUESTIONS ================= */
+
+        function getQuestionsForExam(
+            examId
+        ) {
+
+            let questions = [];
+
+            try {
+
+                questions =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "questions"
+                        )
+                    ) || [];
+
+            } catch (error) {
+
+                questions = [];
+
+            }
+
+            if (
+                !Array.isArray(questions)
+            ) {
+
+                return [];
+
+            }
+
+            return questions.filter(
+                function(question) {
+
+                    return (
+                        String(
+                            question.examId ||
+                            ""
+                        ) ===
+                        String(examId)
+                    );
+
+                }
+            );
+
+        }
+
+        /* ================= TOGGLE STATUS ================= */
+
+        function toggleExamStatus(id) {
+
+            const exam =
+                exams.find(
+                    function(item) {
+
+                        return (
+                            String(
+                                item.id ||
+                                item.examId
+                            ) ===
+                            String(id)
+                        );
+
+                    }
+                );
+
+            if (!exam) {
+
+                showToast(
+                    "Exam not found.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            exam.status =
+                exam.status === "Active"
+                    ? "Inactive"
+                    : "Active";
+
+            localStorage.setItem(
+                "exams",
+                JSON.stringify(exams)
+            );
+
+            renderExams();
+            updateStats();
+
+            showToast(
+                `Exam marked as ${exam.status}.`,
+                "success"
+            );
+
+        }
+
+        /* ================= RENDER EXAMS ================= */
+
+        function renderExams() {
+
+            const examList =
+                document.getElementById(
+                    "examList"
+                );
+
+            const searchInput =
+                document.getElementById(
+                    "searchInput"
+                );
+
+            const searchValue =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+            const filteredExams =
+                exams.filter(
+                    function(exam) {
+
+                        if (!searchValue)
+                            return true;
+
+                        const examName =
+                            String(
+                                exam.examName ||
+                                ""
+                            ).toLowerCase();
+
+                        const subject =
+                            String(
+                                exam.subject ||
+                                ""
+                            ).toLowerCase();
+
+                        return (
+                            examName.includes(
+                                searchValue
+                            ) ||
+                            subject.includes(
+                                searchValue
+                            )
+                        );
+
+                    }
+                );
+
+            if (
+                filteredExams.length === 0
+            ) {
+
+                examList.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-state-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <rect
+                                    x="3"
+                                    y="4"
+                                    width="18"
+                                    height="17"
+                                    rx="2">
+                                </rect>
+
+                                <path d="M8 2v4"></path>
+                                <path d="M16 2v4"></path>
+                                <path d="M3 9h18"></path>
+                                <path d="M9 13h6"></path>
+                                <path d="M9 17h4"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <h3>
+                            ${
+                                searchValue
+                                    ? "No exams found"
+                                    : "No examinations available"
+                            }
+                        </h3>
+
+                        <p>
+                            ${
+                                searchValue
+                                    ? "Try a different exam name or subject."
+                                    : "Create your first examination to get started."
+                            }
+                        </p>
+
+                        ${
+                            searchValue
+                                ? ""
+                                : `
+                                    <button
+                                        class="empty-add-btn"
+                                        onclick="goToAddExam()">
+                                        + Add New Exam
+                                    </button>
+                                `
+                        }
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+            examList.innerHTML =
+                filteredExams
+                    .map(
+                        function(exam) {
+
+                            const formattedDate =
+                                formatDate(
+                                    exam.date ||
+                                    exam.examDate
+                                );
+
+                            const formattedTime =
+                                formatTime(
+                                    exam.startTime
+                                );
+
+                            const currentStatus =
+                                exam.status === "Inactive"
+                                    ? "Inactive"
+                                    : "Active";
+
+                            const statusClass =
+                                currentStatus === "Active"
+                                    ? "active"
+                                    : "inactive";
+
+                            const toggleTitle =
+                                currentStatus === "Active"
+                                    ? "Deactivate"
+                                    : "Activate";
+
+                            const stableId =
+                                String(
+                                    exam.id ||
+                                    exam.examId
+                                );
+
+                            return `
+
+                                <div class="exam-item">
+
+                                    <div class="exam-name">
+
+                                        <div class="exam-icon">
+
+                                            <svg viewBox="0 0 24 24">
+
+                                                <rect
+                                                    x="3"
+                                                    y="4"
+                                                    width="18"
+                                                    height="17"
+                                                    rx="2">
+                                                </rect>
+
+                                                <path d="M8 2v4"></path>
+                                                <path d="M16 2v4"></path>
+                                                <path d="M3 9h18"></path>
+                                                <path d="M8 13h3"></path>
+                                                <path d="M8 17h5"></path>
+
+                                            </svg>
+
+                                        </div>
+
+                                        <div>
+
+                                            <h3>
+                                                ${escapeHTML(
+                                                    exam.examName ||
+                                                    "Untitled Exam"
+                                                )}
+                                            </h3>
+
+                                            <p>
+                                                ${escapeHTML(
+                                                    exam.subject ||
+                                                    "No Subject"
+                                                )}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="exam-detail">
+
+                                        <strong>
+                                            ${formattedDate}
+                                        </strong>
+
+                                        <span>
+                                            ${formattedTime}
+                                        </span>
+
+                                    </div>
+
+                                    <div class="exam-detail">
+
+                                        <strong>
+                                            ${
+                                                Number(
+                                                    exam.duration
+                                                ) || 0
+                                            }
+                                            Minutes
+                                        </strong>
+
+                                        <span>
+                                            ${
+                                                Number(
+                                                    exam.totalQuestions
+                                                ) || 0
+                                            }
+                                            Questions
+                                        </span>
+
+                                    </div>
+
+                                    <div class="exam-detail">
+
+                                        <strong>
+                                            ${
+                                                Number(
+                                                    exam.totalMarks
+                                                ) || 0
+                                            }
+                                            Marks
+                                        </strong>
+
+                                        <span>
+                                            Examination
+                                        </span>
+
+                                    </div>
+
+                                    <div class="exam-actions">
+
+                                        <span
+                                            class="status ${statusClass}">
+
+                                            <span
+                                                class="status-dot">
+                                            </span>
+
+                                            ${escapeHTML(
+                                                currentStatus
+                                            )}
+
+                                        </span>
+
+                                        <!-- VIEW -->
+
+                                        <button
+                                            class="action-btn view"
+                                            title="View Exam"
+                                            onclick="viewExam('${escapeHTML(stableId)}')">
+
+                                            <svg viewBox="0 0 24 24">
+
+                                                <path
+                                                    d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z">
+                                                </path>
+
+                                                <circle
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="2.5">
+                                                </circle>
+
+                                            </svg>
+
+                                        </button>
+
+                                        <!-- EDIT -->
+
+                                        <button
+                                            class="action-btn edit"
+                                            title="Edit Exam"
+                                            onclick="editExam('${escapeHTML(stableId)}')">
+
+                                            <svg viewBox="0 0 24 24">
+
+                                                <path
+                                                    d="M12 20h9">
+                                                </path>
+
+                                                <path
+                                                    d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z">
+                                                </path>
+
+                                            </svg>
+
+                                        </button>
+
+                                        <!-- ACTIVE / INACTIVE -->
+
+                                        <button
+                                            class="action-btn toggle"
+                                            title="${toggleTitle}"
+                                            onclick="toggleExamStatus('${escapeHTML(stableId)}')">
+
+                                            <svg viewBox="0 0 24 24">
+
+                                                ${
+                                                    currentStatus ===
+                                                    "Active"
+
+                                                        ? `
+                                                            <path
+                                                                d="M18 8a6 6 0 0 1-12 0">
+                                                            </path>
+
+                                                            <path
+                                                                d="M12 2v6">
+                                                            </path>
+                                                          `
+
+                                                        : `
+                                                            <path
+                                                                d="M6 9a6 6 0 1 0 12 0">
+                                                            </path>
+
+                                                            <path
+                                                                d="M12 2v7">
+                                                            </path>
+                                                          `
+                                                }
+
+                                            </svg>
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+        }
+
+        /* ================= UPDATE STATS ================= */
+
+        function updateStats() {
+
+            const total =
+                exams.length;
+
+            const active =
+                exams.filter(
+                    function(exam) {
+
+                        return (
+                            exam.status ===
+                            "Active"
+                        );
+
+                    }
+                ).length;
+
+            const totalQuestions =
+                exams.reduce(
+                    function(sum, exam) {
+
+                        return (
+                            sum +
+                            Number(
+                                exam.totalQuestions ||
+                                0
+                            )
+                        );
+
+                    },
+                    0
+                );
+
+            document.getElementById(
+                "totalExams"
+            ).textContent =
+                total;
+
+            document.getElementById(
+                "activeExams"
+            ).textContent =
+                active;
+
+            document.getElementById(
+                "totalQuestions"
+            ).textContent =
+                totalQuestions;
+
+        }
+
+        /* ================= DATE ================= */
+
+        function formatDate(
+            dateString
+        ) {
+
+            if (!dateString)
+                return "No Date";
+
+            const date =
+                new Date(
+                    dateString +
+                    "T00:00:00"
+                );
+
+            if (
+                isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return dateString;
+
+            }
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+        /* ================= TIME ================= */
+
+        function formatTime(
+            timeString
+        ) {
+
+            if (!timeString)
+                return "No Time";
+
+            const parts =
+                String(
+                    timeString
+                ).split(":");
+
+            if (
+                parts.length < 2
+            ) {
+
+                return timeString;
+
+            }
+
+            let hour =
+                Number(parts[0]);
+
+            const minute =
+                parts[1];
+
+            const period =
+                hour >= 12
+                    ? "PM"
+                    : "AM";
+
+            hour =
+                hour % 12 || 12;
+
+            return (
+                `${hour}:${minute} ${period}`
+            );
+
+        }
+
+        /* ================= ESCAPE HTML ================= */
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+        /* ================= FOCUS LIST ================= */
+
+        function focusExamList() {
+
+            document.getElementById(
+                "examSection"
+            ).scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+        /* ================= TOAST ================= */
+
+        let toastTimer;
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+            toast.textContent =
+                message;
+
+            toast.className =
+                "toast " +
+                (
+                    type ||
+                    "success"
+                ) +
+                " show";
+
+            clearTimeout(
+                toastTimer
+            );
+
+            toastTimer =
+                setTimeout(
+                    function() {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3000
+                );
+
+        }
+
+        /* ================= MOBILE SIDEBAR ================= */
+
+        function toggleSidebar() {
+
+            const sidebar =
+                document.getElementById(
+                    "sidebar"
+                );
+
+            const overlay =
+                document.getElementById(
+                    "sidebarOverlay"
+                );
+
+            sidebar.classList.toggle(
+                "open"
+            );
+
+            overlay.classList.toggle(
+                "show"
+            );
+
+        }
+
+        /* ================= SEARCH ================= */
+
+        document.getElementById(
+            "searchInput"
+        ).addEventListener(
+            "input",
+            renderExams
+        );
+
+        /* ================= START ================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                loadAdminName();
+                loadExams();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

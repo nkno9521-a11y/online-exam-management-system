@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results | Online Examination System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1d2b3a;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 245px;
+            height: 100vh;
+            background: #062d63;
+            color: white;
+            padding: 25px 15px;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .logo-area img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+        }
+
+        .logo-area h2 {
+            font-size: 18px;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .logo-area p {
+            font-size: 12px;
+            color: #b9d3f5;
+            margin-top: 4px;
+        }
+
+        .menu {
+            margin-top: 25px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            color: #dceaff;
+            padding: 13px 15px;
+            margin-bottom: 7px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .menu a:hover {
+            background: #0d4287;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #1e73d8;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 245px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            border-bottom: 1px solid #e5eaf0;
+        }
+
+        .topbar-left h1 {
+            font-size: 23px;
+            color: #12345b;
+        }
+
+        .topbar-left p {
+            font-size: 12px;
+            color: #7b8794;
+            margin-top: 3px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-text {
+            text-align: right;
+        }
+
+        .admin-text strong {
+            display: block;
+            font-size: 14px;
+            color: #243b53;
+        }
+
+        .admin-text span {
+            font-size: 11px;
+            color: #8996a5;
+        }
+
+        .admin-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #1e73d8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px 35px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            color: #12345b;
+            font-size: 24px;
+        }
+
+        .page-heading p {
+            color: #7c8a9a;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .refresh-btn {
+            border: none;
+            background: #1e73d8;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .refresh-btn:hover {
+            background: #155db1;
+        }
+
+        /* ================= STAT CARDS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e7edf4;
+            box-shadow: 0 4px 12px rgba(20, 50, 90, 0.05);
+        }
+
+        .stat-card p {
+            color: #7c8a9a;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card h3 {
+            font-size: 26px;
+            color: #12345b;
+        }
+
+        .stat-card .small-text {
+            font-size: 11px;
+            color: #8b98a8;
+            margin-top: 5px;
+        }
+
+        /* ================= FILTER AREA ================= */
+
+        .filter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e7edf4;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input,
+        .filter-box select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #d9e1ea;
+            border-radius: 7px;
+            outline: none;
+            font-size: 13px;
+            color: #34495e;
+            background: white;
+        }
+
+        .search-box input:focus,
+        .filter-box select:focus {
+            border-color: #1e73d8;
+        }
+
+        .filter-select {
+            width: 180px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e7edf4;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(20, 50, 90, 0.04);
+        }
+
+        .table-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .table-header h3 {
+            color: #12345b;
+            font-size: 17px;
+        }
+
+        .table-header p {
+            color: #8a96a3;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            background: #f7f9fc;
+            color: #627386;
+            font-size: 12px;
+            text-align: left;
+            padding: 14px 18px;
+            border-bottom: 1px solid #e5eaf0;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #edf1f5;
+            font-size: 13px;
+            color: #34495e;
+        }
+
+        tr:hover td {
+            background: #fafcff;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #163c69;
+        }
+
+        .exam-name {
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        .score {
+            font-weight: 600;
+            color: #1e73d8;
+        }
+
+        .percentage {
+            font-weight: 600;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status.passed {
+            background: #e7f7ee;
+            color: #16834d;
+        }
+
+        .status.failed {
+            background: #fdecec;
+            color: #d53b3b;
+        }
+
+        .status.completed {
+            background: #e9f2ff;
+            color: #2467b2;
+        }
+
+        /* ================= VIEW BUTTON ================= */
+
+        .view-btn {
+            border: none;
+            background: #eaf3ff;
+            color: #1768bd;
+            padding: 7px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .view-btn:hover {
+            background: #d7e9ff;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8492a0;
+        }
+
+        .empty-state .icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            color: #526274;
+            font-size: 17px;
+            margin-bottom: 6px;
+        }
+
+        .empty-state p {
+            font-size: 12px;
+        }
+
+        /* ================= MODAL ================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 24, 50, 0.55);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 560px;
+            max-width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #e8edf2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            color: #12345b;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: #f1f4f8;
+            color: #637386;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .modal-body {
+            padding: 22px;
+        }
+
+        .result-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .info-item {
+            background: #f7f9fc;
+            padding: 14px;
+            border-radius: 8px;
+        }
+
+        .info-item.full {
+            grid-column: 1 / -1;
+        }
+
+        .info-item span {
+            display: block;
+            color: #8996a5;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            color: #284665;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .page-heading {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+
+            .result-info {
+                grid-template-columns: 1fr;
+            }
+
+            .info-item.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+            <img src="logo.jpg" alt="College Logo">
+
+            <h2>Online Examination</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="menu">
+
+            <a href="admin.html">
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="manage-exam.html">
+                <span class="menu-icon">▣</span>
+                <span>Manage Exams</span>
+            </a>
+
+            <a href="manage-question.html">
+                <span class="menu-icon">?</span>
+                <span>Questions</span>
+            </a>
+
+            <a href="students.html">
+                <span class="menu-icon">♙</span>
+                <span>Students</span>
+            </a>
+
+            <a href="results.html" class="active">
+                <span class="menu-icon">▤</span>
+                <span>Results</span>
+            </a>
+
+            <a href="reports.html">
+                <span class="menu-icon">▥</span>
+                <span>Reports</span>
+            </a>
+
+            <a href="settings.html">
+                <span class="menu-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <h1>Results</h1>
+                <p>View and manage student examination results</p>
+            </div>
+
+            <div class="admin-info">
+
+                <div class="admin-text">
+                    <strong id="adminName">Admin</strong>
+                    <span>Administrator</span>
+                </div>
+
+                <div class="admin-avatar" id="adminAvatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+            <!-- PAGE HEADING -->
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Examination Results</h2>
+                    <p>Monitor student performance and examination results</p>
+                </div>
+
+                <button class="refresh-btn" onclick="loadResults()">
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <p>Total Results</p>
+                    <h3 id="totalResults">0</h3>
+                    <div class="small-text">All submitted examinations</div>
+                </div>
+
+                <div class="stat-card">
+                    <p>Passed</p>
+                    <h3 id="passedResults">0</h3>
+                    <div class="small-text">Students who passed</div>
+                </div>
+
+                <div class="stat-card">
+                    <p>Failed</p>
+                    <h3 id="failedResults">0</h3>
+                    <div class="small-text">Students who failed</div>
+                </div>
+
+                <div class="stat-card">
+                    <p>Average Score</p>
+                    <h3 id="averageScore">0%</h3>
+                    <div class="small-text">Overall student performance</div>
+                </div>
+
+            </div>
+
+
+            <!-- FILTER -->
+
+            <div class="filter-box">
+
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by student name, exam name or subject..."
+                        oninput="renderResults()"
+                    >
+                </div>
+
+                <div class="filter-select">
+                    <select id="statusFilter" onchange="renderResults()">
+                        <option value="all">All Status</option>
+                        <option value="passed">Passed</option>
+                        <option value="failed">Failed</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <h3>Student Results</h3>
+
+                    <p>
+                        All examination results submitted by students
+                    </p>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Student</th>
+                                <th>Examination</th>
+                                <th>Score</th>
+                                <th>Percentage</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="resultsTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= VIEW RESULT MODAL ================= -->
+
+    <div class="modal" id="resultModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h3>Result Details</h3>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()">
+                    ×
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="result-info">
+
+                    <div class="info-item">
+                        <span>Student Name</span>
+                        <strong id="modalStudent">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Examination</span>
+                        <strong id="modalExam">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Subject</span>
+                        <strong id="modalSubject">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Score</span>
+                        <strong id="modalScore">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Total Questions</span>
+                        <strong id="modalTotal">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Correct Answers</span>
+                        <strong id="modalCorrect">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Wrong Answers</span>
+                        <strong id="modalWrong">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Percentage</span>
+                        <strong id="modalPercentage">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Date</span>
+                        <strong id="modalDate">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Status</span>
+                        <strong id="modalStatus">-</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        let allResults = [];
+
+
+        /* ================= ADMIN NAME ================= */
+
+        function loadAdminName() {
+
+            const adminName =
+                localStorage.getItem("adminName") || "Admin";
+
+            document.getElementById("adminName").textContent =
+                adminName;
+
+            document.getElementById("adminAvatar").textContent =
+                adminName.charAt(0).toUpperCase();
+        }
+
+
+        /* ================= SAFE NUMBER ================= */
+
+        function getNumber(value) {
+
+            const number = parseFloat(value);
+
+            return isNaN(number) ? 0 : number;
+        }
+
+
+        /* ================= GET RESULT DATA ================= */
+
+        function getStudentName(result) {
+
+            return (
+                result.studentName ||
+                result.name ||
+                result.student ||
+                "Unknown Student"
+            );
+        }
+
+
+        function getExamName(result) {
+
+            return (
+                result.examName ||
+                result.exam ||
+                result.testName ||
+                result.title ||
+                "Unknown Exam"
+            );
+        }
+
+
+        function getSubject(result) {
+
+            return (
+                result.subject ||
+                result.category ||
+                "-"
+            );
+        }
+
+
+        function getScore(result) {
+
+            return getNumber(
+                result.score ??
+                result.marks ??
+                result.examScore ??
+                result.obtainedMarks
+            );
+        }
+
+
+        function getTotalQuestions(result) {
+
+            return getNumber(
+                result.totalQuestions ??
+                result.total ??
+                result.questions ??
+                result.totalMarks
+            );
+        }
+
+
+        function getCorrect(result) {
+
+            return getNumber(
+                result.correct ??
+                result.correctAnswers ??
+                result.rightAnswers
+            );
+        }
+
+
+        function getWrong(result) {
+
+            return getNumber(
+                result.wrong ??
+                result.wrongAnswers
+            );
+        }
+
+
+        function getPercentage(result) {
+
+            let percentage = getNumber(
+                result.percentage ??
+                result.percent
+            );
+
+            if (
+                percentage === 0 &&
+                getScore(result) > 0 &&
+                getTotalQuestions(result) > 0
+            ) {
+
+                percentage =
+                    (getScore(result) / getTotalQuestions(result)) * 100;
+            }
+
+            return percentage;
+        }
+
+
+        function getDate(result) {
+
+            return (
+                result.date ||
+                result.completedAt ||
+                result.createdAt ||
+                "-"
+            );
+        }
+
+
+        /* ================= STATUS ================= */
+
+        function getStatus(result) {
+
+            if (result.status) {
+
+                return result.status.toString().toLowerCase();
+
+            }
+
+            const percentage = getPercentage(result);
+
+            if (percentage >= 40) {
+                return "passed";
+            }
+
+            return "failed";
+        }
+
+
+        /* ================= FORMAT DATE ================= */
+
+        function formatDate(dateValue) {
+
+            if (!dateValue || dateValue === "-") {
+                return "-";
+            }
+
+            const date = new Date(dateValue);
+
+            if (isNaN(date.getTime())) {
+                return dateValue;
+            }
+
+            return date.toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+        }
+
+
+        /* ================= LOAD RESULTS ================= */
+
+        function loadResults() {
+
+            try {
+
+                const storedResults =
+                    JSON.parse(
+                        localStorage.getItem("results") || "[]"
+                    );
+
+                if (Array.isArray(storedResults)) {
+
+                    allResults = storedResults;
+
+                } else {
+
+                    allResults = [];
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading results:",
+                    error
+                );
+
+                allResults = [];
+
+            }
+
+            updateStatistics();
+
+            renderResults();
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        function updateStatistics() {
+
+            const total =
+                allResults.length;
+
+            let passed = 0;
+            let failed = 0;
+            let percentageTotal = 0;
+
+            allResults.forEach(result => {
+
+                const percentage =
+                    getPercentage(result);
+
+                const status =
+                    getStatus(result);
+
+                percentageTotal += percentage;
+
+                if (status === "passed") {
+
+                    passed++;
+
+                } else if (status === "failed") {
+
+                    failed++;
+
+                }
+
+            });
+
+
+            const average =
+                total > 0
+                    ? percentageTotal / total
+                    : 0;
+
+
+            document.getElementById("totalResults")
+                .textContent = total;
+
+            document.getElementById("passedResults")
+                .textContent = passed;
+
+            document.getElementById("failedResults")
+                .textContent = failed;
+
+            document.getElementById("averageScore")
+                .textContent =
+                average.toFixed(1) + "%";
+        }
+
+
+        /* ================= RENDER RESULTS ================= */
+
+        function renderResults() {
+
+            const tbody =
+                document.getElementById(
+                    "resultsTableBody"
+                );
+
+            const searchText =
+                document.getElementById(
+                    "searchInput"
+                ).value
+                    .toLowerCase()
+                    .trim();
+
+            const statusFilter =
+                document.getElementById(
+                    "statusFilter"
+                ).value;
+
+
+            let filtered =
+                allResults.filter(result => {
+
+                    const student =
+                        getStudentName(result)
+                            .toLowerCase();
+
+                    const exam =
+                        getExamName(result)
+                            .toLowerCase();
+
+                    const subject =
+                        getSubject(result)
+                            .toLowerCase();
+
+                    const status =
+                        getStatus(result);
+
+
+                    const matchesSearch =
+                        student.includes(searchText) ||
+                        exam.includes(searchText) ||
+                        subject.includes(searchText);
+
+
+                    const matchesStatus =
+                        statusFilter === "all" ||
+                        status === statusFilter;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesStatus
+                    );
+
+                });
+
+
+            tbody.innerHTML = "";
+
+
+            if (filtered.length === 0) {
+
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+
+                                <div class="icon">
+                                    📊
+                                </div>
+
+                                <h3>
+                                    No Results Found
+                                </h3>
+
+                                <p>
+                                    No student examination results are available.
+                                </p>
+
+                            </div>
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            filtered.forEach((result, index) => {
+
+                const student =
+                    getStudentName(result);
+
+                const exam =
+                    getExamName(result);
+
+                const score =
+                    getScore(result);
+
+                const total =
+                    getTotalQuestions(result);
+
+                const percentage =
+                    getPercentage(result);
+
+                const date =
+                    formatDate(
+                        getDate(result)
+                    );
+
+                const status =
+                    getStatus(result);
+
+
+                let statusClass =
+                    "completed";
+
+                let statusText =
+                    "Completed";
+
+
+                if (status === "passed") {
+
+                    statusClass = "passed";
+                    statusText = "Passed";
+
+                } else if (status === "failed") {
+
+                    statusClass = "failed";
+                    statusText = "Failed";
+
+                }
+
+
+                const originalIndex =
+                    allResults.indexOf(result);
+
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        <div class="student-name">
+                            ${escapeHTML(student)}
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="exam-name">
+                            ${escapeHTML(exam)}
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="score">
+                            ${score}
+                            ${total > 0 ? " / " + total : ""}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="percentage">
+                            ${percentage.toFixed(1)}%
+                        </span>
+                    </td>
+
+                    <td>
+                        ${escapeHTML(date)}
+                    </td>
+
+                    <td>
+                        <span class="status ${statusClass}">
+                            ${statusText}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="view-btn"
+                            onclick="viewResult(${originalIndex})">
+
+                            View
+
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                tbody.appendChild(row);
+
+            });
+
+        }
+
+
+        /* ================= VIEW RESULT ================= */
+
+        function viewResult(index) {
+
+            const result =
+                allResults[index];
+
+            if (!result) {
+                return;
+            }
+
+
+            document.getElementById("modalStudent")
+                .textContent =
+                getStudentName(result);
+
+
+            document.getElementById("modalExam")
+                .textContent =
+                getExamName(result);
+
+
+            document.getElementById("modalSubject")
+                .textContent =
+                getSubject(result);
+
+
+            const score =
+                getScore(result);
+
+            const total =
+                getTotalQuestions(result);
+
+
+            document.getElementById("modalScore")
+                .textContent =
+                total > 0
+                    ? score + " / " + total
+                    : score;
+
+
+            document.getElementById("modalTotal")
+                .textContent =
+                total || "-";
+
+
+            document.getElementById("modalCorrect")
+                .textContent =
+                getCorrect(result) || "-";
+
+
+            document.getElementById("modalWrong")
+                .textContent =
+                getWrong(result) || "-";
+
+
+            document.getElementById("modalPercentage")
+                .textContent =
+                getPercentage(result).toFixed(1) + "%";
+
+
+            document.getElementById("modalDate")
+                .textContent =
+                formatDate(
+                    getDate(result)
+                );
+
+
+            const status =
+                getStatus(result);
+
+
+            let statusText =
+                "Completed";
+
+
+            if (status === "passed") {
+                statusText = "Passed";
+            }
+
+            if (status === "failed") {
+                statusText = "Failed";
+            }
+
+
+            document.getElementById("modalStatus")
+                .textContent =
+                statusText;
+
+
+            document.getElementById("resultModal")
+                .style.display = "flex";
+        }
+
+
+        /* ================= CLOSE MODAL ================= */
+
+        function closeModal() {
+
+            document.getElementById("resultModal")
+                .style.display = "none";
+        }
+
+
+        /* ================= ESCAPE HTML ================= */
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        /* ================= MODAL OUTSIDE CLICK ================= */
+
+        window.addEventListener(
+            "click",
+            function(event) {
+
+                const modal =
+                    document.getElementById(
+                        "resultModal"
+                    );
+
+                if (event.target === modal) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+
+        /* ================= STORAGE UPDATE ================= */
+
+        window.addEventListener(
+            "storage",
+            function(event) {
+
+                if (event.key === "results") {
+
+                    loadResults();
+
+                }
+
+            }
+        );
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        loadAdminName();
+
+        loadResults();
+
+    </script>
+
+</body>
+
+</html>

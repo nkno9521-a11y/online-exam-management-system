@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Question | Online Examination</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f7fc;
+            color: #1e293b;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(135deg, #082b63, #0b4ea2);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+        }
+
+        .header h1 {
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #dbeafe;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 92%;
+            max-width: 800px;
+            margin: 35px auto;
+        }
+
+        /* ================= BOX ================= */
+
+        .box {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid #e3eaf4;
+            box-shadow: 0 8px 25px rgba(15,23,42,0.07);
+        }
+
+        .box h2 {
+            text-align: center;
+            color: #123f7a;
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
+
+        .description {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 28px;
+            font-size: 13px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif;
+            outline: none;
+            background: #fafcff;
+            color: #334155;
+            transition: 0.25s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #0b4ea2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(11,78,162,0.08);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        /* ================= EXAM INFO ================= */
+
+        .exam-info {
+            display: none;
+            margin-top: -5px;
+            margin-bottom: 22px;
+            padding: 14px 16px;
+            background: #f0f7ff;
+            border: 1px solid #d6e9ff;
+            border-radius: 9px;
+            color: #23456f;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .exam-info.show {
+            display: block;
+        }
+
+        .exam-info strong {
+            color: #0b4ea2;
+        }
+
+        /* ================= SECTION TITLE ================= */
+
+        .options-title {
+            margin: 8px 0 17px;
+            padding-bottom: 9px;
+            border-bottom: 2px solid #e8eef7;
+            color: #0b4ea2;
+            font-size: 16px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px 18px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .update {
+            background: #0b4ea2;
+        }
+
+        .update:hover {
+            background: #083b7c;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 13px rgba(11,78,162,0.22);
+        }
+
+        .back {
+            background: #64748b;
+        }
+
+        .back:hover {
+            background: #475569;
+            transform: translateY(-1px);
+        }
+
+        /* ================= MESSAGE ================= */
+
+        .error-box {
+            display: none;
+            padding: 14px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #be123c;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .error-box.show {
+            display: block;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 22px 15px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .box {
+                padding: 24px 20px;
+                border-radius: 14px;
+            }
+
+            .box h2 {
+                font-size: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <h1>
+            Online Exam Management System
+        </h1>
+
+        <p>
+            ✏️ Edit Examination Question
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= MAIN CONTAINER ================= -->
+
+    <div class="container">
+
+        <div class="box">
+
+            <h2>
+                📝 Edit Question Details
+            </h2>
+
+            <p class="description">
+                Update the question and answer options
+            </p>
+
+
+            <div
+                class="error-box"
+                id="errorBox">
+            </div>
+
+
+
+            <form id="editQuestionForm">
+
+
+                <!-- ================= EXAM ================= -->
+
+                <div class="form-group">
+
+                    <label for="examId">
+                        Examination
+                    </label>
+
+                    <select
+                        id="examId"
+                        required>
+
+                        <option value="">
+                            -- Select Examination --
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ================= EXAM INFORMATION ================= -->
+
+                <div
+                    class="exam-info"
+                    id="examInfo">
+                </div>
+
+
+
+                <!-- ================= QUESTION ================= -->
+
+                <div class="form-group">
+
+                    <label for="question">
+                        Question
+                    </label>
+
+                    <textarea
+                        id="question"
+                        placeholder="Enter question"
+                        required></textarea>
+
+                </div>
+
+
+
+                <!-- ================= OPTIONS ================= -->
+
+                <h3 class="options-title">
+                    Answer Options
+                </h3>
+
+
+
+                <!-- OPTION A -->
+
+                <div class="form-group">
+
+                    <label for="optionA">
+                        Option A
+                    </label>
+
+                    <input
+                        type="text"
+                        id="optionA"
+                        placeholder="Enter Option A"
+                        required>
+
+                </div>
+
+
+
+                <!-- OPTION B -->
+
+                <div class="form-group">
+
+                    <label for="optionB">
+                        Option B
+                    </label>
+
+                    <input
+                        type="text"
+                        id="optionB"
+                        placeholder="Enter Option B"
+                        required>
+
+                </div>
+
+
+
+                <!-- OPTION C -->
+
+                <div class="form-group">
+
+                    <label for="optionC">
+                        Option C
+                    </label>
+
+                    <input
+                        type="text"
+                        id="optionC"
+                        placeholder="Enter Option C"
+                        required>
+
+                </div>
+
+
+
+                <!-- OPTION D -->
+
+                <div class="form-group">
+
+                    <label for="optionD">
+                        Option D
+                    </label>
+
+                    <input
+                        type="text"
+                        id="optionD"
+                        placeholder="Enter Option D"
+                        required>
+
+                </div>
+
+
+
+                <!-- ================= CORRECT ANSWER ================= -->
+
+                <div class="form-group">
+
+                    <label for="correctAnswer">
+                        Correct Answer
+                    </label>
+
+                    <select
+                        id="correctAnswer"
+                        required>
+
+                        <option value="">
+                            Select Correct Answer
+                        </option>
+
+                        <option value="A">
+                            Option A
+                        </option>
+
+                        <option value="B">
+                            Option B
+                        </option>
+
+                        <option value="C">
+                            Option C
+                        </option>
+
+                        <option value="D">
+                            Option D
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ================= BUTTONS ================= -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="update">
+
+                        ✓ Update Question
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="back"
+                        onclick="goBack()">
+
+                        ← Back
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        /* ================= DATA ================= */
+
+        let questions = [];
+
+        let exams = [];
+
+        let currentQuestion = null;
+
+        let questionId = "";
+
+
+
+        /* ================= LOAD DATA ================= */
+
+        function loadData() {
+
+            try {
+
+                questions =
+                    JSON.parse(
+                        localStorage.getItem("questions")
+                    ) || [];
+
+            } catch (error) {
+
+                questions = [];
+
+            }
+
+
+            try {
+
+                exams =
+                    JSON.parse(
+                        localStorage.getItem("exams")
+                    ) || [];
+
+            } catch (error) {
+
+                exams = [];
+
+            }
+
+
+            if (!Array.isArray(questions)) {
+
+                questions = [];
+
+            }
+
+
+            if (!Array.isArray(exams)) {
+
+                exams = [];
+
+            }
+
+        }
+
+
+
+        /* ================= FIND QUESTION ================= */
+
+        function findQuestion() {
+
+            questionId =
+                localStorage.getItem("editQuestionId");
+
+
+            /*
+                Compatibility with old version.
+                If editQuestionId is not available,
+                use editQuestionIndex once.
+            */
+
+            if (!questionId) {
+
+                const oldIndex =
+                    localStorage.getItem(
+                        "editQuestionIndex"
+                    );
+
+
+                if (
+                    oldIndex !== null &&
+                    questions[oldIndex]
+                ) {
+
+                    currentQuestion =
+                        questions[oldIndex];
+
+                    questionId =
+                        String(
+                            currentQuestion.id || ""
+                        );
+
+                }
+
+            }
+
+
+            if (!questionId) {
+
+                showError(
+                    "Question information not found. Please open Edit from the Questions page."
+                );
+
+                return false;
+
+            }
+
+
+            currentQuestion =
+                questions.find(
+                    function(question) {
+
+                        return String(
+                            question.id
+                        ) === String(
+                            questionId
+                        );
+
+                    }
+                );
+
+
+            if (!currentQuestion) {
+
+                showError(
+                    "The selected question could not be found."
+                );
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+
+        /* ================= LOAD EXAMS ================= */
+
+        function loadExamDropdown() {
+
+            const examSelect =
+                document.getElementById("examId");
+
+
+            examSelect.innerHTML = `
+                <option value="">
+                    -- Select Examination --
+                </option>
+            `;
+
+
+            if (exams.length === 0) {
+
+                examSelect.innerHTML = `
+                    <option value="">
+                        No examinations available
+                    </option>
+                `;
+
+                examSelect.disabled = true;
+
+                return;
+
+            }
+
+
+            examSelect.disabled = false;
+
+
+            exams.forEach(
+                function(exam) {
+
+                    const option =
+                        document.createElement("option");
+
+
+                    option.value =
+                        String(exam.id);
+
+
+                    option.textContent =
+                        (
+                            exam.examName ||
+                            "Unnamed Exam"
+                        ) +
+                        " - " +
+                        (
+                            exam.subject ||
+                            "No Subject"
+                        );
+
+
+                    examSelect.appendChild(option);
+
+                }
+            );
+
+        }
+
+
+
+        /* ================= GET MATCHING EXAM ================= */
+
+        function findExamForQuestion() {
+
+            if (!currentQuestion) {
+
+                return null;
+
+            }
+
+
+            /*
+                First priority:
+                use the saved Exam ID.
+            */
+
+            if (currentQuestion.examId) {
+
+                const examById =
+                    exams.find(
+                        function(exam) {
+
+                            return String(exam.id) ===
+                                String(
+                                    currentQuestion.examId
+                                );
+
+                        }
+                    );
+
+
+                if (examById) {
+
+                    return examById;
+
+                }
+
+            }
+
+
+            /*
+                Compatibility for old questions
+                which may only contain examName.
+            */
+
+            if (currentQuestion.examName) {
+
+                const examByName =
+                    exams.find(
+                        function(exam) {
+
+                            return String(
+                                exam.examName || ""
+                            )
+                            .trim()
+                            .toLowerCase() ===
+                            String(
+                                currentQuestion.examName || ""
+                            )
+                            .trim()
+                            .toLowerCase();
+
+                        }
+                    );
+
+
+                if (examByName) {
+
+                    return examByName;
+
+                }
+
+            }
+
+
+            return null;
+
+        }
+
+
+
+        /* ================= LOAD QUESTION DETAILS ================= */
+
+        function loadQuestionDetails() {
+
+            if (!currentQuestion) {
+
+                return;
+
+            }
+
+
+            const examSelect =
+                document.getElementById("examId");
+
+
+            const matchingExam =
+                findExamForQuestion();
+
+
+            if (matchingExam) {
+
+                examSelect.value =
+                    String(matchingExam.id);
+
+                showExamInfo();
+
+            }
+
+
+            document.getElementById("question").value =
+                currentQuestion.question || "";
+
+
+            document.getElementById("optionA").value =
+                currentQuestion.optionA || "";
+
+
+            document.getElementById("optionB").value =
+                currentQuestion.optionB || "";
+
+
+            document.getElementById("optionC").value =
+                currentQuestion.optionC || "";
+
+
+            document.getElementById("optionD").value =
+                currentQuestion.optionD || "";
+
+
+
+            /* ================= CORRECT ANSWER ================= */
+
+            let correctLetter =
+                currentQuestion.correctOption || "";
+
+
+            /*
+                Compatibility:
+                If correctOption does not exist,
+                find it using the saved answer text.
+            */
+
+            if (!correctLetter) {
+
+                const savedAnswer =
+                    String(
+                        currentQuestion.correctAnswer || ""
+                    ).trim();
+
+
+                if (
+                    savedAnswer &&
+                    savedAnswer ===
+                    String(
+                        currentQuestion.optionA || ""
+                    ).trim()
+                ) {
+
+                    correctLetter = "A";
+
+                }
+
+                else if (
+                    savedAnswer &&
+                    savedAnswer ===
+                    String(
+                        currentQuestion.optionB || ""
+                    ).trim()
+                ) {
+
+                    correctLetter = "B";
+
+                }
+
+                else if (
+                    savedAnswer &&
+                    savedAnswer ===
+                    String(
+                        currentQuestion.optionC || ""
+                    ).trim()
+                ) {
+
+                    correctLetter = "C";
+
+                }
+
+                else if (
+                    savedAnswer &&
+                    savedAnswer ===
+                    String(
+                        currentQuestion.optionD || ""
+                    ).trim()
+                ) {
+
+                    correctLetter = "D";
+
+                }
+
+            }
+
+
+            document.getElementById(
+                "correctAnswer"
+            ).value = correctLetter;
+
+        }
+
+
+
+        /* ================= EXAM INFORMATION ================= */
+
+        function showExamInfo() {
+
+            const examId =
+                document.getElementById(
+                    "examId"
+                ).value;
+
+
+            const examInfo =
+                document.getElementById(
+                    "examInfo"
+                );
+
+
+            if (!examId) {
+
+                examInfo.classList.remove("show");
+
+                examInfo.innerHTML = "";
+
+                return;
+
+            }
+
+
+            const selectedExam =
+                exams.find(
+                    function(exam) {
+
+                        return String(exam.id) ===
+                            String(examId);
+
+                    }
+                );
+
+
+            if (!selectedExam) {
+
+                examInfo.classList.remove("show");
+
+                examInfo.innerHTML = "";
+
+                return;
+
+            }
+
+
+            examInfo.innerHTML = `
+
+                <strong>Examination:</strong>
+                ${escapeHTML(
+                    selectedExam.examName || "-"
+                )}
+
+                &nbsp;&nbsp; | &nbsp;&nbsp;
+
+                <strong>Subject:</strong>
+                ${escapeHTML(
+                    selectedExam.subject || "-"
+                )}
+
+                &nbsp;&nbsp; | &nbsp;&nbsp;
+
+                <strong>Duration:</strong>
+                ${escapeHTML(
+                    String(
+                        selectedExam.duration || "-"
+                    )
+                )}
+
+                &nbsp;&nbsp; | &nbsp;&nbsp;
+
+                <strong>Total Marks:</strong>
+                ${escapeHTML(
+                    String(
+                        selectedExam.totalMarks || "-"
+                    )
+                )}
+
+            `;
+
+
+            examInfo.classList.add("show");
+
+        }
+
+
+
+        /* ================= EXAM CHANGE ================= */
+
+        document
+            .getElementById("examId")
+            .addEventListener(
+                "change",
+                function() {
+
+                    showExamInfo();
+
+                }
+            );
+
+
+
+        /* ================= UPDATE QUESTION ================= */
+
+        document
+            .getElementById("editQuestionForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    if (!currentQuestion) {
+
+                        showError(
+                            "Question information not found."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const selectedExamId =
+                        document.getElementById(
+                            "examId"
+                        ).value;
+
+
+                    const question =
+                        document.getElementById(
+                            "question"
+                        ).value.trim();
+
+
+                    const optionA =
+                        document.getElementById(
+                            "optionA"
+                        ).value.trim();
+
+
+                    const optionB =
+                        document.getElementById(
+                            "optionB"
+                        ).value.trim();
+
+
+                    const optionC =
+                        document.getElementById(
+                            "optionC"
+                        ).value.trim();
+
+
+                    const optionD =
+                        document.getElementById(
+                            "optionD"
+                        ).value.trim();
+
+
+                    const correctLetter =
+                        document.getElementById(
+                            "correctAnswer"
+                        ).value;
+
+
+                    if (
+                        !selectedExamId ||
+                        !question ||
+                        !optionA ||
+                        !optionB ||
+                        !optionC ||
+                        !optionD ||
+                        !correctLetter
+                    ) {
+
+                        alert(
+                            "Please fill all fields."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* ================= SELECTED EXAM ================= */
+
+                    const selectedExam =
+                        exams.find(
+                            function(exam) {
+
+                                return String(exam.id) ===
+                                    String(
+                                        selectedExamId
+                                    );
+
+                            }
+                        );
+
+
+                    if (!selectedExam) {
+
+                        alert(
+                            "Selected examination was not found."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* ================= CORRECT ANSWER TEXT ================= */
+
+                    let correctAnswer = "";
+
+
+                    if (correctLetter === "A") {
+
+                        correctAnswer = optionA;
+
+                    }
+
+                    else if (correctLetter === "B") {
+
+                        correctAnswer = optionB;
+
+                    }
+
+                    else if (correctLetter === "C") {
+
+                        correctAnswer = optionC;
+
+                    }
+
+                    else if (correctLetter === "D") {
+
+                        correctAnswer = optionD;
+
+                    }
+
+
+
+                    /* ================= FIND QUESTION INDEX ================= */
+
+                    const questionIndex =
+                        questions.findIndex(
+                            function(item) {
+
+                                return String(
+                                    item.id
+                                ) === String(
+                                    currentQuestion.id
+                                );
+
+                            }
+                        );
+
+
+                    if (questionIndex === -1) {
+
+                        alert(
+                            "Question could not be updated."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* ================= SAVE OLD EXAM ID ================= */
+
+                    const oldExamId =
+                        String(
+                            currentQuestion.examId || ""
+                        );
+
+
+                    const newExamId =
+                        String(
+                            selectedExam.id
+                        );
+
+
+
+                    /* ================= UPDATE QUESTION ================= */
+
+                    /*
+                        Preserve any existing properties
+                        and update only the required fields.
+                    */
+
+                    questions[questionIndex] = {
+
+                        ...currentQuestion,
+
+                        id:
+                            currentQuestion.id ||
+                            (
+                                "question-" +
+                                Date.now() +
+                                "-" +
+                                Math.random()
+                                    .toString(36)
+                                    .substring(2, 8)
+                            ),
+
+                        examId:
+                            newExamId,
+
+                        examName:
+                            selectedExam.examName || "",
+
+                        subject:
+                            selectedExam.subject || "",
+
+                        question:
+                            question,
+
+                        optionA:
+                            optionA,
+
+                        optionB:
+                            optionB,
+
+                        optionC:
+                            optionC,
+
+                        optionD:
+                            optionD,
+
+                        correctAnswer:
+                            correctAnswer,
+
+                        correctOption:
+                            correctLetter,
+
+                        createdAt:
+                            currentQuestion.createdAt ||
+                            new Date().toISOString(),
+
+                        updatedAt:
+                            new Date().toISOString()
+
+                    };
+
+
+
+                    /* ================= SAVE QUESTIONS ================= */
+
+                    localStorage.setItem(
+                        "questions",
+                        JSON.stringify(questions)
+                    );
+
+
+
+                    /* ================= UPDATE ALL EXAM COUNTS ================= */
+
+                    updateAllExamQuestionCounts();
+
+
+
+                    /* ================= CLEAN EDIT STORAGE ================= */
+
+                    localStorage.removeItem(
+                        "editQuestionId"
+                    );
+
+                    localStorage.removeItem(
+                        "editQuestionIndex"
+                    );
+
+
+
+                    /* ================= SUCCESS ================= */
+
+                    alert(
+                        "Question updated successfully!"
+                    );
+
+
+
+                    /* ================= RETURN ================= */
+
+                    window.location.href =
+                        "view-question.html";
+
+                }
+            );
+
+
+
+        /* ================= UPDATE EXAM COUNTS ================= */
+
+        function updateAllExamQuestionCounts() {
+
+            if (!Array.isArray(exams)) {
+
+                return;
+
+            }
+
+
+            exams.forEach(
+                function(exam) {
+
+                    const count =
+                        questions.filter(
+                            function(question) {
+
+                                return String(
+                                    question.examId || ""
+                                ) ===
+                                String(
+                                    exam.id
+                                );
+
+                            }
+                        ).length;
+
+
+                    exam.totalQuestions =
+                        count;
+
+
+                    /*
+                        Keep questionCount synchronized
+                        if this property exists in the
+                        exam data.
+                    */
+
+                    exam.questionCount =
+                        count;
+
+                }
+            );
+
+
+            localStorage.setItem(
+                "exams",
+                JSON.stringify(exams)
+            );
+
+        }
+
+
+
+        /* ================= BACK ================= */
+
+        function goBack() {
+
+            localStorage.removeItem(
+                "editQuestionId"
+            );
+
+            localStorage.removeItem(
+                "editQuestionIndex"
+            );
+
+
+            window.location.href =
+                "view-question.html";
+
+        }
+
+
+
+        /* ================= ERROR ================= */
+
+        function showError(message) {
+
+            const errorBox =
+                document.getElementById(
+                    "errorBox"
+                );
+
+
+            errorBox.textContent =
+                message;
+
+
+            errorBox.classList.add("show");
+
+        }
+
+
+
+        /* ================= HTML SAFETY ================= */
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        loadData();
+
+
+        if (findQuestion()) {
+
+            loadExamDropdown();
+
+            loadQuestionDetails();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

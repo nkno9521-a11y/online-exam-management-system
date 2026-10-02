@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Available Exams</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .top-header {
+            height: 72px;
+            background: #0b2d5c;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .brand-text h1 {
+            font-size: 17px;
+            margin-bottom: 3px;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: #cbd8ea;
+        }
+
+        .student-info {
+            text-align: right;
+        }
+
+        .student-info span {
+            display: block;
+            font-size: 10px;
+            color: #b9cbe2;
+            margin-bottom: 3px;
+        }
+
+        .student-info strong {
+            font-size: 13px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1100px;
+            margin: 28px auto;
+            padding: 0 20px;
+        }
+
+
+        /* ================= PAGE TITLE ================= */
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #123c70;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #738196;
+            font-size: 13px;
+        }
+
+
+        /* ================= SUMMARY ================= */
+
+        .summary-bar {
+            background: white;
+            border: 1px solid #dce3eb;
+
+            padding: 16px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .summary-bar span {
+            color: #718096;
+            font-size: 12px;
+        }
+
+        .summary-bar strong {
+            color: #1769aa;
+            font-size: 18px;
+        }
+
+
+        /* ================= EXAM GRID ================= */
+
+        #examContainer {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+
+        /* ================= EXAM CARD ================= */
+
+        .exam-card {
+            background: white;
+            border: 1px solid #dce3eb;
+
+            padding: 22px;
+
+            box-shadow: 0 3px 12px rgba(25,55,90,0.05);
+
+            transition: 0.2s;
+        }
+
+        .exam-card:hover {
+            border-color: #9ebddd;
+            box-shadow: 0 5px 16px rgba(25,55,90,0.09);
+        }
+
+
+        .exam-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .exam-icon {
+            width: 42px;
+            height: 42px;
+
+            background: #edf5ff;
+            color: #1769aa;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            flex-shrink: 0;
+        }
+
+        .exam-title {
+            flex: 1;
+        }
+
+        .exam-title h3 {
+            color: #173b67;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+        .exam-title p {
+            color: #7b8794;
+            font-size: 11px;
+        }
+
+        .available {
+            color: #28743b;
+            background: #edf8f0;
+            border: 1px solid #cde7d2;
+
+            padding: 5px 8px;
+
+            font-size: 9px;
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= EXAM INFO ================= */
+
+        .exam-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            border-top: 1px solid #e5e9ee;
+            border-bottom: 1px solid #e5e9ee;
+
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            padding: 13px 8px;
+            text-align: center;
+        }
+
+        .info-item:not(:last-child) {
+            border-right: 1px solid #e5e9ee;
+        }
+
+        .info-number {
+            color: #173b67;
+            font-size: 15px;
+            font-weight: bold;
+
+            margin-bottom: 4px;
+        }
+
+        .info-label {
+            color: #8491a2;
+            font-size: 9px;
+        }
+
+
+        /* ================= EXTRA DETAILS ================= */
+
+        .extra-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+        }
+
+        .extra-item {
+            background: #f7faff;
+            border: 1px solid #e8eef5;
+
+            padding: 9px 10px;
+        }
+
+        .extra-item span {
+            display: block;
+
+            color: #8a97a8;
+
+            font-size: 9px;
+
+            margin-bottom: 3px;
+        }
+
+        .extra-item strong {
+            display: block;
+
+            color: #36536f;
+
+            font-size: 10px;
+        }
+
+
+        /* ================= START BUTTON ================= */
+
+        .start-btn {
+            display: block;
+
+            width: 100%;
+
+            background: #1769aa;
+            color: white;
+
+            text-align: center;
+            text-decoration: none;
+
+            padding: 11px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            border: none;
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .start-btn:hover {
+            background: #0d578f;
+        }
+
+
+        /* ================= DISABLED BUTTON ================= */
+
+        .disabled-btn {
+            display: block;
+
+            width: 100%;
+
+            background: #aeb8c4;
+            color: white;
+
+            text-align: center;
+
+            padding: 11px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            grid-column: 1 / -1;
+
+            background: white;
+
+            border: 1px solid #dce3eb;
+
+            padding: 55px 20px;
+
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 50px;
+            height: 50px;
+
+            margin: 0 auto 15px;
+
+            background: #edf5ff;
+            color: #1769aa;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+        .empty h3 {
+            color: #173b67;
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .empty p {
+            color: #7b8794;
+            font-size: 12px;
+        }
+
+
+        /* ================= BACK ================= */
+
+        .back-area {
+            margin-top: 25px;
+        }
+
+        .back-btn {
+            display: inline-block;
+
+            color: #1769aa;
+            background: white;
+
+            border: 1px solid #cbd8e6;
+
+            padding: 10px 18px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #f1f6fb;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .top-header {
+                height: auto;
+                padding: 14px 18px;
+            }
+
+            .brand-text h1 {
+                font-size: 14px;
+            }
+
+            .student-info {
+                display: none;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+
+            .page-title h2 {
+                font-size: 20px;
+            }
+
+            #examContainer {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-bar {
+                padding: 14px 16px;
+            }
+
+            .exam-card {
+                padding: 18px;
+            }
+
+            .exam-card-header {
+                gap: 10px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .exam-card-header {
+                flex-wrap: wrap;
+            }
+
+            .exam-title {
+                min-width: calc(100% - 55px);
+            }
+
+            .available {
+                margin-left: 54px;
+            }
+
+            .exam-info {
+                grid-template-columns: 1fr;
+            }
+
+            .info-item:not(:last-child) {
+                border-right: none;
+                border-bottom: 1px solid #e5e9ee;
+            }
+
+            .extra-details {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <img
+                src="logo.jpg"
+                class="brand-logo"
+                alt="College Logo"
+            >
+
+            <div class="brand-text">
+
+                <h1>
+                    ONLINE EXAM MANAGEMENT SYSTEM
+                </h1>
+
+                <p>
+                    Student Examination Portal
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-info">
+
+            <span>
+                LOGGED IN AS
+            </span>
+
+            <strong id="studentName">
+                Student
+            </strong>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+
+        <div class="page-title">
+
+            <h2>
+                Available Exams
+            </h2>
+
+            <p>
+                View and start examinations currently available for you.
+            </p>
+
+        </div>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <div class="summary-bar">
+
+            <span>
+                Examinations Available
+            </span>
+
+            <strong id="examCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <!-- ================= EXAMS ================= -->
+
+        <div id="examContainer"></div>
+
+
+        <!-- ================= BACK ================= -->
+
+        <div class="back-area">
+
+            <a
+                href="dashboard.html"
+                class="back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =================================================
+           STUDENT NAME
+        ================================================= */
+
+        const studentName =
+            localStorage.getItem("studentName")
+            || "Student";
+
+
+        document.getElementById(
+            "studentName"
+        ).textContent = studentName;
+
+
+
+        /* =================================================
+           LOAD ADMIN EXAMS
+        ================================================= */
+
+        const exams =
+            JSON.parse(
+                localStorage.getItem("exams")
+            ) || [];
+
+
+        const questions =
+            JSON.parse(
+                localStorage.getItem("questions")
+            ) || [];
+
+
+        const examContainer =
+            document.getElementById(
+                "examContainer"
+            );
+
+
+        const examCount =
+            document.getElementById(
+                "examCount"
+            );
+
+
+
+        /* =================================================
+           HTML ESCAPE
+        ================================================= */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* =================================================
+           GET QUESTIONS FOR EXAM
+        ================================================= */
+
+        function getExamQuestions(exam) {
+
+            const examName =
+                String(
+                    exam.name ||
+                    exam.examName ||
+                    ""
+                ).trim()
+                .toLowerCase();
+
+
+            if (!examName) {
+
+                return [];
+
+            }
+
+
+            return questions.filter(function(question) {
+
+                const questionExam =
+                    String(
+                        question.examName ||
+                        question.exam ||
+                        question.testName ||
+                        ""
+                    ).trim()
+                    .toLowerCase();
+
+
+                return questionExam === examName;
+
+            });
+
+        }
+
+
+
+        /* =================================================
+           FORMAT DATE
+        ================================================= */
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+
+                return "Not specified";
+
+            }
+
+
+            const date =
+                new Date(dateValue);
+
+
+            if (isNaN(date.getTime())) {
+
+                return dateValue;
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        /* =================================================
+           FORMAT TIME
+        ================================================= */
+
+        function formatTime(timeValue) {
+
+            if (!timeValue) {
+
+                return "Not specified";
+
+            }
+
+
+            const parts =
+                String(timeValue).split(":");
+
+
+            if (parts.length < 2) {
+
+                return timeValue;
+
+            }
+
+
+            let hour =
+                parseInt(parts[0], 10);
+
+
+            const minute =
+                parts[1];
+
+
+            if (isNaN(hour)) {
+
+                return timeValue;
+
+            }
+
+
+            const period =
+                hour >= 12
+                    ? "PM"
+                    : "AM";
+
+
+            hour =
+                hour % 12 || 12;
+
+
+            return hour + ":" + minute + " " + period;
+
+        }
+
+
+
+        /* =================================================
+           SAVE CURRENT EXAM
+        ================================================= */
+
+        function startExam(examId) {
+
+            const selectedExam =
+                exams.find(function(exam) {
+
+                    return String(exam.id) === String(examId);
+
+                });
+
+
+            if (!selectedExam) {
+
+                alert(
+                    "Exam details could not be found."
+                );
+
+                return;
+
+            }
+
+
+            const examQuestions =
+                getExamQuestions(
+                    selectedExam
+                );
+
+
+            /*
+                Save selected exam details.
+                exam.html can use these values.
+            */
+
+            localStorage.setItem(
+                "currentExam",
+                JSON.stringify(selectedExam)
+            );
+
+
+            localStorage.setItem(
+                "currentExamName",
+                selectedExam.name ||
+                selectedExam.examName ||
+                "Online Examination"
+            );
+
+
+            /*
+                If this exam has its own questions,
+                replace the current exam questions
+                temporarily.
+            */
+
+            if (examQuestions.length > 0) {
+
+                localStorage.setItem(
+                    "currentExamQuestions",
+                    JSON.stringify(examQuestions)
+                );
+
+            }
+
+
+            window.location.href =
+                "exam.html";
+
+        }
+
+
+
+        /* =================================================
+           DISPLAY EXAMS
+        ================================================= */
+
+        function displayExams() {
+
+
+            /*
+                Only Active exams should be
+                visible to students.
+            */
+
+            const activeExams =
+                exams.filter(function(exam) {
+
+                    const status =
+                        String(
+                            exam.status ||
+                            "Active"
+                        ).toLowerCase();
+
+
+                    return (
+                        status === "active" ||
+                        status === "available" ||
+                        status === "true"
+                    );
+
+                });
+
+
+
+            /* ================= NO EXAMS ================= */
+
+            if (activeExams.length === 0) {
+
+                examCount.textContent = "0";
+
+
+                examContainer.innerHTML = `
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            !
+                        </div>
+
+                        <h3>
+                            No Exams Available
+                        </h3>
+
+                        <p>
+                            There are currently no active examinations available.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            /* ================= COUNT ================= */
+
+            examCount.textContent =
+                String(
+                    activeExams.length
+                ).padStart(2, "0");
+
+
+
+            /* ================= CARDS ================= */
+
+            examContainer.innerHTML =
+                activeExams.map(function(exam, index) {
+
+
+                    const examName =
+                        exam.name ||
+                        exam.examName ||
+                        "Online Examination";
+
+
+                    const subject =
+                        exam.subject ||
+                        "General Online Examination";
+
+
+                    const date =
+                        exam.date ||
+                        exam.examDate ||
+                        "";
+
+
+                    const time =
+                        exam.time ||
+                        exam.startTime ||
+                        "";
+
+
+                    const duration =
+                        exam.duration ||
+                        exam.durationMinutes ||
+                        30;
+
+
+                    const adminQuestions =
+                        exam.totalQuestions ||
+                        exam.questions ||
+                        "";
+
+
+                    const totalMarks =
+                        exam.totalMarks ||
+                        exam.marks ||
+                        100;
+
+
+                    const examQuestions =
+                        getExamQuestions(
+                            exam
+                        );
+
+
+                    /*
+                        If questions are linked to this
+                        exam, use their actual count.
+                        Otherwise use Admin exam count.
+                    */
+
+                    const questionCount =
+                        examQuestions.length > 0
+                            ? examQuestions.length
+                            : adminQuestions || 0;
+
+
+                    const examId =
+                        exam.id ||
+                        ("exam_" + index);
+
+
+
+                    return `
+
+                        <div class="exam-card">
+
+                            <div class="exam-card-header">
+
+                                <div class="exam-icon">
+                                    E
+                                </div>
+
+                                <div class="exam-title">
+
+                                    <h3>
+                                        ${escapeHTML(examName)}
+                                    </h3>
+
+                                    <p>
+                                        ${escapeHTML(subject)}
+                                    </p>
+
+                                </div>
+
+                                <span class="available">
+                                    AVAILABLE
+                                </span>
+
+                            </div>
+
+
+
+                            <div class="exam-info">
+
+
+                                <div class="info-item">
+
+                                    <div class="info-number">
+                                        ${escapeHTML(questionCount)}
+                                    </div>
+
+                                    <div class="info-label">
+                                        QUESTIONS
+                                    </div>
+
+                                </div>
+
+
+                                <div class="info-item">
+
+                                    <div class="info-number">
+                                        ${escapeHTML(duration)}
+                                    </div>
+
+                                    <div class="info-label">
+                                        MINUTES
+                                    </div>
+
+                                </div>
+
+
+                                <div class="info-item">
+
+                                    <div class="info-number">
+                                        ${escapeHTML(totalMarks)}
+                                    </div>
+
+                                    <div class="info-label">
+                                        MARKS
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="extra-details">
+
+
+                                <div class="extra-item">
+
+                                    <span>
+                                        EXAM DATE
+                                    </span>
+
+                                    <strong>
+                                        ${escapeHTML(
+                                            formatDate(date)
+                                        )}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="extra-item">
+
+                                    <span>
+                                        START TIME
+                                    </span>
+
+                                    <strong>
+                                        ${escapeHTML(
+                                            formatTime(time)
+                                        )}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <button
+                                class="start-btn"
+                                onclick="startExam('${escapeHTML(examId)}')">
+
+                                Start Examination →
+
+                            </button>
+
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+
+        /* =================================================
+           INITIALIZE
+        ================================================= */
+
+        displayExams();
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Questions | Online Examination</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #1e293b;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #082b63, #0b4ea2);
+            padding: 22px 15px;
+            color: white;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            text-align: center;
+            padding-bottom: 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.18);
+            margin-bottom: 20px;
+        }
+
+        .logo-area img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: white;
+            margin-bottom: 10px;
+        }
+
+        .logo-area h2 {
+            font-size: 18px;
+        }
+
+        .logo-area p {
+            font-size: 12px;
+            color: #dbeafe;
+            margin-top: 5px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 15px;
+            color: #dbeafe;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .menu-icon {
+            width: 24px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #0b3d82;
+        }
+
+        .topbar p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #0b4ea2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .admin-text strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .admin-text span {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome-box {
+            background: linear-gradient(135deg, #0b4ea2, #1267c4);
+            color: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(11,78,162,0.15);
+        }
+
+        .welcome-box h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-box p {
+            font-size: 14px;
+            color: #dbeafe;
+            line-height: 1.6;
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid #e5ebf4;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .summary-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: #eaf3ff;
+            color: #0b4ea2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .summary-card h3 {
+            font-size: 24px;
+            color: #0f172a;
+        }
+
+        .summary-card p {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            margin-bottom: 18px;
+        }
+
+        .section-title h2 {
+            font-size: 20px;
+            color: #123f7a;
+        }
+
+        .section-title p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        /* ================= MANAGEMENT CARDS ================= */
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .management-card {
+            background: white;
+            border: 1px solid #e3eaf4;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.05);
+            transition: 0.25s;
+        }
+
+        .management-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(15,23,42,0.09);
+        }
+
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 13px;
+            background: #eaf3ff;
+            color: #0b4ea2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 18px;
+        }
+
+        .management-card h3 {
+            color: #123f7a;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .management-card p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 42px;
+        }
+
+        .card-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 17px;
+            border-radius: 8px;
+            background: #eaf3ff;
+            color: #0b4ea2;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .card-btn:hover {
+            background: #0b4ea2;
+            color: white;
+        }
+
+        /* ================= EXAM OVERVIEW ================= */
+
+        .exam-section {
+            margin-top: 28px;
+        }
+
+        .exam-section-header {
+            margin-bottom: 18px;
+        }
+
+        .exam-section-header h2 {
+            color: #123f7a;
+            font-size: 20px;
+        }
+
+        .exam-section-header p {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .exam-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .exam-card {
+            background: white;
+            border: 1px solid #e3eaf4;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.04);
+        }
+
+        .exam-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .exam-card h3 {
+            color: #123f7a;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .exam-subject {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .exam-badge {
+            background: #eaf3ff;
+            color: #0b4ea2;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .exam-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .exam-detail {
+            background: #f8fafc;
+            border-radius: 7px;
+            padding: 9px;
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .exam-detail strong {
+            display: block;
+            color: #0b4ea2;
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+
+        .empty-exams {
+            background: white;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 25px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            grid-column: 1 / -1;
+        }
+
+        /* ================= INFO ================= */
+
+        .info-box {
+            background: white;
+            border: 1px solid #e3eaf4;
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 25px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.04);
+        }
+
+        .info-box h3 {
+            color: #123f7a;
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .info-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .info-item strong {
+            color: #0b4ea2;
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            color: #0b4ea2;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1100px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .management-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .exam-list {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-list {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-text {
+                display: none;
+            }
+
+            .exam-details {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo-area">
+
+            <img src="logo.jpg" alt="College Logo">
+
+            <h2>Online Examination</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <ul class="menu">
+
+            <li>
+                <a href="admin.html">
+                    <span class="menu-icon">⌂</span>
+                    Dashboard
+                </a>
+            </li>
+
+
+            <li>
+                <a href="manage-exam.html">
+                    <span class="menu-icon">▣</span>
+                    Manage Exams
+                </a>
+            </li>
+
+
+            <li>
+                <a href="manage-question.html" class="active">
+                    <span class="menu-icon">?</span>
+                    Questions
+                </a>
+            </li>
+
+
+            <li>
+                <a href="students.html">
+                    <span class="menu-icon">♙</span>
+                    Students
+                </a>
+            </li>
+
+
+            <li>
+                <a href="results.html">
+                    <span class="menu-icon">▤</span>
+                    Results
+                </a>
+            </li>
+
+
+            <li>
+                <a href="reports.html">
+                    <span class="menu-icon">◫</span>
+                    Reports
+                </a>
+            </li>
+
+
+            <li>
+                <a href="settings.html">
+                    <span class="menu-icon">⚙</span>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- ================= TOPBAR ================= -->
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:12px;">
+
+                <button
+                    class="mobile-menu"
+                    onclick="toggleSidebar()"
+                >
+                    ☰
+                </button>
+
+                <div>
+
+                    <h1>
+                        Manage Questions
+                    </h1>
+
+                    <p>
+                        Manage examination questions from one place
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-info">
+
+                <div
+                    class="admin-avatar"
+                    id="adminAvatar"
+                >
+                    A
+                </div>
+
+                <div class="admin-text">
+
+                    <strong id="adminName">
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Admin
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <!-- ================= WELCOME ================= -->
+
+            <div class="welcome-box">
+
+                <h2>
+                    Question Management
+                </h2>
+
+                <p>
+                    Create, view and edit questions for each
+                    examination. Every question is connected
+                    to its selected examination using a unique
+                    Exam ID.
+                </p>
+
+            </div>
+
+
+
+            <!-- ================= SUMMARY ================= -->
+
+            <div class="summary-grid">
+
+
+                <!-- TOTAL QUESTIONS -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <h3 id="totalQuestions">
+                            0
+                        </h3>
+
+                        <p>
+                            Total Questions
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TOTAL EXAMS -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        📚
+                    </div>
+
+                    <div>
+
+                        <h3 id="totalExams">
+                            0
+                        </h3>
+
+                        <p>
+                            Exams With Questions
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TOTAL EXAM MARKS -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ★
+                    </div>
+
+                    <div>
+
+                        <h3 id="totalMarks">
+                            0
+                        </h3>
+
+                        <p>
+                            Exam Total Marks
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= MANAGEMENT ================= -->
+
+            <div class="section-title">
+
+                <h2>
+                    Question Management
+                </h2>
+
+                <p>
+                    Choose an action to manage examination questions.
+                </p>
+
+            </div>
+
+
+
+            <div class="management-grid">
+
+
+                <!-- ADD -->
+
+                <div class="management-card">
+
+                    <div class="card-icon">
+                        +
+                    </div>
+
+                    <h3>
+                        Add Question
+                    </h3>
+
+                    <p>
+                        Add a new question to a selected
+                        examination.
+                    </p>
+
+                    <a
+                        href="add-question.html"
+                        class="card-btn"
+                    >
+                        Add Question →
+                    </a>
+
+                </div>
+
+
+
+                <!-- VIEW -->
+
+                <div class="management-card">
+
+                    <div class="card-icon">
+                        👁
+                    </div>
+
+                    <h3>
+                        View Questions
+                    </h3>
+
+                    <p>
+                        Select an examination and view only
+                        the questions belonging to it.
+                    </p>
+
+                    <a
+                        href="view-question.html"
+                        class="card-btn"
+                    >
+                        View Questions →
+                    </a>
+
+                </div>
+
+
+
+                <!-- EDIT -->
+
+                <div class="management-card">
+
+                    <div class="card-icon">
+                        ✎
+                    </div>
+
+                    <h3>
+                        Edit Question
+                    </h3>
+
+                    <p>
+                        Update an existing question while
+                        keeping its Exam ID connection.
+                    </p>
+
+                    <a
+                        href="edit-question.html"
+                        class="card-btn"
+                    >
+                        Edit Question →
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= EXAM OVERVIEW ================= -->
+
+            <div class="exam-section">
+
+                <div class="exam-section-header">
+
+                    <h2>
+                        Examination Question Overview
+                    </h2>
+
+                    <p>
+                        Questions are grouped according to their
+                        connected examination.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="exam-list"
+                    id="examList"
+                >
+
+                    <div class="empty-exams">
+                        Loading examination information...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= INFORMATION ================= -->
+
+            <div class="info-box">
+
+                <h3>
+                    Question Management Overview
+                </h3>
+
+
+                <div class="info-list">
+
+                    <div class="info-item">
+
+                        <strong>
+                            Add Question:
+                        </strong>
+
+                        Select the required examination first
+                        and create a question for that exam.
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <strong>
+                            View Questions:
+                        </strong>
+
+                        Questions can be viewed according
+                        to their connected Exam ID.
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <strong>
+                            Edit Question:
+                        </strong>
+
+                        Modify question details without
+                        removing the examination connection.
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <strong>
+                            Exam Separation:
+                        </strong>
+
+                        Java, Python or other examination
+                        questions remain separated by Exam ID.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        /* ================= LOAD QUESTION DATA ================= */
+
+        function loadQuestionData() {
+
+            let questions = [];
+            let exams = [];
+
+
+
+            /* ================= LOAD QUESTIONS ================= */
+
+            try {
+
+                const savedQuestions =
+                    localStorage.getItem("questions");
+
+
+                questions =
+                    savedQuestions
+                        ? JSON.parse(savedQuestions)
+                        : [];
+
+
+                if (!Array.isArray(questions)) {
+
+                    questions = [];
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to load questions:",
+                    error
+                );
+
+                questions = [];
+
+            }
+
+
+
+            /* ================= LOAD EXAMS ================= */
+
+            try {
+
+                const savedExams =
+                    localStorage.getItem("exams");
+
+
+                exams =
+                    savedExams
+                        ? JSON.parse(savedExams)
+                        : [];
+
+
+                if (!Array.isArray(exams)) {
+
+                    exams = [];
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to load exams:",
+                    error
+                );
+
+                exams = [];
+
+            }
+
+
+
+            /* ================= TOTAL QUESTIONS ================= */
+
+            document
+                .getElementById("totalQuestions")
+                .textContent =
+                questions.length;
+
+
+
+            /* ================= EXAMS WITH QUESTIONS ================= */
+
+            const examIdsWithQuestions = [
+                ...new Set(
+                    questions
+                        .map(function(question) {
+
+                            return String(
+                                question.examId || ""
+                            );
+
+                        })
+                        .filter(function(id) {
+
+                            return id !== "";
+
+                        })
+                )
+            ];
+
+
+            document
+                .getElementById("totalExams")
+                .textContent =
+                examIdsWithQuestions.length;
+
+
+
+            /* ================= TOTAL EXAM MARKS ================= */
+
+            let totalMarks = 0;
+
+
+            examIdsWithQuestions.forEach(
+                function(examId) {
+
+                    const exam =
+                        exams.find(
+                            function(item) {
+
+                                return String(
+                                    item.id
+                                ) === String(
+                                    examId
+                                );
+
+                            }
+                        );
+
+
+                    if (exam) {
+
+                        totalMarks +=
+                            Number(
+                                exam.totalMarks || 0
+                            );
+
+                    }
+
+                }
+            );
+
+
+            document
+                .getElementById("totalMarks")
+                .textContent =
+                totalMarks;
+
+
+
+            /* ================= RENDER EXAM LIST ================= */
+
+            renderExamList(
+                exams,
+                questions
+            );
+
+        }
+
+
+
+        /* ================= RENDER EXAM LIST ================= */
+
+        function renderExamList(
+            exams,
+            questions
+        ) {
+
+            const examList =
+                document.getElementById(
+                    "examList"
+                );
+
+
+            examList.innerHTML = "";
+
+
+
+            /* ================= NO EXAMS ================= */
+
+            if (exams.length === 0) {
+
+                examList.innerHTML = `
+                    <div class="empty-exams">
+                        No examinations found.
+                        Please create an exam first from
+                        Manage Exams → Add Exam.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+
+            /* ================= CREATE EXAM CARDS ================= */
+
+            exams.forEach(function(exam) {
+
+                const examId =
+                    String(
+                        exam.id || ""
+                    );
+
+
+                if (!examId) {
+
+                    return;
+
+                }
+
+
+                const examQuestions =
+                    questions.filter(
+                        function(question) {
+
+                            return String(
+                                question.examId || ""
+                            ) === examId;
+
+                        }
+                    );
+
+
+                const questionCount =
+                    examQuestions.length;
+
+
+                const examName =
+                    exam.examName ||
+                    "Untitled Exam";
+
+
+                const subject =
+                    exam.subject ||
+                    "No Subject";
+
+
+                const duration =
+                    Number(
+                        exam.duration || 0
+                    );
+
+
+                const totalMarks =
+                    Number(
+                        exam.totalMarks || 0
+                    );
+
+
+                const status =
+                    exam.status ||
+                    "Active";
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "exam-card";
+
+
+                card.innerHTML = `
+
+                    <div class="exam-card-top">
+
+                        <div>
+
+                            <h3>
+                                ${escapeHtml(examName)}
+                            </h3>
+
+                            <div class="exam-subject">
+                                ${escapeHtml(subject)}
+                            </div>
+
+                        </div>
+
+                        <div class="exam-badge">
+                            ${questionCount} Questions
+                        </div>
+
+                    </div>
+
+
+                    <div class="exam-details">
+
+                        <div class="exam-detail">
+
+                            <strong>
+                                Exam ID
+                            </strong>
+
+                            ${escapeHtml(examId)}
+
+                        </div>
+
+
+                        <div class="exam-detail">
+
+                            <strong>
+                                Status
+                            </strong>
+
+                            ${escapeHtml(status)}
+
+                        </div>
+
+
+                        <div class="exam-detail">
+
+                            <strong>
+                                Duration
+                            </strong>
+
+                            ${duration} Minutes
+
+                        </div>
+
+
+                        <div class="exam-detail">
+
+                            <strong>
+                                Total Marks
+                            </strong>
+
+                            ${totalMarks}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                examList.appendChild(
+                    card
+                );
+
+            });
+
+
+            if (
+                examList.children.length === 0
+            ) {
+
+                examList.innerHTML = `
+                    <div class="empty-exams">
+                        No valid examinations found.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+
+        /* ================= SAFE HTML ================= */
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* ================= ADMIN NAME ================= */
+
+        function loadAdminName() {
+
+            const savedName =
+                localStorage.getItem(
+                    "adminName"
+                );
+
+
+            if (
+                savedName &&
+                savedName.trim() !== ""
+            ) {
+
+                document
+                    .getElementById("adminName")
+                    .textContent =
+                    savedName;
+
+
+                document
+                    .getElementById("adminAvatar")
+                    .textContent =
+                    savedName
+                        .trim()
+                        .charAt(0)
+                        .toUpperCase();
+
+            }
+
+        }
+
+
+
+        /* ================= MOBILE SIDEBAR ================= */
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                loadAdminName();
+
+                loadQuestionData();
+
+            }
+        );
+
+
+    </script>
+
+</body>
+
+</html>

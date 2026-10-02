@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | Online Examination System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1d2b3a;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 245px;
+            height: 100vh;
+            background: #062d63;
+            color: white;
+            padding: 25px 15px;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .logo-area img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+        }
+
+        .logo-area h2 {
+            font-size: 18px;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .logo-area p {
+            font-size: 12px;
+            color: #b9d3f5;
+            margin-top: 4px;
+        }
+
+        .menu {
+            margin-top: 25px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            color: #dceaff;
+            padding: 13px 15px;
+            margin-bottom: 7px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .menu a:hover {
+            background: #0d4287;
+            color: white;
+        }
+
+        .menu a.active {
+            background: #1e73d8;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 245px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            border-bottom: 1px solid #e5eaf0;
+        }
+
+        .topbar-left h1 {
+            font-size: 23px;
+            color: #12345b;
+        }
+
+        .topbar-left p {
+            font-size: 12px;
+            color: #7b8794;
+            margin-top: 3px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-text {
+            text-align: right;
+        }
+
+        .admin-text strong {
+            display: block;
+            font-size: 14px;
+            color: #243b53;
+        }
+
+        .admin-text span {
+            font-size: 11px;
+            color: #8996a5;
+        }
+
+        .admin-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #1e73d8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px 35px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            color: #12345b;
+            font-size: 24px;
+        }
+
+        .page-heading p {
+            color: #7c8a9a;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .refresh-btn {
+            border: none;
+            background: #1e73d8;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .refresh-btn:hover {
+            background: #155db1;
+        }
+
+        /* ================= STAT CARDS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e7edf4;
+            box-shadow: 0 4px 12px rgba(20,50,90,0.05);
+        }
+
+        .stat-card p {
+            color: #7c8a9a;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card h3 {
+            font-size: 26px;
+            color: #12345b;
+        }
+
+        .stat-card .small-text {
+            font-size: 11px;
+            color: #8b98a8;
+            margin-top: 5px;
+        }
+
+        /* ================= REPORT CARDS ================= */
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e7edf4;
+            box-shadow: 0 4px 12px rgba(20,50,90,0.04);
+            overflow: hidden;
+        }
+
+        .report-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .report-header h3 {
+            color: #12345b;
+            font-size: 17px;
+        }
+
+        .report-header p {
+            color: #8a96a3;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .report-body {
+            padding: 22px;
+        }
+
+        /* ================= PROGRESS ================= */
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-top span:first-child {
+            color: #53677c;
+            font-size: 13px;
+        }
+
+        .progress-top span:last-child {
+            color: #12345b;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 9px;
+            background: #edf2f7;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #1e73d8;
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e7edf4;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(20,50,90,0.04);
+            margin-bottom: 25px;
+        }
+
+        .table-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .table-header h3 {
+            color: #12345b;
+            font-size: 17px;
+        }
+
+        .table-header p {
+            color: #8a96a3;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background: #f7f9fc;
+            color: #627386;
+            font-size: 12px;
+            text-align: left;
+            padding: 14px 18px;
+            border-bottom: 1px solid #e5eaf0;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #edf1f5;
+            font-size: 13px;
+            color: #34495e;
+        }
+
+        tr:hover td {
+            background: #fafcff;
+        }
+
+        .exam-name {
+            font-weight: 600;
+            color: #163c69;
+        }
+
+        .number {
+            font-weight: 600;
+            color: #1e73d8;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status.good {
+            background: #e7f7ee;
+            color: #16834d;
+        }
+
+        .status.low {
+            background: #fdecec;
+            color: #d53b3b;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 45px 20px;
+            color: #8492a0;
+        }
+
+        .empty-state .icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            color: #526274;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .page-heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+
+            <img src="logo.jpg" alt="College Logo">
+
+            <h2>Online Examination</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="admin.html" onclick="goToPage('admin.html'); return false;">
+                <span class="menu-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="manage-exam.html" onclick="goToPage('manage-exam.html'); return false;">
+                <span class="menu-icon">▣</span>
+                <span>Manage Exams</span>
+            </a>
+
+            <a href="manage-question.html" onclick="goToPage('manage-question.html'); return false;">
+                <span class="menu-icon">?</span>
+                <span>Questions</span>
+            </a>
+
+            <a href="students.html" onclick="goToPage('students.html'); return false;">
+                <span class="menu-icon">♙</span>
+                <span>Students</span>
+            </a>
+
+            <a href="results.html" onclick="goToPage('results.html'); return false;">
+                <span class="menu-icon">▤</span>
+                <span>Results</span>
+            </a>
+
+            <a href="reports.html" class="active">
+                <span class="menu-icon">▥</span>
+                <span>Reports</span>
+            </a>
+
+            <a href="settings.html" onclick="goToPage('settings.html'); return false;">
+                <span class="menu-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <h1>Reports</h1>
+
+                <p>
+                    Examination performance and statistical reports
+                </p>
+
+            </div>
+
+            <div class="admin-info">
+
+                <div class="admin-text">
+
+                    <strong id="adminName">
+                        Admin
+                    </strong>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+                <div
+                    class="admin-avatar"
+                    id="adminAvatar">
+
+                    A
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+            <!-- PAGE HEADING -->
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h2>
+                        Examination Reports
+                    </h2>
+
+                    <p>
+                        View overall examination performance and statistics
+                    </p>
+
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadReports()">
+
+                    ↻ Refresh
+
+                </button>
+
+            </div>
+
+            <!-- ================= STATISTICS ================= -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <p>
+                        Total Exams
+                    </p>
+
+                    <h3 id="totalExams">
+                        0
+                    </h3>
+
+                    <div class="small-text">
+                        Exams created by admin
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <p>
+                        Total Students
+                    </p>
+
+                    <h3 id="totalStudents">
+                        0
+                    </h3>
+
+                    <div class="small-text">
+                        Registered students
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <p>
+                        Total Results
+                    </p>
+
+                    <h3 id="totalResults">
+                        0
+                    </h3>
+
+                    <div class="small-text">
+                        Submitted examination results
+                    </div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <p>
+                        Average Score
+                    </p>
+
+                    <h3 id="averageScore">
+                        0%
+                    </h3>
+
+                    <div class="small-text">
+                        Overall student performance
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= REPORT GRID ================= -->
+
+            <div class="report-grid">
+
+                <!-- PERFORMANCE SUMMARY -->
+
+                <div class="report-card">
+
+                    <div class="report-header">
+
+                        <h3>
+                            Performance Summary
+                        </h3>
+
+                        <p>
+                            Overall student performance
+                        </p>
+
+                    </div>
+
+                    <div class="report-body">
+
+                        <div class="progress-item">
+
+                            <div class="progress-top">
+
+                                <span>
+                                    Pass Percentage
+                                </span>
+
+                                <span id="passPercentage">
+                                    0%
+                                </span>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="passBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <div class="progress-top">
+
+                                <span>
+                                    Fail Percentage
+                                </span>
+
+                                <span id="failPercentage">
+                                    0%
+                                </span>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="failBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <div class="progress-top">
+
+                                <span>
+                                    Average Score
+                                </span>
+
+                                <span id="averagePerformance">
+                                    0%
+                                </span>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="averageBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- RESULT SUMMARY -->
+
+                <div class="report-card">
+
+                    <div class="report-header">
+
+                        <h3>
+                            Result Summary
+                        </h3>
+
+                        <p>
+                            Examination result statistics
+                        </p>
+
+                    </div>
+
+                    <div class="report-body">
+
+                        <div class="progress-item">
+
+                            <div class="progress-top">
+
+                                <span>
+                                    Passed Students
+                                </span>
+
+                                <span id="passedCount">
+                                    0
+                                </span>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="passedBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <div class="progress-top">
+
+                                <span>
+                                    Failed Students
+                                </span>
+
+                                <span id="failedCount">
+                                    0
+                                </span>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="failedBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-item">
+
+                            <div class="progress-top">
+
+                                <span>
+                                    Completed Results
+                                </span>
+
+                                <span id="completedCount">
+                                    0
+                                </span>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="completedBar"
+                                    style="width:0%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= EXAM REPORT ================= -->
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <h3>
+                        Exam-wise Report
+                    </h3>
+
+                    <p>
+                        Performance summary for each examination
+                    </p>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Examination</th>
+
+                                <th>Students Attended</th>
+
+                                <th>Average Score</th>
+
+                                <th>Passed</th>
+
+                                <th>Failed</th>
+
+                                <th>Pass Percentage</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="examReportBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- ================= STUDENT REPORT ================= -->
+
+            <div class="table-card">
+
+                <div class="table-header">
+
+                    <h3>
+                        Student Performance Report
+                    </h3>
+
+                    <p>
+                        Individual student examination performance
+                    </p>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Student</th>
+
+                                <th>Exams Attended</th>
+
+                                <th>Average Score</th>
+
+                                <th>Passed</th>
+
+                                <th>Failed</th>
+
+                                <th>Performance</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentReportBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= NAVIGATION ================= */
+
+        function goToPage(page) {
+
+            window.location.href = page;
+
+        }
+
+
+        let exams = [];
+        let students = [];
+        let results = [];
+
+
+        /* ================= ADMIN NAME ================= */
+
+        function loadAdminName() {
+
+            const adminName =
+                localStorage.getItem("adminName") || "Admin";
+
+            document.getElementById("adminName")
+                .textContent = adminName;
+
+            document.getElementById("adminAvatar")
+                .textContent =
+                adminName.charAt(0).toUpperCase();
+
+        }
+
+
+        /* ================= SAFE NUMBER ================= */
+
+        function getNumber(value) {
+
+            const number =
+                parseFloat(value);
+
+            return isNaN(number)
+                ? 0
+                : number;
+
+        }
+
+
+        /* ================= RESULT HELPERS ================= */
+
+        function getStudentName(result) {
+
+            return (
+                result.studentName ||
+                result.name ||
+                result.student ||
+                "Unknown Student"
+            );
+
+        }
+
+
+        function getExamName(result) {
+
+            return (
+                result.examName ||
+                result.exam ||
+                result.testName ||
+                result.title ||
+                "Unknown Exam"
+            );
+
+        }
+
+
+        function getScore(result) {
+
+            return getNumber(
+                result.score ??
+                result.marks ??
+                result.examScore ??
+                result.obtainedMarks
+            );
+
+        }
+
+
+        function getTotal(result) {
+
+            return getNumber(
+                result.totalQuestions ??
+                result.total ??
+                result.questions
+            );
+
+        }
+
+
+        function getPercentage(result) {
+
+            let percentage =
+                getNumber(
+                    result.percentage ??
+                    result.percent
+                );
+
+            if (
+                percentage === 0 &&
+                getScore(result) > 0 &&
+                getTotal(result) > 0
+            ) {
+
+                percentage =
+                    (getScore(result) /
+                    getTotal(result)) * 100;
+
+            }
+
+            return percentage;
+
+        }
+
+
+        function getStatus(result) {
+
+            if (result.status) {
+
+                return result.status
+                    .toString()
+                    .toLowerCase();
+
+            }
+
+            return getPercentage(result) >= 40
+                ? "passed"
+                : "failed";
+
+        }
+
+
+        /* ================= LOAD DATA ================= */
+
+        function loadReports() {
+
+            try {
+
+                exams =
+                    JSON.parse(
+                        localStorage.getItem("exams") || "[]"
+                    );
+
+                students =
+                    JSON.parse(
+                        localStorage.getItem("students") || "[]"
+                    );
+
+                results =
+                    JSON.parse(
+                        localStorage.getItem("results") || "[]"
+                    );
+
+                if (!Array.isArray(exams)) {
+                    exams = [];
+                }
+
+                if (!Array.isArray(students)) {
+                    students = [];
+                }
+
+                if (!Array.isArray(results)) {
+                    results = [];
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading report data:",
+                    error
+                );
+
+                exams = [];
+                students = [];
+                results = [];
+
+            }
+
+            updateStatistics();
+
+            renderPerformance();
+
+            renderExamReport();
+
+            renderStudentReport();
+
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        function updateStatistics() {
+
+            const totalExams =
+                exams.length;
+
+            const totalStudents =
+                students.length;
+
+            const totalResults =
+                results.length;
+
+            let totalPercentage = 0;
+
+            results.forEach(result => {
+
+                totalPercentage +=
+                    getPercentage(result);
+
+            });
+
+            const average =
+                totalResults > 0
+                    ? totalPercentage / totalResults
+                    : 0;
+
+            document.getElementById("totalExams")
+                .textContent =
+                totalExams;
+
+            document.getElementById("totalStudents")
+                .textContent =
+                totalStudents;
+
+            document.getElementById("totalResults")
+                .textContent =
+                totalResults;
+
+            document.getElementById("averageScore")
+                .textContent =
+                average.toFixed(1) + "%";
+
+        }
+
+
+        /* ================= PERFORMANCE ================= */
+
+        function renderPerformance() {
+
+            let passed = 0;
+            let failed = 0;
+
+            results.forEach(result => {
+
+                const status =
+                    getStatus(result);
+
+                if (status === "passed") {
+
+                    passed++;
+
+                } else if (status === "failed") {
+
+                    failed++;
+
+                }
+
+            });
+
+            const total =
+                results.length;
+
+            const passPercentage =
+                total > 0
+                    ? (passed / total) * 100
+                    : 0;
+
+            const failPercentage =
+                total > 0
+                    ? (failed / total) * 100
+                    : 0;
+
+            let average = 0;
+
+            if (total > 0) {
+
+                results.forEach(result => {
+
+                    average +=
+                        getPercentage(result);
+
+                });
+
+                average =
+                    average / total;
+
+            }
+
+            document.getElementById("passPercentage")
+                .textContent =
+                passPercentage.toFixed(1) + "%";
+
+            document.getElementById("failPercentage")
+                .textContent =
+                failPercentage.toFixed(1) + "%";
+
+            document.getElementById("averagePerformance")
+                .textContent =
+                average.toFixed(1) + "%";
+
+            document.getElementById("passBar")
+                .style.width =
+                Math.min(passPercentage, 100) + "%";
+
+            document.getElementById("failBar")
+                .style.width =
+                Math.min(failPercentage, 100) + "%";
+
+            document.getElementById("averageBar")
+                .style.width =
+                Math.min(average, 100) + "%";
+
+            document.getElementById("passedCount")
+                .textContent =
+                passed;
+
+            document.getElementById("failedCount")
+                .textContent =
+                failed;
+
+            document.getElementById("completedCount")
+                .textContent =
+                total;
+
+            document.getElementById("passedBar")
+                .style.width =
+                total > 0
+                    ? (passed / total * 100) + "%"
+                    : "0%";
+
+            document.getElementById("failedBar")
+                .style.width =
+                total > 0
+                    ? (failed / total * 100) + "%"
+                    : "0%";
+
+            document.getElementById("completedBar")
+                .style.width =
+                total > 0
+                    ? "100%"
+                    : "0%";
+
+        }
+
+
+        /* ================= EXAM REPORT ================= */
+
+        function renderExamReport() {
+
+            const tbody =
+                document.getElementById(
+                    "examReportBody"
+                );
+
+            tbody.innerHTML = "";
+
+            let examNames = [];
+
+            exams.forEach(exam => {
+
+                const name =
+                    exam.examName ||
+                    exam.name ||
+                    exam.title ||
+                    "Unnamed Exam";
+
+                if (!examNames.includes(name)) {
+
+                    examNames.push(name);
+
+                }
+
+            });
+
+            results.forEach(result => {
+
+                const name =
+                    getExamName(result);
+
+                if (
+                    name !== "Unknown Exam" &&
+                    !examNames.includes(name)
+                ) {
+
+                    examNames.push(name);
+
+                }
+
+            });
+
+            if (examNames.length === 0) {
+
+                tbody.innerHTML = `
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            <div class="empty-state">
+
+                                <div class="icon">
+                                    📊
+                                </div>
+
+                                <h3>
+                                    No Exam Data
+                                </h3>
+
+                                <p>
+                                    No examination data is available yet.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+            examNames.forEach((examName, index) => {
+
+                const examResults =
+                    results.filter(
+                        result =>
+                            getExamName(result) === examName
+                    );
+
+                const attended =
+                    examResults.length;
+
+                let totalScore = 0;
+                let passed = 0;
+                let failed = 0;
+
+                examResults.forEach(result => {
+
+                    totalScore +=
+                        getPercentage(result);
+
+                    if (
+                        getStatus(result) === "passed"
+                    ) {
+
+                        passed++;
+
+                    } else if (
+                        getStatus(result) === "failed"
+                    ) {
+
+                        failed++;
+
+                    }
+
+                });
+
+                const average =
+                    attended > 0
+                        ? totalScore / attended
+                        : 0;
+
+                const passPercentage =
+                    attended > 0
+                        ? (passed / attended) * 100
+                        : 0;
+
+                const row =
+                    document.createElement("tr");
+
+                row.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        <span class="exam-name">
+                            ${escapeHTML(examName)}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="number">
+                            ${attended}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${average.toFixed(1)}%
+                    </td>
+
+                    <td>
+                        ${passed}
+                    </td>
+
+                    <td>
+                        ${failed}
+                    </td>
+
+                    <td>
+                        <span class="status ${
+                            passPercentage >= 40
+                                ? "good"
+                                : "low"
+                        }">
+                            ${passPercentage.toFixed(1)}%
+                        </span>
+                    </td>
+
+                `;
+
+                tbody.appendChild(row);
+
+            });
+
+        }
+
+
+        /* ================= STUDENT REPORT ================= */
+
+        function renderStudentReport() {
+
+            const tbody =
+                document.getElementById(
+                    "studentReportBody"
+                );
+
+            tbody.innerHTML = "";
+
+            let studentNames = [];
+
+            students.forEach(student => {
+
+                const name =
+                    student.studentName ||
+                    student.name ||
+                    student.fullName;
+
+                if (
+                    name &&
+                    !studentNames.includes(name)
+                ) {
+
+                    studentNames.push(name);
+
+                }
+
+            });
+
+            results.forEach(result => {
+
+                const name =
+                    getStudentName(result);
+
+                if (
+                    name !== "Unknown Student" &&
+                    !studentNames.includes(name)
+                ) {
+
+                    studentNames.push(name);
+
+                }
+
+            });
+
+            if (studentNames.length === 0) {
+
+                tbody.innerHTML = `
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            <div class="empty-state">
+
+                                <div class="icon">
+                                    👨‍🎓
+                                </div>
+
+                                <h3>
+                                    No Student Data
+                                </h3>
+
+                                <p>
+                                    No student performance data is available yet.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+            studentNames.forEach((studentName, index) => {
+
+                const studentResults =
+                    results.filter(
+                        result =>
+                            getStudentName(result) === studentName
+                    );
+
+                const attended =
+                    studentResults.length;
+
+                let totalPercentage = 0;
+                let passed = 0;
+                let failed = 0;
+
+                studentResults.forEach(result => {
+
+                    totalPercentage +=
+                        getPercentage(result);
+
+                    if (
+                        getStatus(result) === "passed"
+                    ) {
+
+                        passed++;
+
+                    } else if (
+                        getStatus(result) === "failed"
+                    ) {
+
+                        failed++;
+
+                    }
+
+                });
+
+                const average =
+                    attended > 0
+                        ? totalPercentage / attended
+                        : 0;
+
+                let performance =
+                    "Low";
+
+                if (average >= 75) {
+
+                    performance = "Excellent";
+
+                } else if (average >= 60) {
+
+                    performance = "Good";
+
+                } else if (average >= 40) {
+
+                    performance = "Average";
+
+                }
+
+                const row =
+                    document.createElement("tr");
+
+                row.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        <span class="exam-name">
+                            ${escapeHTML(studentName)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${attended}
+                    </td>
+
+                    <td>
+                        ${average.toFixed(1)}%
+                    </td>
+
+                    <td>
+                        ${passed}
+                    </td>
+
+                    <td>
+                        ${failed}
+                    </td>
+
+                    <td>
+
+                        <span class="status ${
+                            average >= 40
+                                ? "good"
+                                : "low"
+                        }">
+
+                            ${performance}
+
+                        </span>
+
+                    </td>
+
+                `;
+
+                tbody.appendChild(row);
+
+            });
+
+        }
+
+
+        /* ================= ESCAPE HTML ================= */
+
+        function escapeHTML(value) {
+
+            return String(value)
+
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* ================= STORAGE UPDATE ================= */
+
+        window.addEventListener(
+            "storage",
+            function(event) {
+
+                if (
+                    event.key === "results" ||
+                    event.key === "exams" ||
+                    event.key === "students"
+                ) {
+
+                    loadReports();
+
+                }
+
+            }
+        );
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        loadAdminName();
+
+        loadReports();
+
+    </script>
+
+</body>
+
+</html>

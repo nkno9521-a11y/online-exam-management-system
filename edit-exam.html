@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Exam - Online Examination</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #062b5c, #0b4f91);
+            color: white;
+            padding: 22px 16px;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 8px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .brand img {
+            width: 46px;
+            height: 46px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .brand h2 {
+            font-size: 18px;
+        }
+
+        .brand p {
+            font-size: 12px;
+            opacity: 0.75;
+            margin-top: 3px;
+        }
+
+        .menu {
+            margin-top: 25px;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px 14px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #12345b;
+        }
+
+        .admin {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .content {
+            padding: 30px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #0b4f91, #1976d2);
+            color: white;
+            padding: 28px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(11, 79, 145, 0.18);
+        }
+
+        .intro h2 {
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+        .intro p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+        }
+
+        .form-title {
+            font-size: 20px;
+            color: #12345b;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d7dee8;
+            border-radius: 8px;
+            background: #f9fbfd;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #1976d2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.10);
+        }
+
+        .status-options {
+            display: flex;
+            gap: 12px;
+        }
+
+        .status-options label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 16px;
+            border: 1px solid #d7dee8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: normal;
+            background: #f9fbfd;
+        }
+
+        .status-options input {
+            width: auto;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 22px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .update-btn {
+            background: #1976d2;
+            color: white;
+        }
+
+        .update-btn:hover {
+            background: #125ca8;
+        }
+
+        .back-btn {
+            background: #e8edf3;
+            color: #334155;
+        }
+
+        .back-btn:hover {
+            background: #dce3eb;
+        }
+
+        .error {
+            text-align: center;
+            padding: 30px;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background: #12345b;
+            color: white;
+            padding: 13px 18px;
+            border-radius: 8px;
+            display: none;
+            z-index: 2000;
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            background: #1976d2;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .buttons button {
+                width: 100%;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .status-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <img src="logo.jpg" alt="College Logo">
+
+            <div>
+                <h2>Online Examination</h2>
+                <p>Admin Panel</p>
+            </div>
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="admin.html">Dashboard</a>
+
+            <a href="manage-exam.html" class="active">
+                Manage Exam
+            </a>
+
+            <a href="manage-question.html">
+                Questions
+            </a>
+
+            <a href="students.html">
+                Students
+            </a>
+
+            <a href="results.html">
+                Results
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+            <a href="settings.html">
+                Settings
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:12px;">
+
+                <button
+                    class="menu-btn"
+                    onclick="toggleSidebar()">
+                    ☰
+                </button>
+
+                <h1>Edit Exam</h1>
+
+            </div>
+
+            <div
+                class="admin"
+                id="adminName">
+                Admin
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            <div class="intro">
+
+                <h2>Edit Examination</h2>
+
+                <p>
+                    Update the examination details and save your changes.
+                </p>
+
+            </div>
+
+
+            <div class="form-card">
+
+                <h3 class="form-title">
+                    Examination Details
+                </h3>
+
+
+                <div id="formArea">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label for="examName">
+                                Exam Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="examName"
+                                placeholder="Enter exam name"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="subject">
+                                Subject
+                            </label>
+
+                            <input
+                                type="text"
+                                id="subject"
+                                placeholder="Enter subject"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="examDate">
+                                Exam Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="examDate"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="startTime">
+                                Start Time
+                            </label>
+
+                            <input
+                                type="time"
+                                id="startTime"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="duration">
+                                Duration (Minutes)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="duration"
+                                min="1"
+                                placeholder="Enter duration"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="totalQuestions">
+                                Total Questions
+                            </label>
+
+                            <input
+                                type="number"
+                                id="totalQuestions"
+                                min="1"
+                                placeholder="Enter total questions"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="totalMarks">
+                                Total Marks
+                            </label>
+
+                            <input
+                                type="number"
+                                id="totalMarks"
+                                min="1"
+                                placeholder="Enter total marks"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Exam Status
+                            </label>
+
+                            <div class="status-options">
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="status"
+                                        value="Active"
+                                    >
+
+                                    Active
+
+                                </label>
+
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="status"
+                                        value="Inactive"
+                                    >
+
+                                    Inactive
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="buttons">
+
+                        <button
+                            class="update-btn"
+                            onclick="updateExam()">
+                            ✓ Update Exam
+                        </button>
+
+
+                        <button
+                            class="back-btn"
+                            onclick="window.location.href='manage-exam.html'">
+                            ← Back
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div
+        class="toast"
+        id="toast">
+    </div>
+
+
+    <script>
+
+        /*
+            =====================================================
+            LOAD EXAMS
+            =====================================================
+        */
+
+        let exams = [];
+
+        try {
+
+            const savedExams =
+                localStorage.getItem("exams");
+
+            if (savedExams) {
+
+                const parsedExams =
+                    JSON.parse(savedExams);
+
+                if (Array.isArray(parsedExams)) {
+
+                    exams = parsedExams;
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Unable to load exams:",
+                error
+            );
+
+            exams = [];
+
+        }
+
+
+        /*
+            =====================================================
+            GET EXAM REFERENCE FROM URL
+            =====================================================
+        */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const urlId =
+            params.get("id");
+
+        const urlExamId =
+            params.get("examId");
+
+        const urlIndex =
+            params.get("index");
+
+
+        let examReference = null;
+
+        if (
+            urlId !== null &&
+            urlId !== "" &&
+            urlId !== "undefined" &&
+            urlId !== "null"
+        ) {
+
+            examReference = urlId;
+
+        } else if (
+            urlExamId !== null &&
+            urlExamId !== "" &&
+            urlExamId !== "undefined" &&
+            urlExamId !== "null"
+        ) {
+
+            examReference = urlExamId;
+
+        }
+
+
+        /*
+            =====================================================
+            FIND EXAM INDEX
+            =====================================================
+        */
+
+        let editIndex = -1;
+
+
+        /*
+            First:
+            Search using id or examId.
+        */
+
+        if (examReference !== null) {
+
+            editIndex =
+                exams.findIndex(function (exam) {
+
+                    if (!exam) {
+                        return false;
+                    }
+
+                    return (
+                        String(exam.id || "") ===
+                        String(examReference)
+                    ) ||
+                    (
+                        String(exam.examId || "") ===
+                        String(examReference)
+                    );
+
+                });
+
+        }
+
+
+        /*
+            Second:
+            If URL id is actually an array index,
+            support that also.
+        */
+
+        if (
+            editIndex === -1 &&
+            examReference !== null &&
+            /^\d+$/.test(String(examReference))
+        ) {
+
+            const possibleIndex =
+                Number(examReference);
+
+            if (
+                possibleIndex >= 0 &&
+                possibleIndex < exams.length
+            ) {
+
+                editIndex =
+                    possibleIndex;
+
+            }
+
+        }
+
+
+        /*
+            Third:
+            Support ?index=...
+        */
+
+        if (
+            editIndex === -1 &&
+            urlIndex !== null &&
+            /^\d+$/.test(String(urlIndex))
+        ) {
+
+            const possibleIndex =
+                Number(urlIndex);
+
+            if (
+                possibleIndex >= 0 &&
+                possibleIndex < exams.length
+            ) {
+
+                editIndex =
+                    possibleIndex;
+
+            }
+
+        }
+
+
+        /*
+            Fourth:
+            Support old localStorage method.
+        */
+
+        if (editIndex === -1) {
+
+            const oldIndex =
+                localStorage.getItem(
+                    "editExamIndex"
+                );
+
+            if (
+                oldIndex !== null &&
+                /^\d+$/.test(String(oldIndex))
+            ) {
+
+                const possibleIndex =
+                    Number(oldIndex);
+
+                if (
+                    possibleIndex >= 0 &&
+                    possibleIndex < exams.length
+                ) {
+
+                    editIndex =
+                        possibleIndex;
+
+                }
+
+            }
+
+        }
+
+
+        /*
+            =====================================================
+            LOAD ADMIN NAME
+            =====================================================
+        */
+
+        function loadAdminName() {
+
+            const adminName =
+                localStorage.getItem(
+                    "adminName"
+                );
+
+            document.getElementById(
+                "adminName"
+            ).textContent =
+                adminName || "Admin";
+
+        }
+
+
+        /*
+            =====================================================
+            CONVERT DATE
+            =====================================================
+        */
+
+        function convertDate(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            value =
+                String(value).trim();
+
+
+            /*
+                YYYY-MM-DD
+            */
+
+            if (
+                /^\d{4}-\d{2}-\d{2}$/.test(value)
+            ) {
+
+                return value;
+
+            }
+
+
+            /*
+                DD/MM/YYYY
+            */
+
+            if (
+                /^\d{2}\/\d{2}\/\d{4}$/.test(value)
+            ) {
+
+                const parts =
+                    value.split("/");
+
+                return (
+                    parts[2] +
+                    "-" +
+                    parts[1] +
+                    "-" +
+                    parts[0]
+                );
+
+            }
+
+
+            /*
+                DD-MM-YYYY
+            */
+
+            if (
+                /^\d{2}-\d{2}-\d{4}$/.test(value)
+            ) {
+
+                const parts =
+                    value.split("-");
+
+                return (
+                    parts[2] +
+                    "-" +
+                    parts[1] +
+                    "-" +
+                    parts[0]
+                );
+
+            }
+
+
+            /*
+                JavaScript Date
+            */
+
+            const date =
+                new Date(value);
+
+            if (
+                !isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                const year =
+                    date.getFullYear();
+
+                const month =
+                    String(
+                        date.getMonth() + 1
+                    ).padStart(2, "0");
+
+                const day =
+                    String(
+                        date.getDate()
+                    ).padStart(2, "0");
+
+                return (
+                    year +
+                    "-" +
+                    month +
+                    "-" +
+                    day
+                );
+
+            }
+
+
+            return "";
+
+        }
+
+
+        /*
+            =====================================================
+            CONVERT TIME
+            =====================================================
+        */
+
+        function convertTime(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            value =
+                String(value).trim();
+
+
+            /*
+                HH:MM
+            */
+
+            if (
+                /^\d{2}:\d{2}$/.test(value)
+            ) {
+
+                return value;
+
+            }
+
+
+            /*
+                HH:MM:SS
+            */
+
+            if (
+                /^\d{2}:\d{2}:\d{2}$/.test(value)
+            ) {
+
+                return value.substring(
+                    0,
+                    5
+                );
+
+            }
+
+
+            /*
+                AM / PM
+            */
+
+            const match =
+                value.match(
+                    /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i
+                );
+
+
+            if (match) {
+
+                let hour =
+                    Number(match[1]);
+
+                const minute =
+                    match[2];
+
+                const period =
+                    match[3].toUpperCase();
+
+
+                if (
+                    period === "PM" &&
+                    hour !== 12
+                ) {
+
+                    hour += 12;
+
+                }
+
+
+                if (
+                    period === "AM" &&
+                    hour === 12
+                ) {
+
+                    hour = 0;
+
+                }
+
+
+                return (
+                    String(hour).padStart(2, "0") +
+                    ":" +
+                    minute
+                );
+
+            }
+
+
+            return "";
+
+        }
+
+
+        /*
+            =====================================================
+            CREATE EXAM ID
+            =====================================================
+        */
+
+        function createExamId() {
+
+            return (
+                "exam-" +
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2, 8)
+            );
+
+        }
+
+
+        /*
+            =====================================================
+            LOAD EXAM INTO FORM
+            =====================================================
+        */
+
+        function loadExam() {
+
+            if (
+                editIndex === -1 ||
+                !exams[editIndex]
+            ) {
+
+                document.getElementById(
+                    "formArea"
+                ).innerHTML =
+                    '<div class="error">Exam not found!</div>';
+
+                return;
+
+            }
+
+
+            const exam =
+                exams[editIndex];
+
+
+            /*
+                Make sure the exam has an ID.
+            */
+
+            let finalId =
+                exam.id ||
+                exam.examId;
+
+
+            if (
+                !finalId ||
+                String(finalId).trim() === ""
+            ) {
+
+                finalId =
+                    createExamId();
+
+            }
+
+
+            /*
+                Keep both IDs for compatibility.
+            */
+
+            exam.id =
+                finalId;
+
+            exam.examId =
+                finalId;
+
+
+            /*
+                Exam Name
+            */
+
+            document.getElementById(
+                "examName"
+            ).value =
+                exam.examName ||
+                exam.name ||
+                "";
+
+
+            /*
+                Subject
+            */
+
+            document.getElementById(
+                "subject"
+            ).value =
+                exam.subject ||
+                exam.examSubject ||
+                "";
+
+
+            /*
+                Date
+            */
+
+            const savedDate =
+                exam.date ||
+                exam.examDate ||
+                "";
+
+            document.getElementById(
+                "examDate"
+            ).value =
+                convertDate(savedDate);
+
+
+            /*
+                Start Time
+            */
+
+            document.getElementById(
+                "startTime"
+            ).value =
+                convertTime(
+                    exam.startTime ||
+                    exam.time ||
+                    ""
+                );
+
+
+            /*
+                Duration
+            */
+
+            document.getElementById(
+                "duration"
+            ).value =
+                exam.duration ||
+                exam.examDuration ||
+                "";
+
+
+            /*
+                Total Questions
+            */
+
+            document.getElementById(
+                "totalQuestions"
+            ).value =
+                exam.totalQuestions ||
+                exam.questionCount ||
+                exam.questions ||
+                "";
+
+
+            /*
+                Total Marks
+            */
+
+            document.getElementById(
+                "totalMarks"
+            ).value =
+                exam.totalMarks ||
+                exam.marks ||
+                "";
+
+
+            /*
+                Status
+            */
+
+            let savedStatus =
+                exam.status ||
+                "Active";
+
+            savedStatus =
+                String(savedStatus)
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                savedStatus === "inactive"
+            ) {
+
+                document.querySelector(
+                    'input[name="status"][value="Inactive"]'
+                ).checked = true;
+
+            } else {
+
+                document.querySelector(
+                    'input[name="status"][value="Active"]'
+                ).checked = true;
+
+            }
+
+
+            /*
+                Save generated ID if needed.
+            */
+
+            exams[editIndex] =
+                exam;
+
+            localStorage.setItem(
+                "exams",
+                JSON.stringify(exams)
+            );
+
+        }
+
+
+        /*
+            =====================================================
+            UPDATE EXAM
+            =====================================================
+        */
+
+        function updateExam() {
+
+            if (
+                editIndex === -1 ||
+                !exams[editIndex]
+            ) {
+
+                alert(
+                    "Exam not found!"
+                );
+
+                return;
+
+            }
+
+
+            const examName =
+                document.getElementById(
+                    "examName"
+                ).value.trim();
+
+
+            const subject =
+                document.getElementById(
+                    "subject"
+                ).value.trim();
+
+
+            const date =
+                document.getElementById(
+                    "examDate"
+                ).value.trim();
+
+
+            const startTime =
+                document.getElementById(
+                    "startTime"
+                ).value.trim();
+
+
+            const duration =
+                document.getElementById(
+                    "duration"
+                ).value.trim();
+
+
+            const totalQuestions =
+                document.getElementById(
+                    "totalQuestions"
+                ).value.trim();
+
+
+            const totalMarks =
+                document.getElementById(
+                    "totalMarks"
+                ).value.trim();
+
+
+            const status =
+                document.querySelector(
+                    'input[name="status"]:checked'
+                );
+
+
+            /*
+                =================================================
+                VALIDATION
+                =================================================
+            */
+
+            if (!examName) {
+
+                alert(
+                    "Please enter Exam Name."
+                );
+
+                return;
+
+            }
+
+
+            if (!subject) {
+
+                alert(
+                    "Please enter Subject."
+                );
+
+                return;
+
+            }
+
+
+            if (!date) {
+
+                alert(
+                    "Please select Exam Date."
+                );
+
+                return;
+
+            }
+
+
+            if (!startTime) {
+
+                alert(
+                    "Please select Start Time."
+                );
+
+                return;
+
+            }
+
+
+            if (!duration) {
+
+                alert(
+                    "Please enter Duration."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number(duration) <= 0
+            ) {
+
+                alert(
+                    "Duration must be greater than 0."
+                );
+
+                return;
+
+            }
+
+
+            if (!totalQuestions) {
+
+                alert(
+                    "Please enter Total Questions."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number(totalQuestions) <= 0
+            ) {
+
+                alert(
+                    "Total Questions must be greater than 0."
+                );
+
+                return;
+
+            }
+
+
+            if (!totalMarks) {
+
+                alert(
+                    "Please enter Total Marks."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number(totalMarks) <= 0
+            ) {
+
+                alert(
+                    "Total Marks must be greater than 0."
+                );
+
+                return;
+
+            }
+
+
+            /*
+                If no status is selected,
+                Active will be used.
+            */
+
+            const finalStatus =
+                status
+                    ? status.value
+                    : "Active";
+
+
+            /*
+                =================================================
+                PRESERVE EXISTING EXAM ID
+                =================================================
+            */
+
+            const existingExam =
+                exams[editIndex];
+
+
+            let existingId =
+                existingExam.id ||
+                existingExam.examId;
+
+
+            if (
+                !existingId ||
+                String(existingId).trim() === ""
+            ) {
+
+                existingId =
+                    createExamId();
+
+            }
+
+
+            /*
+                =================================================
+                UPDATE EXAM
+                =================================================
+            */
+
+            exams[editIndex] = {
+
+                ...existingExam,
+
+                id:
+                    existingId,
+
+                examId:
+                    existingId,
+
+                examName:
+                    examName,
+
+                name:
+                    examName,
+
+                subject:
+                    subject,
+
+                examSubject:
+                    subject,
+
+                date:
+                    date,
+
+                examDate:
+                    date,
+
+                startTime:
+                    startTime,
+
+                time:
+                    startTime,
+
+                duration:
+                    Number(duration),
+
+                examDuration:
+                    Number(duration),
+
+                totalQuestions:
+                    Number(totalQuestions),
+
+                questionCount:
+                    Number(totalQuestions),
+
+                totalMarks:
+                    Number(totalMarks),
+
+                marks:
+                    Number(totalMarks),
+
+                status:
+                    finalStatus,
+
+                updatedAt:
+                    new Date().toISOString()
+
+            };
+
+
+            /*
+                Save to localStorage.
+            */
+
+            localStorage.setItem(
+                "exams",
+                JSON.stringify(exams)
+            );
+
+
+            /*
+                Remove old index.
+            */
+
+            localStorage.removeItem(
+                "editExamIndex"
+            );
+
+
+            /*
+                Success message.
+            */
+
+            showToast(
+                "Exam Updated Successfully!"
+            );
+
+
+            /*
+                Return to Manage Exam.
+            */
+
+            setTimeout(function () {
+
+                window.location.href =
+                    "manage-exam.html";
+
+            }, 1000);
+
+        }
+
+
+        /*
+            =====================================================
+            TOAST
+            =====================================================
+        */
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+
+            toast.textContent =
+                message;
+
+
+            toast.style.display =
+                "block";
+
+
+            setTimeout(function () {
+
+                toast.style.display =
+                    "none";
+
+            }, 1500);
+
+        }
+
+
+        /*
+            =====================================================
+            MOBILE SIDEBAR
+            =====================================================
+        */
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList
+                .toggle("show");
+
+        }
+
+
+        /*
+            =====================================================
+            START
+            =====================================================
+        */
+
+        loadAdminName();
+
+        loadExam();
+
+    </script>
+
+</body>
+
+</html>

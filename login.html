@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Online Exam Management System</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            background: #0788e8;
+        }
+
+
+        /* =====================================================
+           MAIN PAGE
+           ===================================================== */
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            background: #0788e8;
+        }
+
+
+        /* =====================================================
+           LEFT COLLEGE SIDE
+           ===================================================== */
+
+        .college-section {
+            width: 65%;
+            min-height: 850px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px 0 0 12px;
+            color: white;
+        }
+
+
+        .college-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+
+        .college-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 57, 130, 0.94),
+                    rgba(0, 101, 198, 0.68),
+                    rgba(0, 54, 120, 0.93)
+                );
+        }
+
+
+        .college-content {
+            position: relative;
+            z-index: 2;
+
+            min-height: 850px;
+
+            padding: 55px 55px 45px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           COLLEGE BRAND
+           ===================================================== */
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            position: relative;
+        }
+
+
+        /* =====================================================
+           LOGO
+           Logo itself stays completely still
+           ===================================================== */
+
+        .logo-wrapper {
+
+            position: relative;
+
+            width: 94px;
+            height: 94px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .brand-logo {
+
+            width: 88px;
+            height: 88px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 3px solid white;
+
+            background: white;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =====================================================
+           CIRCULAR LIGHT TRACK
+           ===================================================== */
+
+        .logo-light-ring {
+
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: 50%;
+
+            z-index: 3;
+
+            pointer-events: none;
+
+            /*
+             * Only one small bright light is visible.
+             * The rest of the ring remains transparent.
+             */
+            background:
+                conic-gradient(
+                    from 0deg,
+                    transparent 0deg,
+                    transparent 325deg,
+                    rgba(25, 199, 237, 0.05) 332deg,
+                    rgba(25, 199, 237, 0.25) 340deg,
+                    rgba(255, 255, 255, 0.95) 347deg,
+                    #19c7ed 352deg,
+                    rgba(25, 199, 237, 0.30) 357deg,
+                    transparent 360deg
+                );
+
+            -webkit-mask:
+                radial-gradient(
+                    farthest-side,
+                    transparent calc(100% - 4px),
+                    #000 calc(100% - 3px)
+                );
+
+            mask:
+                radial-gradient(
+                    farthest-side,
+                    transparent calc(100% - 4px),
+                    #000 calc(100% - 3px)
+                );
+
+            animation:
+                logoLightRotate 2.8s linear infinite;
+        }
+
+
+        @keyframes logoLightRotate {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        .brand-title {
+            color: white;
+        }
+
+
+        .main-title {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+
+        .main-title span {
+            color: #19c7ed;
+        }
+
+
+        .sub-title {
+            margin-top: 6px;
+
+            font-size: 12px;
+
+            letter-spacing: 3px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           QUOTE
+           ===================================================== */
+
+        .quote-area {
+            margin-top: 115px;
+            margin-left: 10px;
+        }
+
+
+        .quote {
+            font-size: 29px;
+
+            line-height: 1.45;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           FEATURES
+           ===================================================== */
+
+        .features {
+            margin-top: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            text-align: center;
+
+            gap: 15px;
+        }
+
+
+        .feature {
+            color: white;
+        }
+
+
+        .feature-icon {
+            height: 48px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .feature-icon svg {
+            width: 43px;
+            height: 43px;
+
+            fill: none;
+
+            stroke: white;
+
+            stroke-width: 1.7;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+        }
+
+
+        .feature p {
+            font-size: 16px;
+
+            font-weight: bold;
+
+            line-height: 1.3;
+        }
+
+
+        /* =====================================================
+           RIGHT LOGIN SIDE
+           ===================================================== */
+
+        .login-section {
+            width: 35%;
+
+            min-height: 850px;
+
+            background: white;
+
+            border-radius:
+                0 12px 12px 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 30px 35px;
+        }
+
+
+        .login-container {
+            width: 100%;
+
+            max-width: 360px;
+        }
+
+
+        /* =====================================================
+           WELCOME
+           ===================================================== */
+
+        .welcome h1 {
+            color: #073d78;
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+        }
+
+
+        .welcome p {
+            color: #6e9bc4;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 25px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =====================================================
+           FORM
+           ===================================================== */
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+
+        .form-label {
+            display: block;
+
+            color: #123f73;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+        }
+
+
+        .input-box {
+            position: relative;
+        }
+
+
+        .input-box input,
+        .input-box select {
+
+            width: 100%;
+
+            height: 54px;
+
+            border:
+                2px solid #dbe9f5;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            background: white;
+
+            color: #214b79;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .input-box input {
+            padding:
+                0 50px;
+        }
+
+
+        .input-box select {
+            padding:
+                0 45px 0 18px;
+
+            appearance: none;
+
+            cursor: pointer;
+        }
+
+
+        .input-box input:focus,
+        .input-box select:focus {
+
+            border-color: #078be8;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(7, 139, 232, 0.10);
+        }
+
+
+        .input-box input::placeholder {
+            color: #86afd0;
+        }
+
+
+        /* =====================================================
+           INPUT ICON
+           ===================================================== */
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 21px;
+
+            height: 21px;
+
+            color: #76a6ce;
+
+            pointer-events: none;
+        }
+
+
+        .input-icon svg {
+
+            width: 100%;
+
+            height: 100%;
+
+            fill: none;
+
+            stroke: currentColor;
+
+            stroke-width: 1.8;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+        }
+
+
+        /* =====================================================
+           PASSWORD EYE
+           ===================================================== */
+
+        .eye-button {
+
+            position: absolute;
+
+            right: 12px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 32px;
+
+            height: 32px;
+
+            border: none;
+
+            background: transparent;
+
+            color: #83afd0;
+
+            cursor: pointer;
+        }
+
+
+        .eye-button svg {
+
+            width: 21px;
+
+            height: 21px;
+
+            fill: none;
+
+            stroke: currentColor;
+
+            stroke-width: 1.8;
+        }
+
+
+        /* =====================================================
+           SELECT ARROW
+           ===================================================== */
+
+        .select-arrow {
+
+            position: absolute;
+
+            right: 16px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            pointer-events: none;
+
+            color: #4381b6;
+        }
+
+
+        .select-arrow svg {
+
+            width: 19px;
+
+            height: 19px;
+
+            fill: none;
+
+            stroke: currentColor;
+
+            stroke-width: 2.3;
+        }
+
+
+        /* =====================================================
+           REMEMBER / FORGOT
+           ===================================================== */
+
+        .login-options {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin:
+                15px 0 20px;
+        }
+
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #28547d;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .remember input {
+
+            width: 18px;
+
+            height: 18px;
+
+            accent-color: #078be8;
+        }
+
+
+        .forgot {
+
+            border: none;
+
+            background: none;
+
+            color: #078be8;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           LOGIN BUTTON
+           ===================================================== */
+
+        .login-button {
+
+            width: 100%;
+
+            height: 56px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #078be8;
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 17px
+                rgba(7, 139, 232, 0.20);
+
+            transition: 0.2s;
+        }
+
+
+        .login-button:hover {
+
+            background: #067dd3;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+           ===================================================== */
+
+        .message {
+
+            text-align: center;
+
+            min-height: 18px;
+
+            margin-top: 10px;
+
+            color: #078be8;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           CONTACT
+           ===================================================== */
+
+        .contact {
+
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #709cc3;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            line-height: 1.5;
+        }
+
+
+        .contact button {
+
+            border: none;
+
+            background: none;
+
+            color: #078be8;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           TABLET
+           ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .login-page {
+                padding: 15px;
+            }
+
+
+            .college-section {
+                width: 60%;
+
+                min-height: 760px;
+            }
+
+
+            .login-section {
+                width: 40%;
+
+                min-height: 760px;
+
+                padding:
+                    25px 25px;
+            }
+
+
+            .college-content {
+                min-height: 760px;
+
+                padding:
+                    40px 35px 35px;
+            }
+
+
+            .logo-wrapper {
+                width: 81px;
+                height: 81px;
+            }
+
+
+            .brand-logo {
+                width: 75px;
+
+                height: 75px;
+            }
+
+
+            .main-title {
+                font-size: 21px;
+            }
+
+
+            .quote {
+                font-size: 24px;
+            }
+
+
+            .login-container {
+                max-width: 330px;
+            }
+
+
+            .welcome h1 {
+                font-size: 29px;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .login-page {
+
+                padding: 0;
+
+                display: block;
+            }
+
+
+            .college-section {
+
+                width: 100%;
+
+                min-height: 430px;
+
+                border-radius: 0;
+            }
+
+
+            .college-content {
+
+                min-height: 430px;
+
+                padding:
+                    30px 25px;
+            }
+
+
+            .logo-wrapper {
+
+                width: 76px;
+                height: 76px;
+            }
+
+
+            .brand-logo {
+
+                width: 70px;
+
+                height: 70px;
+            }
+
+
+            .main-title {
+
+                font-size: 20px;
+            }
+
+
+            .quote-area {
+
+                margin-top: 60px;
+            }
+
+
+            .quote {
+
+                font-size: 23px;
+            }
+
+
+            .feature p {
+
+                font-size: 13px;
+            }
+
+
+            .login-section {
+
+                width: 100%;
+
+                min-height: auto;
+
+                border-radius: 0;
+
+                padding:
+                    40px 25px 50px;
+            }
+
+
+            .login-container {
+
+                max-width: 410px;
+            }
+
+
+            .welcome h1 {
+
+                font-size: 32px;
+            }
+
+
+            .welcome p {
+
+                font-size: 16px;
+            }
+
+
+            .input-box input,
+            .input-box select {
+
+                height: 58px;
+
+                font-size: 15px;
+            }
+
+
+            .login-button {
+
+                height: 60px;
+
+                font-size: 19px;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+           ===================================================== */
+
+        @media (max-width: 480px) {
+
+            .college-section {
+
+                min-height: 400px;
+            }
+
+
+            .college-content {
+
+                min-height: 400px;
+
+                padding:
+                    25px 20px 30px;
+            }
+
+
+            .brand {
+
+                gap: 12px;
+            }
+
+
+            .logo-wrapper {
+
+                width: 68px;
+                height: 68px;
+            }
+
+
+            .brand-logo {
+
+                width: 62px;
+
+                height: 62px;
+            }
+
+
+            .main-title {
+
+                font-size: 17px;
+            }
+
+
+            .sub-title {
+
+                font-size: 9px;
+
+                letter-spacing: 2px;
+            }
+
+
+            .quote-area {
+
+                margin-top: 50px;
+
+                margin-left: 5px;
+            }
+
+
+            .quote {
+
+                font-size: 21px;
+            }
+
+
+            .features {
+
+                gap: 8px;
+            }
+
+
+            .feature-icon svg {
+
+                width: 35px;
+
+                height: 35px;
+            }
+
+
+            .feature p {
+
+                font-size: 11px;
+            }
+
+
+            .login-section {
+
+                padding:
+                    35px 20px 45px;
+            }
+
+
+            .welcome h1 {
+
+                font-size: 29px;
+            }
+
+
+            .welcome p {
+
+                font-size: 14px;
+
+                margin-bottom: 25px;
+            }
+
+
+            .form-label {
+
+                font-size: 14px;
+            }
+
+
+            .input-box input,
+            .input-box select {
+
+                height: 55px;
+
+                font-size: 15px;
+            }
+
+
+            .remember,
+            .forgot {
+
+                font-size: 13px;
+            }
+
+
+            .login-button {
+
+                height: 56px;
+
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-page">
+
+
+    <!-- =====================================================
+         LEFT COLLEGE SECTION
+         ===================================================== -->
+
+    <section class="college-section">
+
+
+        <img
+            src="college.jpg"
+            alt="College"
+            class="college-image"
+        >
+
+
+        <div class="college-overlay"></div>
+
+
+        <div class="college-content">
+
+
+            <!-- COLLEGE BRAND -->
+
+            <div class="brand">
+
+
+                <div class="logo-wrapper">
+
+                    <img
+                        src="logo.jpg"
+                        alt="College Logo"
+                        class="brand-logo"
+                    >
+
+                    <div class="logo-light-ring"></div>
+
+                </div>
+
+
+                <div class="brand-title">
+
+
+                    <div class="main-title">
+
+                        ONLINE
+                        <span>EXAM</span>
+
+                    </div>
+
+
+                    <div class="sub-title">
+
+                        MANAGEMENT SYSTEM
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- QUOTE -->
+
+            <div class="quote-area">
+
+
+                <div class="quote">
+
+                    “Education is the key<br>
+                    to a better tomorrow.”
+
+                </div>
+
+
+            </div>
+
+
+            <!-- FEATURES -->
+
+            <div class="features">
+
+
+                <!-- SECURE -->
+
+                <div class="feature">
+
+
+                    <div class="feature-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M12 3L20 6V12C20 17 16.5 20 12 21C7.5 20 4 17 4 12V6L12 3Z"
+                            />
+
+                            <path
+                                d="M9 12L11 14L15 10"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <p>
+
+                        Secure<br>
+                        Platform
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- TRUSTED -->
+
+                <div class="feature">
+
+
+                    <div class="feature-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M3 21H21"/>
+
+                            <path d="M5 21V8H19V21"/>
+
+                            <path d="M3 8H21"/>
+
+                            <path
+                                d="M12 3L21 8H3L12 3Z"
+                            />
+
+                            <path d="M8 12V17"/>
+
+                            <path d="M12 12V17"/>
+
+                            <path d="M16 12V17"/>
+
+                        </svg>
+
+                    </div>
+
+
+                    <p>
+
+                        Trusted by<br>
+                        Institutions
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- SUPPORT -->
+
+                <div class="feature">
+
+
+                    <div class="feature-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M4 14A8 8 0 0 1 20 14"
+                            />
+
+                            <path
+                                d="M4 14V17C4 18.1 4.9 19 6 19H7V14H4Z"
+                            />
+
+                            <path
+                                d="M20 14V17C20 18.1 19.1 19 18 19H17V14H20Z"
+                            />
+
+                            <path d="M15 20H17"/>
+
+                        </svg>
+
+                    </div>
+
+
+                    <p>
+
+                        24/7<br>
+                        Support
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RIGHT LOGIN SECTION
+         ===================================================== -->
+
+    <section class="login-section">
+
+
+        <div class="login-container">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome">
+
+
+                <h1>
+
+                    Welcome Back!
+
+                </h1>
+
+
+                <p>
+
+                    Login to your account to continue.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                id="loginForm"
+                onsubmit="handleLogin(event)"
+            >
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+
+                    <label
+                        class="form-label"
+                        for="username"
+                    >
+
+                        Username / Email
+
+                    </label>
+
+
+                    <div class="input-box">
+
+
+                        <span class="input-icon">
+
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4"
+                                />
+
+                                <path
+                                    d="M4 21C4.8 17 7.4 15 12 15C16.6 15 19.2 17 20 21"
+                                />
+
+                            </svg>
+
+
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username / Email"
+                            autocomplete="username"
+                            required
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+
+                    <label
+                        class="form-label"
+                        for="password"
+                    >
+
+                        Password
+
+                    </label>
+
+
+                    <div class="input-box">
+
+
+                        <span class="input-icon">
+
+
+                            <svg viewBox="0 0 24 24">
+
+                                <rect
+                                    x="5"
+                                    y="10"
+                                    width="14"
+                                    height="10"
+                                    rx="2"
+                                />
+
+                                <path
+                                    d="M8 10V7A4 4 0 0 1 16 7V10"
+                                />
+
+                            </svg>
+
+
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="eye-button"
+                            onclick="togglePassword()"
+                            aria-label="Show or hide password"
+                        >
+
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M2.5 12C2.5 12 6 6 12 6C18 6 21.5 12 21.5 12C21.5 12 18 18 12 18C6 18 2.5 12 2.5 12Z"
+                                />
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="2.5"
+                                />
+
+                            </svg>
+
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- USER TYPE -->
+
+                <div class="form-group">
+
+
+                    <label
+                        class="form-label"
+                        for="userType"
+                    >
+
+                        Select User Type
+
+                    </label>
+
+
+                    <div class="input-box">
+
+
+                        <select
+                            id="userType"
+                            name="userType"
+                        >
+
+
+                            <option value="student">
+
+                                Student
+
+                            </option>
+
+
+                            <option value="staff">
+
+                                Staff
+
+                            </option>
+
+
+                        </select>
+
+
+                        <span class="select-arrow">
+
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="M6 9L12 15L18 9"
+                                />
+
+                            </svg>
+
+
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- REMEMBER / FORGOT -->
+
+                <div class="login-options">
+
+
+                    <label class="remember">
+
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                        >
+
+
+                        <span>
+
+                            Remember Me
+
+                        </span>
+
+
+                    </label>
+
+
+
+                    <button
+                        type="button"
+                        class="forgot"
+                        onclick="forgotPassword()"
+                    >
+
+                        Forgot Password?
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+
+                    Login
+
+                </button>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    class="message"
+                    id="message"
+                ></div>
+
+
+            </form>
+
+
+
+            <!-- CONTACT -->
+
+            <div class="contact">
+
+
+                Don't have an account?
+
+
+                <button
+                    type="button"
+                    onclick="contactAdmin()"
+                >
+
+                    Contact Administrator
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     EXISTING PROJECT SCRIPT
+     ===================================================== -->
+
+<script src="script.js"></script>
+
+
+<script>
+
+
+    /* =====================================================
+       SHOW / HIDE PASSWORD
+       ===================================================== */
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+        }
+        else {
+
+            password.type = "password";
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       LOGIN
+       ===================================================== */
+
+    function handleLogin(event) {
+
+        event.preventDefault();
+
+
+        const username =
+            document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        const role =
+            document
+                .getElementById("userType")
+                .value;
+
+
+        const message =
+            document.getElementById("message");
+
+
+
+        /* CHECK USERNAME / PASSWORD */
+
+        if (!username || !password) {
+
+            message.textContent =
+                "Please enter your username and password.";
+
+            return;
+
+        }
+
+
+
+        /* STUDENT LOGIN */
+
+        if (role === "student") {
+
+
+            if (typeof login === "function") {
+
+                login();
+
+            }
+            else {
+
+                message.textContent =
+                    "Student login function not found.";
+
+            }
+
+
+            return;
+
+        }
+
+
+
+        /* STAFF LOGIN */
+
+        if (role === "staff") {
+
+            window.location.href =
+                "admin.html";
+
+            return;
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       FORGOT PASSWORD
+       ===================================================== */
+
+    function forgotPassword() {
+
+        document
+            .getElementById("message")
+            .textContent =
+                "Please contact the administrator to reset your password.";
+
+    }
+
+
+
+    /* =====================================================
+       CONTACT ADMINISTRATOR
+       ===================================================== */
+
+    function contactAdmin() {
+
+        document
+            .getElementById("message")
+            .textContent =
+                "Please contact your system administrator.";
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

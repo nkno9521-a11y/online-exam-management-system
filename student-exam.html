@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Exam</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Student Exam</h1>
+
+        <div class="box">
+           <h2>Time Remaining: <span id="timer">30:00</span></h2>
+        </div>
+
+        <p>Available Questions</p>
+
+        <div id="questionContainer"></div>
+
+        <br>
+
+        <button onclick="submitExam()">
+            Submit Exam
+         </button>
+
+    </div>
+    <script>
+
+     if (localStorage.getItem("examSubmitted") === "true") {
+
+        alert("You have already submitted the exam!");
+
+        window.location.href = "result.html";
+    }
+
+    const questions =
+        JSON.parse(localStorage.getItem("questions")) || [];
+
+    const questionContainer =
+        document.getElementById("questionContainer");
+
+    questions.forEach((question, index) => {
+
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+            <h3>Question ${index + 1}</h3>
+
+            <p>${question.question}</p>
+
+            <label>
+                <input type="radio" name="question${index}" value="A">
+                ${question.optionA}
+            </label>
+            <br>
+
+            <label>
+                <input type="radio" name="question${index}" value="B">
+                ${question.optionB}
+            </label>
+            <br>
+
+            <label>
+                <input type="radio" name="question${index}" value="C">
+                ${question.optionC}
+            </label>
+            <br>
+
+            <label>
+                <input type="radio" name="question${index}" value="D">
+                ${question.optionD}
+            </label>
+
+            <hr>
+        `;
+
+        questionContainer.appendChild(div);
+
+    });
+
+    function submitExam() {
+
+        localStorage.setItem("examSubmitted", "true");
+
+        let score = 0;
+
+    questions.forEach((question, index) => {
+
+        const selectedAnswer =
+            document.querySelector(
+                `input[name="question${index}"]:checked`
+            );
+
+        if (selectedAnswer) {
+
+            if (
+                selectedAnswer.value ===
+                question.correctAnswer
+            ) {
+                score++;
+            }
+
+        }
+
+    });
+
+    localStorage.setItem("examScore", score);
+
+    const results =
+    JSON.parse(localStorage.getItem("results")) || [];
+
+const resultData = {
+    studentName: "Student",
+    examName: questions.length > 0
+        ? questions[0].examName
+        : "Exam",
+    score: score,
+    totalQuestions: questions.length
+};
+
+results.push(resultData);
+
+localStorage.setItem(
+    "results",
+    JSON.stringify(results)
+);
+
+    alert(
+        "Exam submitted!\n\nYour Score: " +
+        score +
+        " / " +
+        questions.length
+    );
+
+    window.location.href = "./result.html";
+
+}
+
+</script>
+
+<script>
+
+let timeLeft = 30 * 60;
+
+let timer = setInterval(function () {
+
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
+    document.getElementById("timer").innerHTML =
+        minutes + ":" + seconds;
+
+    timeLeft--;
+
+    if (timeLeft < 0) {
+        clearInterval(timer);
+        alert("Time is over!");
+        submitExam();
+    }
+
+}, 1000);
+
+</script>
+
+</body>
+</html>

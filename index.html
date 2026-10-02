@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Online Exam Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #061b3a;
+            color: white;
+        }
+
+        /* ================= HOME ================= */
+
+        .home {
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(2, 20, 48, 0.92),
+                    rgba(3, 49, 94, 0.68),
+                    rgba(0, 65, 110, 0.35)
+                ),
+                url("college.jpg") center center / cover no-repeat;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 5%;
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        /* ================= LOGO LIGHT EFFECT ================= */
+
+        .index-logo-wrapper {
+            position: relative;
+
+            width: 58px;
+            height: 58px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .index-logo {
+            width: 52px;
+            height: 52px;
+
+            object-fit: contain;
+
+            border-radius: 50%;
+
+            position: relative;
+            z-index: 2;
+
+            background: white;
+
+            border: 2px solid white;
+        }
+
+        .index-logo-light-ring {
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: 50%;
+
+            z-index: 3;
+
+            pointer-events: none;
+
+            background:
+                conic-gradient(
+                    from 0deg,
+
+                    transparent 0deg,
+                    transparent 315deg,
+
+                    rgba(25, 199, 237, 0.08) 325deg,
+
+                    rgba(25, 199, 237, 0.25) 333deg,
+
+                    rgba(74, 224, 255, 0.65) 340deg,
+
+                    rgba(255, 255, 255, 1) 347deg,
+
+                    #19c7ed 352deg,
+
+                    rgba(74, 224, 255, 0.85) 356deg,
+
+                    rgba(25, 199, 237, 0.20) 359deg,
+
+                    transparent 360deg
+                );
+
+            -webkit-mask:
+                radial-gradient(
+                    farthest-side,
+                    transparent calc(100% - 5px),
+                    #000 calc(100% - 3px)
+                );
+
+            mask:
+                radial-gradient(
+                    farthest-side,
+                    transparent calc(100% - 5px),
+                    #000 calc(100% - 3px)
+                );
+
+            filter:
+                drop-shadow(0 0 3px #19c7ed)
+                drop-shadow(0 0 7px rgba(25, 199, 237, 0.75))
+                drop-shadow(0 0 13px rgba(25, 199, 237, 0.45));
+
+            animation:
+                indexLogoLightRotate 2.4s linear infinite;
+        }
+
+        @keyframes indexLogoLightRotate {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: bold;
+
+            line-height: 1.2;
+
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span {
+            color: #35d9ff;
+        }
+
+        /* ================= NAV LINKS ================= */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+
+            gap: 32px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+            color: #35d9ff;
+        }
+
+        .nav-login {
+            padding: 11px 22px;
+
+            background: #078de0;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 8px 20px rgba(0, 141, 224, 0.25);
+        }
+
+        .nav-login:hover {
+            color: white !important;
+
+            background: #06a9ef;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: calc(100vh - 90px);
+
+            display: flex;
+            align-items: center;
+
+            padding: 40px 7% 120px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+
+            line-height: 1.08;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            display: block;
+
+            color: #36d8ff;
+        }
+
+        .hero-description {
+            max-width: 570px;
+
+            color: #dcecf7;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .hero-buttons {
+            display: flex;
+
+            gap: 14px;
+
+            margin-bottom: 45px;
+        }
+
+        .hero-buttons a {
+            text-decoration: none;
+
+            padding: 14px 27px;
+
+            border-radius: 28px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .get-started {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0799e5,
+                    #18c6ef
+                );
+
+            color: white;
+
+            box-shadow:
+                0 10px 25px rgba(0, 145, 220, 0.30);
+        }
+
+        .get-started:hover {
+            transform: translateY(-2px);
+        }
+
+        .learn-more {
+            color: white;
+
+            border:
+                1px solid rgba(255,255,255,0.45);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(8px);
+        }
+
+        .learn-more:hover {
+            background:
+                rgba(255,255,255,0.16);
+        }
+
+        /* ================= FEATURE CARDS ================= */
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            padding: 0 30px;
+
+            z-index: 5;
+        }
+
+        .feature-card {
+            min-height: 92px;
+
+            padding: 17px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(4, 39, 75, 0.55);
+
+            border:
+                1px solid rgba(255,255,255,0.22);
+
+            backdrop-filter: blur(10px);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #078edb;
+
+            border-radius: 50%;
+
+            margin-bottom: 8px;
+
+            font-size: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .feature-card p {
+            color: #c7ddea;
+
+            font-size: 11px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .features {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .index-logo-wrapper {
+                width: 50px;
+                height: 50px;
+            }
+
+            .index-logo {
+                width: 45px;
+                height: 45px;
+            }
+
+            .index-logo-light-ring {
+                filter:
+                    drop-shadow(0 0 3px #19c7ed)
+                    drop-shadow(0 0 6px rgba(25, 199, 237, 0.75))
+                    drop-shadow(0 0 10px rgba(25, 199, 237, 0.45));
+            }
+
+            .logo-text {
+                font-size: 11px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .nav-links a:not(.nav-login) {
+                display: none;
+            }
+
+            .nav-login {
+                padding: 9px 16px;
+            }
+
+            .hero {
+                min-height: auto;
+
+                padding:
+                    70px 25px 260px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .hero-buttons {
+                flex-wrap: wrap;
+            }
+
+            .hero-buttons a {
+                padding: 12px 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr 1fr;
+
+                padding: 0 15px;
+
+                bottom: 15px;
+            }
+
+            .feature-card {
+                min-height: 82px;
+
+                padding: 12px;
+            }
+
+            .feature-card h3 {
+                font-size: 12px;
+            }
+
+            .feature-card p {
+                font-size: 9px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <section class="home">
+
+        <!-- ================= NAVBAR ================= -->
+
+        <nav class="navbar">
+
+            <div class="logo-area">
+
+                <div class="index-logo-wrapper">
+
+                    <img
+                        src="logo.jpg"
+                        alt="College Logo"
+                        class="index-logo">
+
+                    <div class="index-logo-light-ring"></div>
+
+                </div>
+
+                <div class="logo-text">
+
+                    ONLINE <span>EXAM</span>
+                    <br>
+                    MANAGEMENT SYSTEM
+
+                </div>
+
+            </div>
+
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+                <a href="#features">
+                    Features
+                </a>
+
+                <a
+                    href="login.html"
+                    class="nav-login">
+
+                    Login
+
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- ================= HERO ================= -->
+
+        <div class="hero">
+
+            <div class="hero-content">
+
+                <h1>
+
+                    Online Exam
+
+                    <span>
+                        Management System
+                    </span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    A smart and secure platform to conduct
+                    examinations, manage students, and track
+                    results — all in one simple place.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="login.html"
+                        class="get-started">
+
+                        Get Started
+
+                    </a>
+
+
+                    <a
+                        href="#about"
+                        class="learn-more">
+
+                        Learn More
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FEATURE CARDS ================= -->
+
+        <div
+            class="features"
+            id="features">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    👨‍🎓
+                </div>
+
+                <h3>
+                    Easy to Use
+                </h3>
+
+                <p>
+                    Simple and intuitive interface
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Secure
+                </h3>
+
+                <p>
+                    Safe and reliable platform
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⏱️
+                </div>
+
+                <h3>
+                    Save Time
+                </h3>
+
+                <p>
+                    Automate exam process
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Better Results
+                </h3>
+
+                <p>
+                    Accurate and quick results
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ABOUT ANCHOR ================= -->
+
+        <div
+            id="about"
+            style="position:absolute; bottom:0;">
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

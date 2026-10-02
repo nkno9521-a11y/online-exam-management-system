@@ -1,0 +1,2870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Profile | Online Examination System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#1e293b;
+    min-height:100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:245px;
+    height:100vh;
+    background:#062d63;
+    color:white;
+    padding:20px 14px;
+    z-index:1000;
+    box-shadow:3px 0 15px rgba(0,0,0,.08);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:5px 10px 25px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    margin-bottom:22px;
+}
+
+.brand img{
+    width:42px;
+    height:42px;
+    object-fit:cover;
+    border-radius:10px;
+    background:white;
+}
+
+.brand-text h2{
+    font-size:16px;
+    font-weight:700;
+    line-height:1.2;
+}
+
+.brand-text span{
+    font-size:11px;
+    color:#b9d4f4;
+}
+
+.menu-title{
+    font-size:10px;
+    color:#91b4dc;
+    font-weight:700;
+    letter-spacing:1px;
+    padding:0 12px 10px;
+}
+
+.nav-menu{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:12px 13px;
+    border-radius:9px;
+    text-decoration:none;
+    color:#d9e8f8;
+    font-size:14px;
+    font-weight:500;
+    transition:.2s ease;
+}
+
+.nav-item svg{
+    width:19px;
+    height:19px;
+    stroke:currentColor;
+    flex-shrink:0;
+}
+
+.nav-item:hover{
+    background:rgba(255,255,255,.09);
+    color:white;
+}
+
+.nav-item.active{
+    background:#0878d1;
+    color:white;
+    box-shadow:0 5px 14px rgba(8,120,209,.28);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:245px;
+    min-height:100vh;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:72px;
+    background:white;
+    border-bottom:1px solid #e4eaf1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:900;
+}
+
+.page-title h1{
+    font-size:21px;
+    color:#102a43;
+    margin-bottom:3px;
+}
+
+.page-title p{
+    font-size:12px;
+    color:#7b8794;
+}
+
+.top-user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.top-avatar{
+    width:39px;
+    height:39px;
+    border-radius:50%;
+    background:#e8f2fc;
+    color:#0878d1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:14px;
+    border:1px solid #d4e6f7;
+}
+
+.top-user-info strong{
+    display:block;
+    font-size:13px;
+    color:#26384a;
+}
+
+.top-user-info span{
+    font-size:11px;
+    color:#8a98a8;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:30px;
+    max-width:1500px;
+    margin:auto;
+}
+
+/* =========================
+   PROFILE HERO
+========================= */
+
+.profile-hero{
+    background:linear-gradient(120deg,#062d63,#0878d1);
+    border-radius:15px;
+    padding:28px 30px;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    box-shadow:0 8px 25px rgba(6,45,99,.16);
+    margin-bottom:25px;
+}
+
+.hero-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.profile-avatar{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+    background:white;
+    color:#0878d1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:700;
+    border:4px solid rgba(255,255,255,.25);
+    flex-shrink:0;
+}
+
+.hero-info h2{
+    font-size:24px;
+    margin-bottom:7px;
+}
+
+.hero-info p{
+    font-size:13px;
+    color:#d8eaff;
+    margin-bottom:8px;
+}
+
+.student-id{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:white;
+    background:rgba(255,255,255,.12);
+    padding:6px 10px;
+    border-radius:6px;
+}
+
+.student-id svg{
+    width:14px;
+    height:14px;
+}
+
+.status-badge{
+    background:#e8f8ef;
+    color:#16834b;
+    font-size:12px;
+    font-weight:700;
+    padding:8px 13px;
+    border-radius:20px;
+    white-space:nowrap;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.main-grid{
+    display:grid;
+    grid-template-columns:minmax(0,2fr) minmax(300px,1fr);
+    gap:22px;
+}
+
+.left-column,
+.right-column{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:white;
+    border:1px solid #e5eaf0;
+    border-radius:13px;
+    padding:22px;
+    box-shadow:0 4px 15px rgba(15,23,42,.035);
+}
+
+.card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.card-title-icon{
+    width:36px;
+    height:36px;
+    border-radius:9px;
+    background:#eaf4fd;
+    color:#0878d1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.card-title-icon svg{
+    width:19px;
+    height:19px;
+    stroke:currentColor;
+}
+
+.card-title h3{
+    font-size:16px;
+    color:#172b4d;
+}
+
+.card-title p{
+    font-size:11px;
+    color:#8a98a8;
+    margin-top:3px;
+}
+
+/* =========================
+   INFORMATION
+========================= */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px 25px;
+}
+
+.info-item{
+    min-width:0;
+}
+
+.info-label{
+    display:block;
+    font-size:11px;
+    color:#8996a5;
+    margin-bottom:6px;
+}
+
+.info-value{
+    font-size:13px;
+    font-weight:600;
+    color:#26384a;
+    word-break:break-word;
+}
+
+/* =========================
+   STATISTICS
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.stat-box{
+    border:1px solid #e8edf3;
+    border-radius:10px;
+    padding:16px;
+    background:#fbfcfe;
+}
+
+.stat-icon{
+    width:32px;
+    height:32px;
+    background:#edf6ff;
+    color:#0878d1;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:11px;
+}
+
+.stat-icon svg{
+    width:17px;
+    height:17px;
+    stroke:currentColor;
+}
+
+.stat-value{
+    font-size:21px;
+    font-weight:700;
+    color:#132f52;
+}
+
+.stat-label{
+    font-size:11px;
+    color:#8996a5;
+    margin-top:4px;
+}
+
+/* =========================
+   ACCOUNT
+========================= */
+
+.account-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.account-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:13px 0;
+    border-bottom:1px solid #edf0f4;
+}
+
+.account-row:last-child{
+    border-bottom:none;
+    padding-bottom:0;
+}
+
+.account-row:first-child{
+    padding-top:0;
+}
+
+.account-label{
+    font-size:12px;
+    color:#7d8997;
+}
+
+.account-value{
+    font-size:12px;
+    font-weight:600;
+    color:#26384a;
+    text-align:right;
+}
+
+.account-status{
+    color:#16834b;
+    background:#eaf8f0;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:11px;
+}
+
+/* =========================
+   EXAM TABLE
+========================= */
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+.exam-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:560px;
+}
+
+.exam-table th{
+    text-align:left;
+    font-size:11px;
+    color:#7b8794;
+    background:#f7f9fc;
+    padding:12px;
+    font-weight:700;
+    border-bottom:1px solid #e7ebf0;
+}
+
+.exam-table td{
+    padding:13px 12px;
+    font-size:12px;
+    color:#35495e;
+    border-bottom:1px solid #edf0f4;
+}
+
+.exam-table tr:last-child td{
+    border-bottom:none;
+}
+
+.exam-name{
+    font-weight:600;
+    color:#172b4d;
+}
+
+.score{
+    font-weight:700;
+    color:#0878d1;
+}
+
+.result-status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:14px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.result-status.completed{
+    color:#16834b;
+    background:#eaf8f0;
+}
+
+.no-data{
+    text-align:center;
+    padding:25px 10px;
+    color:#98a3af;
+    font-size:12px;
+}
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activity-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.activity-item{
+    display:flex;
+    gap:12px;
+    padding:13px 0;
+    border-bottom:1px solid #edf0f4;
+}
+
+.activity-item:last-child{
+    border-bottom:none;
+    padding-bottom:0;
+}
+
+.activity-item:first-child{
+    padding-top:0;
+}
+
+.activity-icon{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    background:#edf6ff;
+    color:#0878d1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.activity-icon svg{
+    width:16px;
+    height:16px;
+    stroke:currentColor;
+}
+
+.activity-text strong{
+    display:block;
+    color:#35495e;
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.activity-text span{
+    font-size:10px;
+    color:#98a3af;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+.btn{
+    border:none;
+    text-decoration:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:11px 16px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s ease;
+}
+
+.btn svg{
+    width:16px;
+    height:16px;
+    stroke:currentColor;
+}
+
+.btn-primary{
+    background:#0878d1;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#066ab9;
+}
+
+.btn-secondary{
+    background:white;
+    color:#34495e;
+    border:1px solid #dbe2e9;
+}
+
+.btn-secondary:hover{
+    background:#f7f9fc;
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+.mobile-menu{
+    display:none;
+    width:38px;
+    height:38px;
+    border:1px solid #dce4ec;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+    align-items:center;
+    justify-content:center;
+}
+
+.mobile-menu svg{
+    width:20px;
+    height:20px;
+    stroke:#183b61;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+
+    .right-column{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        align-items:start;
+    }
+
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s ease;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .mobile-menu{
+        display:flex;
+    }
+
+    .topbar{
+        padding:0 18px;
+    }
+
+    .page-title{
+        display:none;
+    }
+
+    .content{
+        padding:20px 16px;
+    }
+
+    .profile-hero{
+        padding:22px;
+    }
+
+    .right-column{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .top-user-info{
+        display:none;
+    }
+
+    .profile-hero{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .hero-left{
+        width:100%;
+    }
+
+    .profile-avatar{
+        width:68px;
+        height:68px;
+        font-size:23px;
+    }
+
+    .hero-info h2{
+        font-size:19px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <img src="logo.jpg" alt="Logo">
+
+        <div class="brand-text">
+
+            <h2>Online Examination</h2>
+
+            <span>Student Portal</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="menu-title">
+        MAIN MENU
+    </div>
+
+
+    <nav class="nav-menu">
+
+        <a href="dashboard.html" class="nav-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <path d="M3 10.5L12 3l9 7.5"></path>
+                <path d="M5 9.5V21h14V9.5"></path>
+                <path d="M9 21v-7h6v7"></path>
+            </svg>
+
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="available-exams.html" class="nav-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+                <path d="M8 7h8"></path>
+                <path d="M8 11h8"></path>
+                <path d="M8 15h5"></path>
+            </svg>
+
+            <span>Available Exams</span>
+
+        </a>
+
+
+        <a href="result.html#my-results" class="nav-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <path d="M4 19V5"></path>
+                <path d="M4 19h16"></path>
+                <path d="M8 16v-4"></path>
+                <path d="M12 16V8"></path>
+                <path d="M16 16v-6"></path>
+            </svg>
+
+            <span>My Results</span>
+
+        </a>
+
+
+        <a href="exam-history.html" class="nav-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+            </svg>
+
+            <span>Exam History</span>
+
+        </a>
+
+
+        <a href="profile.html" class="nav-item active">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6"></path>
+            </svg>
+
+            <span>My Profile</span>
+
+        </a>
+
+    </nav>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div style="display:flex;align-items:center;gap:12px;">
+
+            <button
+                class="mobile-menu"
+                onclick="toggleSidebar()">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="2">
+
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h16"></path>
+
+                </svg>
+
+            </button>
+
+
+            <div class="page-title">
+
+                <h1>My Profile</h1>
+
+                <p>
+                    View and manage your student account information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="top-user">
+
+            <div
+                class="top-avatar"
+                id="topAvatar">
+                S
+            </div>
+
+
+            <div class="top-user-info">
+
+                <strong id="topUserName">
+                    Student
+                </strong>
+
+                <span>
+                    Student Account
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+        <!-- PROFILE HERO -->
+
+        <div class="profile-hero">
+
+            <div class="hero-left">
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar">
+                    S
+                </div>
+
+
+                <div class="hero-info">
+
+                    <h2 id="profileName">
+                        Student Name
+                    </h2>
+
+                    <p id="profileCourse">
+                        Course not available
+                    </p>
+
+
+                    <div class="student-id">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2">
+
+                            <rect
+                                x="3"
+                                y="5"
+                                width="18"
+                                height="14"
+                                rx="2">
+                            </rect>
+
+                            <path d="M7 9h10"></path>
+
+                            <path d="M7 13h6"></path>
+
+                        </svg>
+
+
+                        <span id="profileStudentId">
+                            Student ID
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="status-badge"
+                id="profileStatus">
+                Active
+            </div>
+
+        </div>
+
+
+
+        <!-- MAIN GRID -->
+
+        <div class="main-grid">
+
+
+            <!-- LEFT COLUMN -->
+
+            <div class="left-column">
+
+
+                <!-- PERSONAL INFORMATION -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <div class="card-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <circle
+                                        cx="12"
+                                        cy="8"
+                                        r="4">
+                                    </circle>
+
+                                    <path
+                                        d="M4 21c.8-4.1 3.4-6 8-6s7.2 1.9 8 6">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Personal Information
+                                </h3>
+
+                                <p>
+                                    Your registered student details
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-grid">
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Student Name
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoName">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Email / Gmail
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoEmail">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Phone Number
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoPhone">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Department
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoDepartment">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Course
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoCourse">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Year
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoYear">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Semester
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoSemester">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span class="info-label">
+                                Institution
+                            </span>
+
+                            <span
+                                class="info-value"
+                                id="infoCollege">
+                                -
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EXAM HISTORY -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <div class="card-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9">
+                                    </circle>
+
+                                    <path d="M12 7v5l3 2"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Exam History
+                                </h3>
+
+                                <p>
+                                    Your recently attended examinations
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrap">
+
+                        <table class="exam-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Exam</th>
+
+                                    <th>Date</th>
+
+                                    <th>Score</th>
+
+                                    <th>Status</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="examHistoryBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RECENT ACTIVITY -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <div class="card-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <path d="M12 6v6l4 2"></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9">
+                                    </circle>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Recent Activity
+                                </h3>
+
+                                <p>
+                                    Your recent account activity
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="activity-list"
+                        id="activityList">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RIGHT COLUMN -->
+
+            <div class="right-column">
+
+
+                <!-- EXAM STATISTICS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <div class="card-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <path d="M4 19V5"></path>
+                                    <path d="M4 19h16"></path>
+                                    <path d="M8 16v-4"></path>
+                                    <path d="M12 16V8"></path>
+                                    <path d="M16 16v-6"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Exam Statistics
+                                </h3>
+
+                                <p>
+                                    Your performance overview
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stats-grid">
+
+
+                        <div class="stat-box">
+
+                            <div class="stat-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <rect
+                                        x="4"
+                                        y="3"
+                                        width="16"
+                                        height="18"
+                                        rx="2">
+                                    </rect>
+
+                                    <path d="M8 7h8"></path>
+                                    <path d="M8 11h8"></path>
+                                    <path d="M8 15h5"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statAttended">
+                                0
+                            </div>
+
+                            <div class="stat-label">
+                                Exams Attended
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-box">
+
+                            <div class="stat-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <path d="M5 12l4 4L19 6"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statCompleted">
+                                0
+                            </div>
+
+                            <div class="stat-label">
+                                Completed
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-box">
+
+                            <div class="stat-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <path d="M12 3v18"></path>
+                                    <path d="M3 12h18"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statAverage">
+                                0%
+                            </div>
+
+                            <div class="stat-label">
+                                Average Score
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-box">
+
+                            <div class="stat-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <path d="M12 3l2.7 5.5 6.3.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.4l6.3-.9L12 3z">
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="statHighest">
+                                0%
+                            </div>
+
+                            <div class="stat-label">
+                                Highest Score
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ACCOUNT INFORMATION -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <div class="card-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <rect
+                                        x="3"
+                                        y="5"
+                                        width="18"
+                                        height="14"
+                                        rx="2">
+                                    </rect>
+
+                                    <path d="M8 9h8"></path>
+                                    <path d="M8 13h5"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Account Information
+                                </h3>
+
+                                <p>
+                                    Account status and details
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-list">
+
+
+                        <div class="account-row">
+
+                            <span class="account-label">
+                                Account Status
+                            </span>
+
+                            <span
+                                class="account-value account-status"
+                                id="accountStatus">
+                                Active
+                            </span>
+
+                        </div>
+
+
+                        <div class="account-row">
+
+                            <span class="account-label">
+                                User Type
+                            </span>
+
+                            <span class="account-value">
+                                Student
+                            </span>
+
+                        </div>
+
+
+                        <div class="account-row">
+
+                            <span class="account-label">
+                                Joined Date
+                            </span>
+
+                            <span
+                                class="account-value"
+                                id="joinedDate">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="account-row">
+
+                            <span class="account-label">
+                                Last Active
+                            </span>
+
+                            <span
+                                class="account-value"
+                                id="lastActive">
+                                Today
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <div class="card-title-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke-width="2">
+
+                                    <path d="M12 3v18"></path>
+                                    <path d="M3 12h18"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <h3>
+                                    Quick Actions
+                                </h3>
+
+                                <p>
+                                    Navigate to other sections
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <a
+                            href="dashboard.html"
+                            class="btn btn-primary">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke-width="2">
+
+                                <path d="M3 10.5L12 3l9 7.5"></path>
+                                <path d="M5 9.5V21h14V9.5"></path>
+
+                            </svg>
+
+                            Dashboard
+
+                        </a>
+
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="logout()">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke-width="2">
+
+                                <path d="M10 17l5-5-5-5"></path>
+                                <path d="M15 12H3"></path>
+                                <path d="M21 3v18"></path>
+
+                            </svg>
+
+                            Logout
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function readJSON(key, fallback){
+
+    try{
+
+        const value = localStorage.getItem(key);
+
+        if(!value){
+            return fallback;
+        }
+
+        const parsed = JSON.parse(value);
+
+        return parsed;
+
+    }
+    catch(error){
+
+        return fallback;
+
+    }
+
+}
+
+
+function getValue(object, keys, fallback=""){
+
+    if(!object){
+        return fallback;
+    }
+
+    for(const key of keys){
+
+        if(
+            object[key] !== undefined &&
+            object[key] !== null &&
+            String(object[key]).trim() !== ""
+        ){
+
+            return object[key];
+
+        }
+
+    }
+
+    return fallback;
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function getInitial(name){
+
+    if(!name){
+        return "S";
+    }
+
+    const words =
+        String(name)
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    if(words.length >= 2){
+
+        return (
+            words[0].charAt(0) +
+            words[words.length - 1].charAt(0)
+        ).toUpperCase();
+
+    }
+
+    return words[0]
+        .charAt(0)
+        .toUpperCase();
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+        return "—";
+    }
+
+    const date = new Date(value);
+
+    if(isNaN(date.getTime())){
+        return String(value);
+    }
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOGGED-IN STUDENT
+========================================================= */
+
+const loggedStudentName =
+    localStorage.getItem("studentName") ||
+    localStorage.getItem("name") ||
+    "Student";
+
+
+const loggedStudentEmail =
+    localStorage.getItem("studentEmail") ||
+    localStorage.getItem("email") ||
+    localStorage.getItem("gmail") ||
+    "";
+
+
+const loggedStudentId =
+    localStorage.getItem("studentId") ||
+    localStorage.getItem("registerNumber") ||
+    localStorage.getItem("regNo") ||
+    "";
+
+
+/* =========================================================
+   ADMIN STUDENT DATA
+========================================================= */
+
+const students =
+    readJSON("students",[]);
+
+
+let currentStudent = null;
+
+
+if(Array.isArray(students)){
+
+    currentStudent =
+        students.find(student => {
+
+            const studentName =
+                getValue(
+                    student,
+                    [
+                        "studentName",
+                        "name",
+                        "fullName"
+                    ],
+                    ""
+                );
+
+
+            const studentEmail =
+                getValue(
+                    student,
+                    [
+                        "email",
+                        "studentEmail",
+                        "gmail"
+                    ],
+                    ""
+                );
+
+
+            const studentId =
+                getValue(
+                    student,
+                    [
+                        "studentId",
+                        "id",
+                        "registerNumber",
+                        "regNo"
+                    ],
+                    ""
+                );
+
+
+            /* Match by ID */
+
+            if(
+                loggedStudentId &&
+                studentId &&
+                String(loggedStudentId)
+                    .trim()
+                    .toLowerCase() ===
+                String(studentId)
+                    .trim()
+                    .toLowerCase()
+            ){
+
+                return true;
+
+            }
+
+
+            /* Match by Email */
+
+            if(
+                loggedStudentEmail &&
+                studentEmail &&
+                String(loggedStudentEmail)
+                    .trim()
+                    .toLowerCase() ===
+                String(studentEmail)
+                    .trim()
+                    .toLowerCase()
+            ){
+
+                return true;
+
+            }
+
+
+            /* Match by Name */
+
+            if(
+                studentName &&
+                String(studentName)
+                    .trim()
+                    .toLowerCase() ===
+                String(loggedStudentName)
+                    .trim()
+                    .toLowerCase()
+            ){
+
+                return true;
+
+            }
+
+
+            return false;
+
+        }) || null;
+
+}
+
+
+/* =========================================================
+   FINAL STUDENT PROFILE
+========================================================= */
+
+const student = {
+
+    name:
+        getValue(
+            currentStudent,
+            [
+                "studentName",
+                "name",
+                "fullName"
+            ],
+            loggedStudentName
+        ),
+
+
+    id:
+        getValue(
+            currentStudent,
+            [
+                "studentId",
+                "id",
+                "registerNumber",
+                "regNo"
+            ],
+            loggedStudentId ||
+            "Not Available"
+        ),
+
+
+    email:
+        getValue(
+            currentStudent,
+            [
+                "email",
+                "studentEmail",
+                "gmail"
+            ],
+            loggedStudentEmail ||
+            "Not Available"
+        ),
+
+
+    phone:
+        getValue(
+            currentStudent,
+            [
+                "phone",
+                "mobile",
+                "phoneNumber",
+                "studentPhone"
+            ],
+            localStorage.getItem("studentPhone") ||
+            localStorage.getItem("phone") ||
+            "Not Available"
+        ),
+
+
+    department:
+        getValue(
+            currentStudent,
+            [
+                "department",
+                "studentDepartment"
+            ],
+            localStorage.getItem("studentDepartment") ||
+            localStorage.getItem("department") ||
+            "Not Available"
+        ),
+
+
+    course:
+        getValue(
+            currentStudent,
+            [
+                "course",
+                "program",
+                "studentCourse"
+            ],
+            localStorage.getItem("studentCourse") ||
+            localStorage.getItem("course") ||
+            "Not Available"
+        ),
+
+
+    year:
+        getValue(
+            currentStudent,
+            [
+                "year",
+                "studentYear"
+            ],
+            localStorage.getItem("studentYear") ||
+            localStorage.getItem("year") ||
+            "Not Available"
+        ),
+
+
+    semester:
+        getValue(
+            currentStudent,
+            [
+                "semester",
+                "studentSemester"
+            ],
+            localStorage.getItem("studentSemester") ||
+            localStorage.getItem("semester") ||
+            "Not Available"
+        ),
+
+
+    college:
+        getValue(
+            currentStudent,
+            [
+                "college",
+                "institution",
+                "studentCollege"
+            ],
+            localStorage.getItem("studentCollege") ||
+            localStorage.getItem("college") ||
+            "Not Available"
+        ),
+
+
+    status:
+        getValue(
+            currentStudent,
+            [
+                "status",
+                "studentStatus"
+            ],
+            "Active"
+        ),
+
+
+    joinedDate:
+        getValue(
+            currentStudent,
+            [
+                "joinedDate",
+                "createdAt",
+                "registeredDate",
+                "date"
+            ],
+            ""
+        )
+
+};
+
+
+/* =========================================================
+   DISPLAY PROFILE INFORMATION
+========================================================= */
+
+const initials =
+    getInitial(student.name);
+
+
+document.getElementById("profileName")
+    .textContent = student.name;
+
+
+document.getElementById("topUserName")
+    .textContent = student.name;
+
+
+document.getElementById("profileAvatar")
+    .textContent = initials;
+
+
+document.getElementById("topAvatar")
+    .textContent = initials;
+
+
+document.getElementById("profileStudentId")
+    .textContent = student.id;
+
+
+let courseDepartment =
+    student.course;
+
+
+if(
+    student.department &&
+    student.department !== "Not Available"
+){
+
+    courseDepartment +=
+        " • " +
+        student.department;
+
+}
+
+
+document.getElementById("profileCourse")
+    .textContent = courseDepartment;
+
+
+document.getElementById("infoName")
+    .textContent = student.name;
+
+
+document.getElementById("infoEmail")
+    .textContent = student.email;
+
+
+document.getElementById("infoPhone")
+    .textContent = student.phone;
+
+
+document.getElementById("infoDepartment")
+    .textContent = student.department;
+
+
+document.getElementById("infoCourse")
+    .textContent = student.course;
+
+
+document.getElementById("infoYear")
+    .textContent = student.year;
+
+
+document.getElementById("infoSemester")
+    .textContent = student.semester;
+
+
+document.getElementById("infoCollege")
+    .textContent = student.college;
+
+
+document.getElementById("profileStatus")
+    .textContent = student.status;
+
+
+document.getElementById("accountStatus")
+    .textContent = student.status;
+
+
+document.getElementById("joinedDate")
+    .textContent = formatDate(student.joinedDate);
+
+
+/* =========================================================
+   GET ALL EXAM RESULTS
+========================================================= */
+
+const allResults =
+    readJSON("results",[]);
+
+
+let myResults = [];
+
+
+if(Array.isArray(allResults)){
+
+    myResults =
+        allResults.filter(result => {
+
+            const resultName =
+                getValue(
+                    result,
+                    [
+                        "studentName",
+                        "name",
+                        "fullName",
+                        "student"
+                    ],
+                    ""
+                );
+
+
+            const resultEmail =
+                getValue(
+                    result,
+                    [
+                        "email",
+                        "studentEmail",
+                        "gmail"
+                    ],
+                    ""
+                );
+
+
+            const resultId =
+                getValue(
+                    result,
+                    [
+                        "studentId",
+                        "registerNumber",
+                        "regNo"
+                    ],
+                    ""
+                );
+
+
+            /* Match Student ID */
+
+            if(
+                student.id !== "Not Available" &&
+                resultId &&
+                String(resultId)
+                    .trim()
+                    .toLowerCase() ===
+                String(student.id)
+                    .trim()
+                    .toLowerCase()
+            ){
+
+                return true;
+
+            }
+
+
+            /* Match Email */
+
+            if(
+                student.email !== "Not Available" &&
+                resultEmail &&
+                String(resultEmail)
+                    .trim()
+                    .toLowerCase() ===
+                String(student.email)
+                    .trim()
+                    .toLowerCase()
+            ){
+
+                return true;
+
+            }
+
+
+            /* Match Name */
+
+            if(
+                resultName &&
+                String(resultName)
+                    .trim()
+                    .toLowerCase() ===
+                String(student.name)
+                    .trim()
+                    .toLowerCase()
+            ){
+
+                return true;
+
+            }
+
+
+            return false;
+
+        });
+
+}
+
+
+/* =========================================================
+   SORT NEWEST FIRST
+========================================================= */
+
+myResults.sort((a,b) => {
+
+    const dateA =
+        new Date(
+            a.createdAt ||
+            a.date ||
+            a.completedAt ||
+            0
+        ).getTime();
+
+
+    const dateB =
+        new Date(
+            b.createdAt ||
+            b.date ||
+            b.completedAt ||
+            0
+        ).getTime();
+
+
+    return dateB - dateA;
+
+});
+
+
+/* =========================================================
+   RESULT HELPERS
+========================================================= */
+
+function getResultExamName(result){
+
+    return getValue(
+        result,
+        [
+            "examName",
+            "exam",
+            "testName",
+            "title",
+            "name"
+        ],
+        "Online Examination"
+    );
+
+}
+
+
+function getResultDate(result){
+
+    return getValue(
+        result,
+        [
+            "date",
+            "completedAt",
+            "createdAt",
+            "examDate"
+        ],
+        ""
+    );
+
+}
+
+
+function getResultTotal(result){
+
+    return Number(
+        result.totalQuestions ??
+        result.total ??
+        result.questions ??
+        0
+    ) || 0;
+
+}
+
+
+function getResultScore(result){
+
+    return Number(
+        result.score ??
+        result.correct ??
+        result.marks ??
+        0
+    ) || 0;
+
+}
+
+
+function getResultPercentage(result){
+
+    let percentage =
+        Number(
+            result.percentage ??
+            result.percent ??
+            0
+        ) || 0;
+
+
+    if(
+        percentage === 0 &&
+        getResultTotal(result) > 0
+    ){
+
+        percentage =
+            (
+                getResultScore(result) /
+                getResultTotal(result)
+            ) * 100;
+
+    }
+
+
+    return Math.round(
+        percentage * 100
+    ) / 100;
+
+}
+
+
+/* =========================================================
+   EXAM HISTORY
+========================================================= */
+
+const historyBody =
+    document.getElementById(
+        "examHistoryBody"
+    );
+
+
+if(myResults.length === 0){
+
+    historyBody.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="4"
+                class="no-data">
+
+                No exam history available yet.
+
+            </td>
+
+        </tr>
+
+    `;
+
+}
+else{
+
+    myResults.forEach(result => {
+
+        const examName =
+            getResultExamName(result);
+
+
+        const date =
+            getResultDate(result);
+
+
+        const percentage =
+            getResultPercentage(result);
+
+
+        const status =
+            result.status ||
+            "Completed";
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+
+                <span class="exam-name">
+
+                    ${escapeHTML(examName)}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHTML(
+                    formatDate(date)
+                )}
+
+            </td>
+
+
+            <td>
+
+                <span class="score">
+
+                    ${percentage}%
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span class="result-status completed">
+
+                    ${escapeHTML(
+                        String(status).toUpperCase()
+                    )}
+
+                </span>
+
+            </td>
+
+        `;
+
+
+        historyBody.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+const scores =
+    myResults.map(
+        result =>
+            getResultPercentage(result)
+    );
+
+
+const attended =
+    myResults.length;
+
+
+const completed =
+    myResults.filter(result => {
+
+        const status =
+            String(
+                result.status ||
+                "Completed"
+            )
+            .trim()
+            .toLowerCase();
+
+
+        return (
+            status === "completed" ||
+            status === "complete" ||
+            status === "submitted" ||
+            status === "finished"
+        );
+
+    }).length;
+
+
+const average =
+    scores.length > 0
+        ? Math.round(
+            scores.reduce(
+                (sum, score) =>
+                    sum + score,
+                0
+            ) / scores.length
+        )
+        : 0;
+
+
+const highest =
+    scores.length > 0
+        ? Math.max(...scores)
+        : 0;
+
+
+document.getElementById(
+    "statAttended"
+).textContent =
+    attended;
+
+
+document.getElementById(
+    "statCompleted"
+).textContent =
+    completed;
+
+
+document.getElementById(
+    "statAverage"
+).textContent =
+    average + "%";
+
+
+document.getElementById(
+    "statHighest"
+).textContent =
+    highest + "%";
+
+
+/* =========================================================
+   RECENT ACTIVITY
+========================================================= */
+
+const activityList =
+    document.getElementById(
+        "activityList"
+    );
+
+
+if(myResults.length === 0){
+
+    activityList.innerHTML = `
+
+        <div class="activity-item">
+
+            <div class="activity-icon">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2">
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9">
+                    </circle>
+
+                    <path d="M12 8v4l3 2"></path>
+
+                </svg>
+
+            </div>
+
+
+            <div class="activity-text">
+
+                <strong>
+                    No recent exam activity
+                </strong>
+
+                <span>
+                    Your activity will appear here after attending an exam.
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+else{
+
+    myResults
+        .slice(0,4)
+        .forEach(result => {
+
+            const examName =
+                getResultExamName(result);
+
+
+            const date =
+                getResultDate(result);
+
+
+            const percentage =
+                getResultPercentage(result);
+
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "activity-item";
+
+
+            item.innerHTML = `
+
+                <div class="activity-icon">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2">
+
+                        <path d="M5 12l4 4L19 6"></path>
+
+                    </svg>
+
+                </div>
+
+
+                <div class="activity-text">
+
+                    <strong>
+
+                        Completed
+                        ${escapeHTML(examName)}
+
+                    </strong>
+
+
+                    <span>
+
+                        Score:
+                        ${percentage}%
+                        •
+                        ${escapeHTML(
+                            formatDate(date)
+                        )}
+
+                    </span>
+
+                </div>
+
+            `;
+
+
+            activityList.appendChild(item);
+
+        });
+
+}
+
+
+/* =========================================================
+   LAST ACTIVE
+========================================================= */
+
+const previousLastActive =
+    localStorage.getItem(
+        "lastActive"
+    );
+
+
+document.getElementById(
+    "lastActive"
+).textContent =
+    previousLastActive || "Today";
+
+
+localStorage.setItem(
+    "lastActive",
+    "Today"
+);
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout(){
+
+    localStorage.removeItem(
+        "studentName"
+    );
+
+    localStorage.removeItem(
+        "studentEmail"
+    );
+
+    localStorage.removeItem(
+        "studentId"
+    );
+
+    localStorage.removeItem(
+        "studentPhone"
+    );
+
+    localStorage.removeItem(
+        "studentDepartment"
+    );
+
+    localStorage.removeItem(
+        "studentCourse"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================================================
+   AUTO REFRESH RESULTS
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function(event){
+
+        if(
+            event.key === "results" ||
+            event.key === "students"
+        ){
+
+            location.reload();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172b4d;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 245px;
+            height: 100vh;
+
+            background: #062d63;
+            color: white;
+
+            padding: 20px 14px;
+
+            z-index: 1000;
+
+            box-shadow: 3px 0 15px rgba(0,0,0,0.08);
+
+            transition: 0.25s ease;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 5px 10px 25px;
+
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+
+            margin-bottom: 22px;
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            background: white;
+        }
+
+        .brand-text h2 {
+            font-size: 16px;
+            line-height: 1.2;
+        }
+
+        .brand-text span {
+            display: block;
+
+            font-size: 11px;
+
+            color: #b9d4f4;
+
+            margin-top: 3px;
+        }
+
+        .menu-title {
+            font-size: 10px;
+
+            color: #91b4dc;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            padding: 0 12px 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+
+            gap: 6px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px 13px;
+
+            border-radius: 9px;
+
+            color: #d9e8f8;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-item svg {
+            width: 19px;
+            height: 19px;
+
+            stroke: currentColor;
+
+            flex-shrink: 0;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.09);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: #0878d1;
+
+            color: white;
+
+            box-shadow:
+                0 5px 14px rgba(8,120,209,0.28);
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 245px;
+
+            min-height: 100vh;
+        }
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+            height: 72px;
+
+            background: white;
+
+            border-bottom: 1px solid #e4eaf1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 900;
+        }
+
+        .page-title h1 {
+            font-size: 21px;
+
+            color: #102a43;
+
+            margin-bottom: 3px;
+        }
+
+        .page-title p {
+            font-size: 12px;
+
+            color: #7b8794;
+        }
+
+        .admin-user {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #e8f2fc;
+
+            color: #0878d1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            border: 1px solid #d4e6f7;
+        }
+
+        .admin-info strong {
+            display: block;
+
+            font-size: 13px;
+
+            color: #26384a;
+        }
+
+        .admin-info span {
+            display: block;
+
+            font-size: 11px;
+
+            color: #8a98a8;
+
+            margin-top: 2px;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            padding: 30px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        /* =========================
+           WELCOME
+        ========================= */
+
+        .welcome {
+            background:
+                linear-gradient(
+                    120deg,
+                    #062d63,
+                    #0878d1
+                );
+
+            border-radius: 15px;
+
+            padding: 27px 30px;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 8px 25px rgba(6,45,99,0.15);
+        }
+
+        .welcome h2 {
+            font-size: 22px;
+
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+            color: #d9eaff;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .welcome-icon {
+            width: 60px;
+            height: 60px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.12);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .welcome-icon svg {
+            width: 30px;
+            height: 30px;
+
+            stroke: white;
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #e5eaf0;
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            box-shadow:
+                0 4px 15px rgba(15,23,42,0.035);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 11px;
+
+            background: #edf6ff;
+
+            color: #0878d1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+        .stat-icon svg {
+            width: 23px;
+            height: 23px;
+
+            stroke: currentColor;
+        }
+
+        .stat-info span {
+            display: block;
+
+            font-size: 11px;
+
+            color: #8996a5;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-info strong {
+            display: block;
+
+            font-size: 24px;
+
+            color: #172b4d;
+        }
+
+        /* =========================
+           SECTION HEADER
+        ========================= */
+
+        .section-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 17px;
+
+            color: #172b4d;
+        }
+
+        .section-header p {
+            font-size: 11px;
+
+            color: #8996a5;
+
+            margin-top: 3px;
+        }
+
+        /* =========================
+           MANAGEMENT CARDS
+        ========================= */
+
+        .management-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+        .management-card {
+            background: white;
+
+            border: 1px solid #e5eaf0;
+
+            border-radius: 13px;
+
+            padding: 21px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            box-shadow:
+                0 4px 15px rgba(15,23,42,0.035);
+        }
+
+        .management-card:hover {
+            transform: translateY(-3px);
+
+            border-color: #c9dff2;
+
+            box-shadow:
+                0 9px 24px rgba(15,23,42,0.08);
+        }
+
+        .management-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 16px;
+        }
+
+        .management-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 10px;
+
+            background: #edf6ff;
+
+            color: #0878d1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .management-icon svg {
+            width: 21px;
+            height: 21px;
+
+            stroke: currentColor;
+        }
+
+        .arrow {
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+
+            background: #f5f8fb;
+
+            color: #728096;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .arrow svg {
+            width: 15px;
+            height: 15px;
+
+            stroke: currentColor;
+        }
+
+        .management-card h3 {
+            font-size: 15px;
+
+            color: #172b4d;
+
+            margin-bottom: 6px;
+        }
+
+        .management-card p {
+            font-size: 11px;
+
+            color: #8996a5;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           BOTTOM GRID
+        ========================= */
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr;
+
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+
+            border: 1px solid #e5eaf0;
+
+            border-radius: 13px;
+
+            padding: 21px;
+
+            box-shadow:
+                0 4px 15px rgba(15,23,42,0.035);
+        }
+
+        .panel-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .panel-header h3 {
+            font-size: 15px;
+
+            color: #172b4d;
+        }
+
+        .panel-header span {
+            font-size: 11px;
+
+            color: #8996a5;
+        }
+
+        /* =========================
+           ACTIVITY
+        ========================= */
+
+        .activity {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .activity-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 8px;
+
+            background: #edf6ff;
+
+            color: #0878d1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+        .activity-icon svg {
+            width: 17px;
+            height: 17px;
+
+            stroke: currentColor;
+        }
+
+        .activity-text strong {
+            display: block;
+
+            font-size: 12px;
+
+            color: #35495e;
+
+            margin-bottom: 3px;
+        }
+
+        .activity-text span {
+            font-size: 10px;
+
+            color: #98a3af;
+        }
+
+        /* =========================
+           QUICK INFO
+        ========================= */
+
+        .quick-list {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .quick-row {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .quick-row:last-child {
+            border-bottom: none;
+        }
+
+        .quick-label {
+            font-size: 12px;
+
+            color: #7d8997;
+        }
+
+        .quick-value {
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #26384a;
+        }
+
+        /* =========================
+           MOBILE BUTTON
+        ========================= */
+
+        .menu-button {
+            display: none;
+
+            width: 38px;
+            height: 38px;
+
+            border: 1px solid #dce4ec;
+
+            background: white;
+
+            border-radius: 8px;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+        }
+
+        .menu-button svg {
+            width: 20px;
+            height: 20px;
+
+            stroke: #183b61;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .management-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .menu-button {
+                display: flex;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .page-title {
+                display: none;
+            }
+
+            .content {
+                padding: 20px 16px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+                padding: 22px;
+            }
+
+            .welcome-icon {
+                display: none;
+            }
+
+            .admin-info {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <img src="logo.jpg"
+                 alt="Online Examination">
+
+            <div class="brand-text">
+
+                <h2>Online Examination</h2>
+
+                <span>Admin Panel</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            ADMIN MENU
+        </div>
+
+
+        <nav class="nav-menu">
+
+
+            <a href="admin.html"
+               class="nav-item active">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                    <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                    <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                    <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+
+                </svg>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <!-- FIXED: manage-exam.html -->
+
+            <a href="manage-exam.html"
+               class="nav-item">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+                    <path d="M8 7h8"></path>
+                    <path d="M8 11h8"></path>
+                    <path d="M8 15h5"></path>
+
+                </svg>
+
+                <span>Manage Exams</span>
+
+            </a>
+
+
+            <a href="manage-question.html"
+               class="nav-item">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <circle cx="12" cy="12" r="9"></circle>
+
+                    <path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-.7.9-2 1.2-2 2.5"></path>
+
+                    <path d="M12 17h.01"></path>
+
+                </svg>
+
+                <span>Questions</span>
+
+            </a>
+
+
+            <a href="Managing student.html"
+               class="nav-item">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <circle cx="9" cy="8" r="3"></circle>
+
+                    <path d="M3 20c.6-3.4 2.6-5 6-5s5.4 1.6 6 5"></path>
+
+                    <path d="M16 5.5a3 3 0 0 1 0 5.8"></path>
+
+                    <path d="M17 15c2.3.2 3.7 1.7 4 4"></path>
+
+                </svg>
+
+                <span>Students</span>
+
+            </a>
+
+
+            <a href="results.html"
+               class="nav-item">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <path d="M4 19V5"></path>
+                    <path d="M4 19h16"></path>
+                    <path d="M8 16v-4"></path>
+                    <path d="M12 16V8"></path>
+                    <path d="M16 16v-6"></path>
+
+                </svg>
+
+                <span>Results</span>
+
+            </a>
+
+
+            <a href="reports.html"
+               class="nav-item">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <path d="M6 3h9l4 4v14H6z"></path>
+                    <path d="M14 3v5h5"></path>
+                    <path d="M9 13h6"></path>
+                    <path d="M9 17h6"></path>
+                    <path d="M9 9h2"></path>
+
+                </svg>
+
+                <span>Reports</span>
+
+            </a>
+
+
+            <a href="settings.html"
+               class="nav-item">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke-width="2">
+
+                    <circle cx="12" cy="12" r="3"></circle>
+
+                    <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.6v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H6v-2.6h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.6v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0-.3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.6v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H6v-2.6h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.6v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v2.6h-.1a1.7 1.7 0 0 0-1.6 1z"></path>
+
+                </svg>
+
+                <span>Settings</span>
+
+            </a>
+
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:12px;">
+
+                <button class="menu-button"
+                        onclick="toggleSidebar()">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke-width="2">
+
+                        <path d="M4 6h16"></path>
+                        <path d="M4 12h16"></path>
+                        <path d="M4 18h16"></path>
+
+                    </svg>
+
+                </button>
+
+
+                <div class="page-title">
+
+                    <h1>Admin Dashboard</h1>
+
+                    <p>
+                        Manage your online examination system
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-user">
+
+                <div class="admin-avatar"
+                     id="adminAvatar">
+
+                    A
+
+                </div>
+
+
+                <div class="admin-info">
+
+                    <strong id="adminName">
+                        Administrator
+                    </strong>
+
+                    <span>
+                        System Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome">
+
+                <div>
+
+                    <h2>
+                        Welcome back, <span id="welcomeName">Admin</span>
+                    </h2>
+
+                    <p>
+                        Here's an overview of your
+                        online examination system.
+                    </p>
+
+                </div>
+
+
+                <div class="welcome-icon">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke-width="1.7">
+
+                        <rect x="3"
+                              y="4"
+                              width="18"
+                              height="16"
+                              rx="2"></rect>
+
+                        <path d="M7 8h10"></path>
+                        <path d="M7 12h7"></path>
+                        <path d="M7 16h4"></path>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke-width="2">
+
+                            <circle cx="9" cy="8" r="3"></circle>
+
+                            <path d="M3 20c.6-3.4 2.6-5 6-5s5.4 1.6 6 5"></path>
+
+                            <path d="M16 5.5a3 3 0 0 1 0 5.8"></path>
+
+                            <path d="M17 15c2.3.2 3.7 1.7 4 4"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Total Students</span>
+
+                        <strong id="studentCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke-width="2">
+
+                            <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+
+                            <path d="M8 7h8"></path>
+                            <path d="M8 11h8"></path>
+                            <path d="M8 15h5"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Total Exams</span>
+
+                        <strong id="examCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke-width="2">
+
+                            <circle cx="12" cy="12" r="9"></circle>
+
+                            <path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-.7.9-2 1.2-2 2.5"></path>
+
+                            <path d="M12 17h.01"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Total Questions</span>
+
+                        <strong id="questionCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke-width="2">
+
+                            <path d="M4 19V5"></path>
+                            <path d="M4 19h16"></path>
+                            <path d="M8 16v-4"></path>
+                            <path d="M12 16V8"></path>
+                            <path d="M16 16v-6"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Total Results</span>
+
+                        <strong id="resultCount">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- MANAGEMENT -->
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Management
+                    </h2>
+
+                    <p>
+                        Manage the main areas of the examination system
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="management-grid">
+
+
+                <!-- EXAMS -->
+
+                <div class="management-card"
+                     onclick="goTo('manage-exam.html')">
+
+                    <div class="management-top">
+
+                        <div class="management-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+
+                                <path d="M8 7h8"></path>
+                                <path d="M8 11h8"></path>
+                                <path d="M8 15h5"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="arrow">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M9 18l6-6-6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Manage Exams
+                    </h3>
+
+                    <p>
+                        Create, edit and manage examinations.
+                    </p>
+
+                </div>
+
+
+                <!-- QUESTIONS -->
+
+                <div class="management-card"
+                     onclick="goTo('manage-question.html')">
+
+                    <div class="management-top">
+
+                        <div class="management-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <circle cx="12" cy="12" r="9"></circle>
+
+                                <path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-.7.9-2 1.2-2 2.5"></path>
+
+                                <path d="M12 17h.01"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="arrow">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M9 18l6-6-6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Questions
+                    </h3>
+
+                    <p>
+                        Add and manage examination questions.
+                    </p>
+
+                </div>
+
+
+                <!-- STUDENTS -->
+
+                <div class="management-card"
+                     onclick="goTo('Managing student.html')">
+
+                    <div class="management-top">
+
+                        <div class="management-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <circle cx="9" cy="8" r="3"></circle>
+
+                                <path d="M3 20c.6-3.4 2.6-5 6-5s5.4 1.6 6 5"></path>
+
+                                <path d="M16 5.5a3 3 0 0 1 0 5.8"></path>
+
+                                <path d="M17 15c2.3.2 3.7 1.7 4 4"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="arrow">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M9 18l6-6-6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Students
+                    </h3>
+
+                    <p>
+                        Add, view and manage registered students.
+                    </p>
+
+                </div>
+
+
+                <!-- RESULTS -->
+
+                <div class="management-card"
+                     onclick="goTo('results.html')">
+
+                    <div class="management-top">
+
+                        <div class="management-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M4 19V5"></path>
+                                <path d="M4 19h16"></path>
+                                <path d="M8 16v-4"></path>
+                                <path d="M12 16V8"></path>
+                                <path d="M16 16v-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="arrow">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M9 18l6-6-6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Results
+                    </h3>
+
+                    <p>
+                        View and manage student examination results.
+                    </p>
+
+                </div>
+
+
+                <!-- REPORTS -->
+
+                <div class="management-card"
+                     onclick="goTo('reports.html')">
+
+                    <div class="management-top">
+
+                        <div class="management-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M6 3h9l4 4v14H6z"></path>
+
+                                <path d="M14 3v5h5"></path>
+
+                                <path d="M9 13h6"></path>
+
+                                <path d="M9 17h6"></path>
+
+                                <path d="M9 9h2"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="arrow">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M9 18l6-6-6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Reports
+                    </h3>
+
+                    <p>
+                        Generate examination and student reports.
+                    </p>
+
+                </div>
+
+
+                <!-- SETTINGS -->
+
+                <div class="management-card"
+                     onclick="goTo('settings.html')">
+
+                    <div class="management-top">
+
+                        <div class="management-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <circle cx="12" cy="12" r="3"></circle>
+
+                                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.6v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H6v-2.6h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.6v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v2.6h-.1a1.7 1.7 0 0 0-1.6 1z"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="arrow">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke-width="2">
+
+                                <path d="M9 18l6-6-6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <h3>
+                        Settings
+                    </h3>
+
+                    <p>
+                        Configure system and examination settings.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BOTTOM -->
+
+            <div class="bottom-grid">
+
+
+                <!-- ACTIVITY -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h3>
+                            Recent Activity
+                        </h3>
+
+                        <span>
+                            System overview
+                        </span>
+
+                    </div>
+
+
+                    <div class="activity">
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke-width="2">
+
+                                    <circle cx="9" cy="8" r="3"></circle>
+
+                                    <path d="M3 20c.6-3.4 2.6-5 6-5s5.4 1.6 6 5"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div class="activity-text">
+
+                                <strong>
+                                    Student Management
+                                </strong>
+
+                                <span>
+                                    Manage registered students
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke-width="2">
+
+                                    <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+
+                                    <path d="M8 7h8"></path>
+                                    <path d="M8 11h8"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div class="activity-text">
+
+                                <strong>
+                                    Examination Management
+                                </strong>
+
+                                <span>
+                                    Create and manage examinations
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke-width="2">
+
+                                    <circle cx="12" cy="12" r="9"></circle>
+
+                                    <path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-.7.9-2 1.2-2 2.5"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div class="activity-text">
+
+                                <strong>
+                                    Question Management
+                                </strong>
+
+                                <span>
+                                    Manage examination questions
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon">
+
+                                <svg viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke-width="2">
+
+                                    <path d="M4 19V5"></path>
+                                    <path d="M4 19h16"></path>
+                                    <path d="M8 16v-4"></path>
+                                    <path d="M12 16V8"></path>
+                                    <path d="M16 16v-6"></path>
+
+                                </svg>
+
+                            </div>
+
+                            <div class="activity-text">
+
+                                <strong>
+                                    Result Management
+                                </strong>
+
+                                <span>
+                                    Review student performance
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK INFO -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h3>
+                            System Summary
+                        </h3>
+
+                        <span>
+                            Current
+                        </span>
+
+                    </div>
+
+
+                    <div class="quick-list">
+
+
+                        <div class="quick-row">
+
+                            <span class="quick-label">
+                                Students
+                            </span>
+
+                            <span class="quick-value"
+                                  id="summaryStudents">
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="quick-row">
+
+                            <span class="quick-label">
+                                Exams
+                            </span>
+
+                            <span class="quick-value"
+                                  id="summaryExams">
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="quick-row">
+
+                            <span class="quick-label">
+                                Questions
+                            </span>
+
+                            <span class="quick-value"
+                                  id="summaryQuestions">
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="quick-row">
+
+                            <span class="quick-label">
+                                Results
+                            </span>
+
+                            <span class="quick-value"
+                                  id="summaryResults">
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="quick-row">
+
+                            <span class="quick-label">
+                                System
+                            </span>
+
+                            <span class="quick-value">
+                                Active
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =========================
+           LOCAL STORAGE
+        ========================== */
+
+        function getArrayCount(key) {
+
+            try {
+
+                const data =
+                    JSON.parse(
+                        localStorage.getItem(key)
+                    );
+
+                return Array.isArray(data)
+                    ? data.length
+                    : 0;
+
+            } catch (error) {
+
+                return 0;
+
+            }
+
+        }
+
+
+        const students =
+            getArrayCount("students");
+
+        const exams =
+            getArrayCount("exams");
+
+        const questions =
+            getArrayCount("questions");
+
+        const results =
+            getArrayCount("results");
+
+
+        /* =========================
+           DASHBOARD COUNTS
+        ========================== */
+
+        document.getElementById("studentCount")
+            .textContent = students;
+
+        document.getElementById("examCount")
+            .textContent = exams;
+
+        document.getElementById("questionCount")
+            .textContent = questions;
+
+        document.getElementById("resultCount")
+            .textContent = results;
+
+
+        document.getElementById("summaryStudents")
+            .textContent = students;
+
+        document.getElementById("summaryExams")
+            .textContent = exams;
+
+        document.getElementById("summaryQuestions")
+            .textContent = questions;
+
+        document.getElementById("summaryResults")
+            .textContent = results;
+
+
+        /* =========================
+           ADMIN NAME
+        ========================== */
+
+        const storedAdminName =
+            localStorage.getItem("adminName") ||
+            "Administrator";
+
+
+        document.getElementById("adminName")
+            .textContent = storedAdminName;
+
+
+        document.getElementById("welcomeName")
+            .textContent = storedAdminName;
+
+
+        /* =========================
+           ADMIN INITIAL
+        ========================== */
+
+        const initial =
+            storedAdminName
+                .trim()
+                .charAt(0)
+                .toUpperCase();
+
+
+        document.getElementById("adminAvatar")
+            .textContent = initial || "A";
+
+
+        /* =========================
+           NAVIGATION
+        ========================== */
+
+        function goTo(page) {
+
+            window.location.href = page;
+
+        }
+
+
+        /* =========================
+           MOBILE SIDEBAR
+        ========================== */
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("open");
+
+        }
+
+
+        /* =========================
+           CLOSE SIDEBAR
+           AFTER MOBILE CLICK
+        ========================== */
+
+        document
+            .querySelectorAll(".nav-item")
+            .forEach(item => {
+
+                item.addEventListener(
+                    "click",
+                    function() {
+
+                        if (
+                            window.innerWidth <= 800
+                        ) {
+
+                            document
+                                .getElementById("sidebar")
+                                .classList.remove("open");
+
+                        }
+
+                    }
+                );
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>

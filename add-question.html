@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Question | Online Examination</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: linear-gradient(180deg, #082b63, #0b4ea2);
+            color: white;
+            padding: 22px 15px;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            text-align: center;
+            padding-bottom: 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.18);
+            margin-bottom: 20px;
+        }
+
+        .logo-area img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: white;
+            margin-bottom: 10px;
+        }
+
+        .logo-area h2 {
+            font-size: 18px;
+        }
+
+        .logo-area p {
+            font-size: 12px;
+            color: #dbeafe;
+            margin-top: 5px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 7px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 15px;
+            color: #dbeafe;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+
+        .menu-icon {
+            width: 24px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-left h1 {
+            font-size: 22px;
+            color: #0b3d82;
+        }
+
+        .topbar-left p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #0b4ea2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .admin-text strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .admin-text span {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px;
+        }
+
+        .page-header {
+            margin-bottom: 22px;
+        }
+
+        .page-header h2 {
+            color: #123f7a;
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* ================= FORM CARD ================= */
+
+        .form-card {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e3eaf4;
+            box-shadow: 0 7px 24px rgba(15,23,42,0.06);
+            overflow: hidden;
+        }
+
+        .form-card-header {
+            background: linear-gradient(135deg, #0b4ea2, #1267c4);
+            color: white;
+            padding: 25px 28px;
+        }
+
+        .form-card-header h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .form-card-header p {
+            font-size: 13px;
+            color: #dbeafe;
+        }
+
+        .form-body {
+            padding: 28px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #dbe3ef;
+            border-radius: 9px;
+            outline: none;
+            background: #fafcff;
+            color: #1e293b;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #0b4ea2;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(11,78,162,0.08);
+        }
+
+        select:disabled {
+            background: #f1f5f9;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        /* ================= EXAM INFO ================= */
+
+        .exam-info {
+            display: none;
+            margin-top: -5px;
+            margin-bottom: 20px;
+            padding: 13px 15px;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 9px;
+        }
+
+        .exam-info.show {
+            display: block;
+        }
+
+        .exam-info-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #123f7a;
+            margin-bottom: 5px;
+        }
+
+        .exam-info-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            font-size: 11px;
+            color: #475569;
+        }
+
+        /* ================= OPTIONS ================= */
+
+        .options-section {
+            margin-top: 8px;
+            margin-bottom: 22px;
+        }
+
+        .options-heading {
+            color: #123f7a;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5eaf1;
+        }
+
+        .option-box {
+            position: relative;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .option-badge {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: #eaf3ff;
+            color: #0b4ea2;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 8px;
+            border-top: 1px solid #eef2f7;
+        }
+
+        button {
+            border: none;
+            border-radius: 9px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #0b4ea2, #1267c4);
+            color: white;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(11,78,162,0.25);
+        }
+
+        .add-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-btn {
+            background: white;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+        }
+
+        /* ================= NOTE ================= */
+
+        .note {
+            margin-top: 20px;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            border-radius: 9px;
+            padding: 13px 15px;
+            color: #1e40af;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .no-exam-note {
+            display: none;
+            margin-top: 15px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 9px;
+            padding: 13px 15px;
+            color: #9a3412;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .no-exam-note.show {
+            display: block;
+        }
+
+        /* ================= TOAST ================= */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            background: #0f172a;
+            color: white;
+            padding: 13px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            opacity: 0;
+            transform: translateY(15px);
+            pointer-events: none;
+            transition: 0.3s;
+            z-index: 3000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            color: #0b4ea2;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-body {
+                padding: 20px;
+            }
+
+            .form-card-header {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column-reverse;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .admin-text {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo-area">
+
+            <img src="logo.jpg" alt="College Logo">
+
+            <h2>Online Examination</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <ul class="menu">
+
+            <li>
+                <a href="admin.html">
+                    <span class="menu-icon">⌂</span>
+                    Dashboard
+                </a>
+            </li>
+
+
+            <li>
+                <a href="manage-exam.html">
+                    <span class="menu-icon">▣</span>
+                    Manage Exams
+                </a>
+            </li>
+
+
+            <li>
+                <a href="manage-question.html" class="active">
+                    <span class="menu-icon">?</span>
+                    Questions
+                </a>
+            </li>
+
+
+            <li>
+                <a href="students.html">
+                    <span class="menu-icon">♙</span>
+                    Students
+                </a>
+            </li>
+
+
+            <li>
+                <a href="results.html">
+                    <span class="menu-icon">▤</span>
+                    Results
+                </a>
+            </li>
+
+
+            <li>
+                <a href="reports.html">
+                    <span class="menu-icon">◫</span>
+                    Reports
+                </a>
+            </li>
+
+
+            <li>
+                <a href="settings.html">
+                    <span class="menu-icon">⚙</span>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="mobile-menu"
+                    onclick="toggleSidebar()"
+                >
+                    ☰
+                </button>
+
+                <div>
+
+                    <h1>
+                        Add Question
+                    </h1>
+
+                    <p>
+                        Create a new examination question
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-info">
+
+                <div
+                    class="admin-avatar"
+                    id="adminAvatar"
+                >
+                    A
+                </div>
+
+                <div class="admin-text">
+
+                    <strong id="adminName">
+                        Administrator
+                    </strong>
+
+                    <span>
+                        Admin
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <div class="page-header">
+
+                <h2>
+                    Add New Question
+                </h2>
+
+                <p>
+                    Select the examination first, then enter the question and answer options.
+                </p>
+
+            </div>
+
+
+
+            <!-- FORM CARD -->
+
+            <div class="form-card">
+
+
+                <div class="form-card-header">
+
+                    <h3>
+                        📝 Question Details
+                    </h3>
+
+                    <p>
+                        Select an existing exam and fill in all required fields to add the question.
+                    </p>
+
+                </div>
+
+
+
+                <form id="questionForm">
+
+
+                    <div class="form-body">
+
+
+                        <!-- EXAM SELECT -->
+
+                        <div class="form-group">
+
+                            <label for="examId">
+
+                                Select Examination
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+                            <select
+                                id="examId"
+                                required
+                            >
+
+                                <option value="">
+                                    Select an Examination
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- SELECTED EXAM INFORMATION -->
+
+                        <div
+                            class="exam-info"
+                            id="examInfo"
+                        >
+
+                            <div class="exam-info-title">
+                                Selected Examination
+                            </div>
+
+                            <div class="exam-info-details">
+
+                                <span>
+                                    <strong>Exam:</strong>
+                                    <span id="selectedExamName">
+                                        -
+                                    </span>
+                                </span>
+
+                                <span>
+                                    <strong>Subject:</strong>
+                                    <span id="selectedExamSubject">
+                                        -
+                                    </span>
+                                </span>
+
+                                <span>
+                                    <strong>Duration:</strong>
+                                    <span id="selectedExamDuration">
+                                        -
+                                    </span>
+                                </span>
+
+                                <span>
+                                    <strong>Total Marks:</strong>
+                                    <span id="selectedExamMarks">
+                                        -
+                                    </span>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- NO EXAM NOTE -->
+
+                        <div
+                            class="no-exam-note"
+                            id="noExamNote"
+                        >
+
+                            <strong>No examination available.</strong>
+
+                            Please create an examination first from
+                            <strong>Manage Exams → Add Exam</strong>.
+                            After creating the exam, return here to add questions.
+
+                        </div>
+
+
+
+                        <!-- QUESTION -->
+
+                        <div class="form-group">
+
+                            <label for="question">
+
+                                Question
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+                            <textarea
+                                id="question"
+                                placeholder="Enter the examination question"
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- OPTIONS -->
+
+                        <div class="options-section">
+
+                            <h3 class="options-heading">
+                                Answer Options
+                            </h3>
+
+
+                            <div class="form-grid">
+
+
+                                <!-- OPTION A -->
+
+                                <div class="form-group option-box">
+
+                                    <label
+                                        for="optionA"
+                                        class="option-label"
+                                    >
+
+                                        <span class="option-badge">
+                                            A
+                                        </span>
+
+                                        Option A
+
+                                        <span class="required">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="optionA"
+                                        placeholder="Enter option A"
+                                        required
+                                    >
+
+                                </div>
+
+
+
+                                <!-- OPTION B -->
+
+                                <div class="form-group option-box">
+
+                                    <label
+                                        for="optionB"
+                                        class="option-label"
+                                    >
+
+                                        <span class="option-badge">
+                                            B
+                                        </span>
+
+                                        Option B
+
+                                        <span class="required">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="optionB"
+                                        placeholder="Enter option B"
+                                        required
+                                    >
+
+                                </div>
+
+
+
+                                <!-- OPTION C -->
+
+                                <div class="form-group option-box">
+
+                                    <label
+                                        for="optionC"
+                                        class="option-label"
+                                    >
+
+                                        <span class="option-badge">
+                                            C
+                                        </span>
+
+                                        Option C
+
+                                        <span class="required">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="optionC"
+                                        placeholder="Enter option C"
+                                        required
+                                    >
+
+                                </div>
+
+
+
+                                <!-- OPTION D -->
+
+                                <div class="form-group option-box">
+
+                                    <label
+                                        for="optionD"
+                                        class="option-label"
+                                    >
+
+                                        <span class="option-badge">
+                                            D
+                                        </span>
+
+                                        Option D
+
+                                        <span class="required">
+                                            *
+                                        </span>
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="optionD"
+                                        placeholder="Enter option D"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CORRECT ANSWER -->
+
+                        <div class="form-group">
+
+                            <label for="correctAnswer">
+
+                                Correct Answer
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+                            <select
+                                id="correctAnswer"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Correct Answer
+                                </option>
+
+                                <option value="A">
+                                    Option A
+                                </option>
+
+                                <option value="B">
+                                    Option B
+                                </option>
+
+                                <option value="C">
+                                    Option C
+                                </option>
+
+                                <option value="D">
+                                    Option D
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- NOTE -->
+
+                        <div class="note">
+
+                            <strong>Note:</strong>
+
+                            This question will be permanently connected
+                            to the selected examination using its unique
+                            Exam ID. Questions from other examinations
+                            will remain separate.
+
+                        </div>
+
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="buttons">
+
+                            <button
+                                type="button"
+                                class="back-btn"
+                                onclick="window.location.href='manage-question.html'"
+                            >
+                                ← Back
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                class="add-btn"
+                                id="addQuestionBtn"
+                            >
+                                ✓ Add Question
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- TOAST -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= GLOBAL EXAMS ================= */
+
+        let exams = [];
+
+
+
+        /* ================= GENERATE UNIQUE ID ================= */
+
+        function generateQuestionId() {
+
+            return (
+                "question-" +
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2, 9)
+            );
+
+        }
+
+
+
+        /* ================= LOAD EXAMS ================= */
+
+        function loadExams() {
+
+            const examSelect =
+                document.getElementById("examId");
+
+            const noExamNote =
+                document.getElementById("noExamNote");
+
+            const addQuestionBtn =
+                document.getElementById("addQuestionBtn");
+
+
+            examSelect.innerHTML = `
+                <option value="">
+                    Select an Examination
+                </option>
+            `;
+
+
+            try {
+
+                const savedExams =
+                    localStorage.getItem("exams");
+
+
+                exams =
+                    savedExams
+                        ? JSON.parse(savedExams)
+                        : [];
+
+
+                if (!Array.isArray(exams)) {
+
+                    exams = [];
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to load exams:",
+                    error
+                );
+
+                exams = [];
+
+            }
+
+
+
+            /* ================= NO EXAMS ================= */
+
+            if (exams.length === 0) {
+
+                noExamNote.classList.add("show");
+
+                examSelect.disabled = true;
+
+                addQuestionBtn.disabled = true;
+
+                return;
+
+            }
+
+
+
+            /* ================= EXAM DROPDOWN ================= */
+
+            noExamNote.classList.remove("show");
+
+            examSelect.disabled = false;
+
+            addQuestionBtn.disabled = false;
+
+
+            exams.forEach(function(exam) {
+
+                if (
+                    exam.id === undefined ||
+                    exam.id === null ||
+                    String(exam.id).trim() === ""
+                ) {
+
+                    return;
+
+                }
+
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value =
+                    String(exam.id);
+
+
+                const examName =
+                    exam.examName ||
+                    "Untitled Exam";
+
+
+                const subject =
+                    exam.subject ||
+                    "No Subject";
+
+
+                option.textContent =
+                    examName +
+                    " - " +
+                    subject;
+
+
+                examSelect.appendChild(option);
+
+            });
+
+
+            if (examSelect.options.length === 1) {
+
+                noExamNote.classList.add("show");
+
+                examSelect.disabled = true;
+
+                addQuestionBtn.disabled = true;
+
+            }
+
+        }
+
+
+
+        /* ================= GET SELECTED EXAM ================= */
+
+        function getSelectedExam(examId) {
+
+            return exams.find(function(exam) {
+
+                return String(exam.id) === String(examId);
+
+            });
+
+        }
+
+
+
+        /* ================= EXAM SELECTION ================= */
+
+        document
+            .getElementById("examId")
+            .addEventListener(
+                "change",
+                function() {
+
+                    const selectedId =
+                        this.value;
+
+
+                    const examInfo =
+                        document.getElementById(
+                            "examInfo"
+                        );
+
+
+                    if (!selectedId) {
+
+                        examInfo.classList.remove(
+                            "show"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const selectedExam =
+                        getSelectedExam(
+                            selectedId
+                        );
+
+
+                    if (!selectedExam) {
+
+                        examInfo.classList.remove(
+                            "show"
+                        );
+
+                        return;
+
+                    }
+
+
+                    document.getElementById(
+                        "selectedExamName"
+                    ).textContent =
+                        selectedExam.examName ||
+                        "Untitled Exam";
+
+
+                    document.getElementById(
+                        "selectedExamSubject"
+                    ).textContent =
+                        selectedExam.subject ||
+                        "No Subject";
+
+
+                    document.getElementById(
+                        "selectedExamDuration"
+                    ).textContent =
+                        (
+                            Number(
+                                selectedExam.duration
+                            ) || 0
+                        ) +
+                        " Minutes";
+
+
+                    document.getElementById(
+                        "selectedExamMarks"
+                    ).textContent =
+                        (
+                            Number(
+                                selectedExam.totalMarks
+                            ) || 0
+                        );
+
+
+                    examInfo.classList.add(
+                        "show"
+                    );
+
+                }
+            );
+
+
+
+        /* ================= FORM SUBMIT ================= */
+
+        document
+            .getElementById("questionForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    /* ================= SELECTED EXAM ================= */
+
+                    const selectedExamId =
+                        document
+                            .getElementById("examId")
+                            .value
+                            .trim();
+
+
+                    if (!selectedExamId) {
+
+                        showToast(
+                            "Please select an examination."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const selectedExam =
+                        getSelectedExam(
+                            selectedExamId
+                        );
+
+
+                    if (!selectedExam) {
+
+                        showToast(
+                            "Selected examination was not found."
+                        );
+
+                        loadExams();
+
+                        return;
+
+                    }
+
+
+
+                    /* ================= GET EXISTING QUESTIONS ================= */
+
+                    let questions = [];
+
+
+                    try {
+
+                        const savedQuestions =
+                            localStorage.getItem(
+                                "questions"
+                            );
+
+
+                        questions =
+                            savedQuestions
+                                ? JSON.parse(
+                                    savedQuestions
+                                )
+                                : [];
+
+
+                        if (
+                            !Array.isArray(
+                                questions
+                            )
+                        ) {
+
+                            questions = [];
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Unable to load questions:",
+                            error
+                        );
+
+                        questions = [];
+
+                    }
+
+
+
+                    /* ================= GET FORM VALUES ================= */
+
+                    const question =
+                        document
+                            .getElementById("question")
+                            .value
+                            .trim();
+
+
+                    const optionA =
+                        document
+                            .getElementById("optionA")
+                            .value
+                            .trim();
+
+
+                    const optionB =
+                        document
+                            .getElementById("optionB")
+                            .value
+                            .trim();
+
+
+                    const optionC =
+                        document
+                            .getElementById("optionC")
+                            .value
+                            .trim();
+
+
+                    const optionD =
+                        document
+                            .getElementById("optionD")
+                            .value
+                            .trim();
+
+
+                    const correctLetter =
+                        document
+                            .getElementById(
+                                "correctAnswer"
+                            )
+                            .value;
+
+
+
+                    /* ================= VALIDATION ================= */
+
+                    if (
+                        !question ||
+                        !optionA ||
+                        !optionB ||
+                        !optionC ||
+                        !optionD ||
+                        !correctLetter
+                    ) {
+
+                        showToast(
+                            "Please fill all fields."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* ================= CONVERT ANSWER ================= */
+
+                    let correctAnswer = "";
+
+
+                    if (
+                        correctLetter === "A"
+                    ) {
+
+                        correctAnswer =
+                            optionA;
+
+                    }
+
+                    else if (
+                        correctLetter === "B"
+                    ) {
+
+                        correctAnswer =
+                            optionB;
+
+                    }
+
+                    else if (
+                        correctLetter === "C"
+                    ) {
+
+                        correctAnswer =
+                            optionC;
+
+                    }
+
+                    else if (
+                        correctLetter === "D"
+                    ) {
+
+                        correctAnswer =
+                            optionD;
+
+                    }
+
+
+
+                    /* ================= CREATE QUESTION ================= */
+
+                    const questionData = {
+
+                        id:
+                            generateQuestionId(),
+
+                        examId:
+                            String(
+                                selectedExam.id
+                            ),
+
+                        examName:
+                            selectedExam.examName ||
+                            "",
+
+                        subject:
+                            selectedExam.subject ||
+                            "",
+
+                        question:
+                            question,
+
+                        optionA:
+                            optionA,
+
+                        optionB:
+                            optionB,
+
+                        optionC:
+                            optionC,
+
+                        optionD:
+                            optionD,
+
+                        correctAnswer:
+                            correctAnswer,
+
+                        correctOption:
+                            correctLetter,
+
+                        createdAt:
+                            new Date().toISOString()
+
+                    };
+
+
+
+                    /* ================= SAVE QUESTION ================= */
+
+                    questions.push(
+                        questionData
+                    );
+
+
+                    localStorage.setItem(
+                        "questions",
+                        JSON.stringify(
+                            questions
+                        )
+                    );
+
+
+
+                    /* ================= UPDATE EXAM QUESTION COUNT ================= */
+
+                    const examIndex =
+                        exams.findIndex(
+                            function(exam) {
+
+                                return String(
+                                    exam.id
+                                ) === String(
+                                    selectedExam.id
+                                );
+
+                            }
+                        );
+
+
+                    if (
+                        examIndex !== -1
+                    ) {
+
+                        const currentQuestionCount =
+                            Number(
+                                exams[
+                                    examIndex
+                                ].totalQuestions || 0
+                            );
+
+
+                        exams[
+                            examIndex
+                        ].totalQuestions =
+                            currentQuestionCount + 1;
+
+
+                        /* Keep questionCount synchronized */
+
+                        exams[
+                            examIndex
+                        ].questionCount =
+                            exams[
+                                examIndex
+                            ].totalQuestions;
+
+
+                        localStorage.setItem(
+                            "exams",
+                            JSON.stringify(
+                                exams
+                            )
+                        );
+
+                    }
+
+
+
+                    /* ================= SUCCESS ================= */
+
+                    showToast(
+                        "Question added successfully!"
+                    );
+
+
+
+                    /* ================= RESET FORM ================= */
+
+                    document
+                        .getElementById(
+                            "questionForm"
+                        )
+                        .reset();
+
+
+                    document
+                        .getElementById(
+                            "examInfo"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
+
+
+                    /*
+                     * Keep the updated exam list
+                     * available after saving.
+                     */
+
+                    loadExams();
+
+                }
+            );
+
+
+
+        /* ================= TOAST ================= */
+
+        let toastTimer;
+
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+
+            toast.textContent =
+                message;
+
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    function() {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    2500
+                );
+
+        }
+
+
+
+        /* ================= ADMIN NAME ================= */
+
+        function loadAdminName() {
+
+            const savedName =
+                localStorage.getItem(
+                    "adminName"
+                );
+
+
+            if (
+                savedName &&
+                savedName.trim() !== ""
+            ) {
+
+                document
+                    .getElementById(
+                        "adminName"
+                    )
+                    .textContent =
+                    savedName;
+
+
+                document
+                    .getElementById(
+                        "adminAvatar"
+                    )
+                    .textContent =
+                    savedName
+                        .trim()
+                        .charAt(0)
+                        .toUpperCase();
+
+            }
+
+        }
+
+
+
+        /* ================= SIDEBAR ================= */
+
+        function toggleSidebar() {
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                loadAdminName();
+
+                loadExams();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

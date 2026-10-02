@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Exam History</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #26384d;
+        }
+
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 245px;
+            height: 100vh;
+            background: #062d63;
+            color: white;
+            padding: 20px 15px;
+        }
+
+
+        .logo-area {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            margin-bottom: 20px;
+        }
+
+
+        .logo-area img {
+            width: 75px;
+            height: 75px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 5px;
+        }
+
+
+        .logo-area h2 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            padding: 13px 14px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+
+        .menu a:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+
+        .menu a.active {
+            background: #0878d1;
+        }
+
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 245px;
+            min-height: 100vh;
+        }
+
+
+        /* ================= TOP BAR ================= */
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e4eaf1;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+        }
+
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #183b66;
+        }
+
+
+        .student-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .student-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+
+            background: #e5f2ff;
+            color: #0878d1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        .student-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #28435f;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px;
+        }
+
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+
+        .page-heading h2 {
+            color: #183b66;
+            font-size: 25px;
+            margin-bottom: 7px;
+        }
+
+
+        .page-heading p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+
+        /* ================= HISTORY CARD ================= */
+
+        .history-card {
+            background: white;
+            border: 1px solid #e5ebf2;
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+
+        .history-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .history-title h3 {
+            color: #183b66;
+            font-size: 19px;
+        }
+
+
+        .attempt-count {
+            background: #eaf4ff;
+            color: #0878d1;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* ================= TIMELINE ================= */
+
+        .timeline {
+            position: relative;
+            margin-top: 10px;
+        }
+
+
+        .timeline::before {
+            content: "";
+
+            position: absolute;
+
+            left: 20px;
+            top: 10px;
+            bottom: 10px;
+
+            width: 2px;
+
+            background: #dce7f2;
+        }
+
+
+        .history-item {
+            position: relative;
+
+            display: flex;
+
+            gap: 18px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .history-icon {
+            position: relative;
+            z-index: 2;
+
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+
+            border-radius: 50%;
+
+            background: #0878d1;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+
+        .history-content {
+            flex: 1;
+
+            border: 1px solid #e5ebf2;
+
+            border-radius: 8px;
+
+            padding: 18px;
+
+            background: #fff;
+        }
+
+
+        .history-top {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: flex-start;
+
+            gap: 15px;
+        }
+
+
+        .exam-name {
+            color: #183b66;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        .attempt-number {
+            color: #718096;
+            font-size: 13px;
+        }
+
+
+        .completed {
+            background: #e9f8ef;
+            color: #18864b;
+
+            padding: 6px 11px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        /* ================= DETAILS ================= */
+
+        .history-details {
+            display: flex;
+
+            gap: 25px;
+
+            margin-top: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .detail {
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        .detail strong {
+            color: #34495e;
+
+            margin-left: 4px;
+        }
+
+
+        /* ================= SCORE ================= */
+
+        .score-box {
+            margin-top: 15px;
+
+            background: #f5faff;
+
+            border: 1px solid #e0edf9;
+
+            border-radius: 6px;
+
+            padding: 12px 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .score-label {
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+
+        .score-value {
+            color: #0878d1;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= RESULT BUTTON ================= */
+
+        .view-result {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 8px 14px;
+
+            background: #0878d1;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            border: none;
+
+            transition: 0.2s;
+        }
+
+
+        .view-result:hover {
+            background: #0669b8;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 60px 20px;
+        }
+
+
+        .empty-icon {
+            width: 55px;
+            height: 55px;
+
+            margin: 0 auto 15px;
+
+            background: #eaf4ff;
+            color: #0878d1;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+
+        .empty h3 {
+            color: #183b66;
+
+            margin-bottom: 8px;
+
+            font-size: 18px;
+        }
+
+
+        .empty p {
+            color: #718096;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= BACK BUTTON ================= */
+
+        .back-btn {
+            margin-top: 25px;
+
+            display: inline-block;
+
+            background: #183b66;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+
+        .back-btn:hover {
+            background: #0f2b4c;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .history-top {
+                flex-direction: column;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+
+            .main {
+                margin-left: 0;
+            }
+
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+
+            .content {
+                padding: 18px;
+            }
+
+
+            .timeline::before {
+                left: 18px;
+            }
+
+
+            .history-icon {
+                width: 38px;
+                min-width: 38px;
+                height: 38px;
+            }
+
+
+            .history-details {
+                gap: 12px;
+            }
+
+
+            .history-title {
+                align-items: flex-start;
+
+                gap: 12px;
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="logo-area">
+
+            <img
+                src="logo.jpg"
+                alt="Logo"
+            >
+
+            <h2>
+                Online Examination
+            </h2>
+
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a href="dashboard.html">
+
+                <span class="menu-icon">
+                    ⌂
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="available-exams.html">
+
+                <span class="menu-icon">
+                    ▣
+                </span>
+
+                Available Exams
+
+            </a>
+
+
+            <a href="result.html#my-results">
+
+                <span class="menu-icon">
+                    ▥
+                </span>
+
+                My Results
+
+            </a>
+
+
+            <a
+                href="exam-history.html"
+                class="active">
+
+                <span class="menu-icon">
+                    ◷
+                </span>
+
+                Exam History
+
+            </a>
+
+
+            <a href="profile.html">
+
+                <span class="menu-icon">
+                    ♙
+                </span>
+
+                My Profile
+
+            </a>
+
+
+        </nav>
+
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- ================= TOP BAR ================= -->
+
+        <header class="topbar">
+
+
+            <h1>
+                Exam History
+            </h1>
+
+
+            <div class="student-box">
+
+
+                <div
+                    class="student-avatar"
+                    id="studentAvatar">
+
+                    S
+
+                </div>
+
+
+                <span
+                    class="student-name"
+                    id="studentName">
+
+                    Student
+
+                </span>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <div class="page-heading">
+
+                <h2>
+                    Examination History
+                </h2>
+
+                <p>
+                    View your previous examination attempts and activity.
+                </p>
+
+            </div>
+
+
+
+            <div class="history-card">
+
+
+                <div class="history-title">
+
+
+                    <h3>
+                        Your Exam Activity
+                    </h3>
+
+
+                    <div
+                        class="attempt-count"
+                        id="attemptCount">
+
+                        0 Attempts
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- HISTORY -->
+
+                <div
+                    class="timeline"
+                    id="historyList">
+                </div>
+
+
+
+                <!-- EMPTY -->
+
+                <div
+                    class="empty"
+                    id="emptyMessage"
+                    style="display:none;">
+
+                    <div class="empty-icon">
+                        📝
+                    </div>
+
+                    <h3>
+                        No Exam History
+                    </h3>
+
+                    <p>
+                        You have not completed any examinations yet.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- BACK -->
+
+            <a
+                href="dashboard.html"
+                class="back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script>
+
+
+        /* =================================================
+           STUDENT
+        ================================================= */
+
+        const studentName =
+            localStorage.getItem("studentName")
+            || "Student";
+
+
+        document.getElementById(
+            "studentName"
+        ).innerText =
+            studentName;
+
+
+        document.getElementById(
+            "studentAvatar"
+        ).innerText =
+            studentName
+                .charAt(0)
+                .toUpperCase();
+
+
+
+        /* =================================================
+           ESCAPE HTML
+        ================================================= */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* =================================================
+           LOAD HISTORY
+        ================================================= */
+
+        function loadExamHistory() {
+
+
+            const results =
+                JSON.parse(
+                    localStorage.getItem("results")
+                ) || [];
+
+
+            /*
+                Only results belonging to
+                the currently logged-in student.
+            */
+
+            const currentStudentResults =
+                results.filter(function(result) {
+
+
+                    const resultStudent =
+                        String(
+                            result.studentName ||
+                            result.name ||
+                            ""
+                        )
+                        .trim()
+                        .toLowerCase();
+
+
+                    return (
+                        resultStudent ===
+                        studentName
+                            .trim()
+                            .toLowerCase()
+                    );
+
+                });
+
+
+
+            /*
+                New results normally have an id.
+                If an older result does not have
+                one, use its original array index.
+            */
+
+            currentStudentResults.forEach(
+                function(result, index) {
+
+                    if (!result.id) {
+
+                        result._historyId =
+                            "history_" + index;
+
+                    }
+
+                }
+            );
+
+
+
+            /*
+                Newest attempts first.
+            */
+
+            currentStudentResults.sort(
+                function(a, b) {
+
+                    const dateA =
+                        new Date(
+                            a.date ||
+                            a.createdAt ||
+                            0
+                        ).getTime();
+
+
+                    const dateB =
+                        new Date(
+                            b.date ||
+                            b.createdAt ||
+                            0
+                        ).getTime();
+
+
+                    if (
+                        !isNaN(dateA) &&
+                        !isNaN(dateB) &&
+                        dateA !== dateB
+                    ) {
+
+                        return dateB - dateA;
+
+                    }
+
+
+                    return (
+                        Number(b.id || 0) -
+                        Number(a.id || 0)
+                    );
+
+                }
+            );
+
+
+
+            const historyList =
+                document.getElementById(
+                    "historyList"
+                );
+
+
+            const emptyMessage =
+                document.getElementById(
+                    "emptyMessage"
+                );
+
+
+            const attemptCount =
+                document.getElementById(
+                    "attemptCount"
+                );
+
+
+
+            /* ================= COUNT ================= */
+
+            attemptCount.innerText =
+                currentStudentResults.length +
+                (
+                    currentStudentResults.length === 1
+                        ? " Attempt"
+                        : " Attempts"
+                );
+
+
+
+            /* ================= EMPTY ================= */
+
+            if (
+                currentStudentResults.length === 0
+            ) {
+
+                historyList.style.display =
+                    "none";
+
+
+                emptyMessage.style.display =
+                    "block";
+
+
+                return;
+
+            }
+
+
+
+            /* ================= SHOW HISTORY ================= */
+
+            historyList.style.display =
+                "block";
+
+
+            emptyMessage.style.display =
+                "none";
+
+
+            historyList.innerHTML = "";
+
+
+
+            currentStudentResults.forEach(
+                function(result, index) {
+
+
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    item.className =
+                        "history-item";
+
+
+
+                    const examName =
+                        result.examName ||
+                        result.currentExamName ||
+                        "Online Examination";
+
+
+
+                    const date =
+                        result.date ||
+                        result.completedAt ||
+                        result.createdAt ||
+                        "Date not available";
+
+
+
+                    const score =
+                        result.score ??
+                        result.examScore ??
+                        "--";
+
+
+
+                    const totalQuestions =
+                        result.totalQuestions ??
+                        result.questions ??
+                        "--";
+
+
+
+                    /*
+                        Result ID
+                    */
+
+                    const resultId =
+                        result.id ||
+                        result._historyId;
+
+
+
+                    item.innerHTML = `
+
+                        <div class="history-icon">
+                            ✓
+                        </div>
+
+
+                        <div class="history-content">
+
+
+                            <div class="history-top">
+
+
+                                <div>
+
+                                    <div class="exam-name">
+                                        ${escapeHTML(examName)}
+                                    </div>
+
+
+                                    <div class="attempt-number">
+                                        Attempt ${currentStudentResults.length - index}
+                                    </div>
+
+                                </div>
+
+
+                                <span class="completed">
+                                    Completed
+                                </span>
+
+
+                            </div>
+
+
+
+                            <div class="history-details">
+
+
+                                <div class="detail">
+
+                                    📅
+
+                                    Date & Time:
+
+                                    <strong>
+                                        ${escapeHTML(date)}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="detail">
+
+                                    📝
+
+                                    Questions:
+
+                                    <strong>
+                                        ${escapeHTML(totalQuestions)}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="score-box">
+
+                                <span class="score-label">
+                                    Examination Score
+                                </span>
+
+
+                                <span class="score-value">
+                                    ${escapeHTML(score)}
+                                </span>
+
+                            </div>
+
+
+
+                            <button
+                                class="view-result"
+                                onclick="viewResult('${escapeHTML(resultId)}')">
+
+                                View Result
+
+                            </button>
+
+
+                        </div>
+
+                    `;
+
+
+                    historyList.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================================
+           VIEW RESULT
+        ================================================= */
+
+        function viewResult(resultId) {
+
+
+            localStorage.setItem(
+                "lastResultId",
+                String(resultId)
+            );
+
+
+            window.location.href =
+                "result.html";
+
+        }
+
+
+
+        /* =================================================
+           LOAD
+        ================================================= */
+
+        loadExamHistory();
+
+
+    </script>
+
+
+</body>
+
+</html>
